@@ -1,59 +1,98 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera, Environment } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { PerspectiveCamera, Environment, Stars } from '@react-three/drei';
+import { EffectComposer, Bloom, Vignette, ChromaticAberration, Noise } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { BigBang } from './BigBang';
 import { InfiniteOrbs } from './InfiniteOrbs';
 
 function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntroComplete: () => void }) {
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={60} />
+      <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={75} />
 
-      <ambientLight intensity={0.1} />
-      <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
-      <pointLight position={[-10, -10, -10]} intensity={0.3} color="#8b5cf6" />
+      {/* Deep space ambient */}
+      <ambientLight intensity={0.05} />
+
+      {/* Stars background */}
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 
       {!showOrbs && <BigBang onComplete={onIntroComplete} />}
       {showOrbs && <InfiniteOrbs />}
 
       <Environment preset="night" />
 
-      <EffectComposer>
+      {/* Heavy post-processing */}
+      <EffectComposer multisampling={8}>
         <Bloom
-          intensity={1.2}
-          luminanceThreshold={0.1}
+          intensity={2}
+          luminanceThreshold={0.05}
           luminanceSmoothing={0.9}
           blendFunction={BlendFunction.ADD}
+          mipmapBlur
+        />
+        <ChromaticAberration
+          blendFunction={BlendFunction.NORMAL}
+          offset={[0.002, 0.002]}
+          radialModulation={true}
+          modulationOffset={0.5}
         />
         <Vignette
           offset={0.3}
-          darkness={0.9}
+          darkness={0.8}
           blendFunction={BlendFunction.NORMAL}
+        />
+        <Noise
+          opacity={0.03}
+          blendFunction={BlendFunction.OVERLAY}
         />
       </EffectComposer>
     </>
   );
 }
 
+function LoadingScreen() {
+  return (
+    <div className="absolute inset-0 z-50 bg-[#030303] flex items-center justify-center">
+      <div className="w-12 h-12 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+    </div>
+  );
+}
+
 export function IntroScene({ onIntroComplete }: { onIntroComplete: () => void }) {
   const [showOrbs, setShowOrbs] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Give WebGL time to initialize
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleIntroComplete = () => {
     setShowOrbs(true);
-    setTimeout(onIntroComplete, 500);
+    setTimeout(onIntroComplete, 300);
   };
 
   return (
     <div className="fixed inset-0 z-0">
+      {!isLoaded && <LoadingScreen />}
       <Canvas
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        gl={{
+          antialias: true,
+          alpha: false,
+          powerPreference: 'high-performance',
+          stencil: false,
+        }}
         style={{ background: '#030303' }}
         dpr={[1, 2]}
+        camera={{ position: [0, 0, 8], fov: 75 }}
+        onCreated={() => setIsLoaded(true)}
       >
+        <color attach="background" args={['#030303']} />
+        <fog attach="fog" args={['#030303', 30, 100]} />
         <Suspense fallback={null}>
           <SceneContent showOrbs={showOrbs} onIntroComplete={handleIntroComplete} />
         </Suspense>
