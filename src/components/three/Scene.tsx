@@ -53,10 +53,11 @@ function SceneContent() {
 
 export function Scene() {
   return (
-    <div className="absolute inset-0 -z-10">
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ background: 'transparent' }}
+        dpr={[1, 2]}
       >
         <Suspense fallback={null}>
           <SceneContent />

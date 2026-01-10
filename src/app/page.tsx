@@ -24,11 +24,13 @@ export default function Home() {
       {/* 3D Background Scene */}
       <Scene />
 
-      {/* Content sections */}
-      <Hero />
-      <Services />
-      <Products />
-      <Footer />
+      {/* Content sections - z-10 to appear above 3D scene */}
+      <div className="relative z-10">
+        <Hero />
+        <Services />
+        <Products />
+        <Footer />
+      </div>
 
       {/* AI Chat Widget */}
       <AIChat />

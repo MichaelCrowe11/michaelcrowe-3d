@@ -4,11 +4,15 @@ import { motion } from 'framer-motion';
 
 const products = [
   {
-    title: 'Mushroom Cultivator\'s Masterclass',
+    title: "Mushroom Cultivator's Masterclass",
     subtitle: 'The Complete Guide',
     price: '$499',
     originalPrice: '$899',
-    image: '/products/masterclass.png',
+    icon: (
+      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    ),
     features: ['28 Chapters', '640+ Pages', '46 Hours Video', 'Lifetime Access'],
     gradient: 'from-emerald-500 to-teal-600',
     link: '/products/masterclass'
@@ -18,7 +22,11 @@ const products = [
     subtitle: '500+ Validated Targets',
     price: '$2,499',
     originalPrice: '$4,999',
-    image: '/products/dataset.png',
+    icon: (
+      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+      </svg>
+    ),
     features: ['ChEMBL Validated', 'SMILES Data', 'ML Ready', 'API Access'],
     gradient: 'from-cyan-500 to-blue-600',
     link: '/products/dataset'
@@ -28,7 +36,11 @@ const products = [
     subtitle: 'Enterprise Solutions',
     price: '$5,000',
     originalPrice: null,
-    image: '/products/consulting.png',
+    icon: (
+      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+      </svg>
+    ),
     features: ['Claude 4.5 Opus', 'Custom Models', '1:1 Sessions', 'Implementation'],
     gradient: 'from-violet-500 to-purple-600',
     link: '/products/consulting'
@@ -74,12 +86,10 @@ export function Products() {
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                    className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
                     whileHover={{ rotate: 5, scale: 1.1 }}
                   >
-                    <span className="text-5xl">
-                      {i === 0 ? '🍄' : i === 1 ? '🧬' : '🤖'}
-                    </span>
+                    {product.icon}
                   </motion.div>
                 </div>
                 {product.originalPrice && (
