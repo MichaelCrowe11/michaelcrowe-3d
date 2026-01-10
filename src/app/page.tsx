@@ -1,39 +1,25 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Hero } from '@/components/sections/Hero';
-import { Services } from '@/components/sections/Services';
-import { Products } from '@/components/sections/Products';
-import { Footer } from '@/components/sections/Footer';
+import { useState } from 'react';
 
-// Dynamic import for Three.js scene to prevent SSR issues
-const Scene = dynamic(
-  () => import('@/components/three/Scene').then((mod) => mod.Scene),
+const IntroScene = dynamic(
+  () => import('@/components/three/IntroScene').then((mod) => mod.IntroScene),
   { ssr: false }
 );
 
-// Dynamic import for chat component
-const AIChat = dynamic(
-  () => import('@/components/chat/AIChat').then((mod) => mod.AIChat),
+const AgenticChat = dynamic(
+  () => import('@/components/chat/AgenticChat').then((mod) => mod.AgenticChat),
   { ssr: false }
 );
 
 export default function Home() {
+  const [showChat, setShowChat] = useState(false);
+
   return (
-    <main className="relative min-h-screen bg-[var(--background)]">
-      {/* 3D Background Scene */}
-      <Scene />
-
-      {/* Content sections - z-10 to appear above 3D scene */}
-      <div className="relative z-10">
-        <Hero />
-        <Services />
-        <Products />
-        <Footer />
-      </div>
-
-      {/* AI Chat Widget */}
-      <AIChat />
+    <main className="relative min-h-screen bg-[#030303] overflow-hidden">
+      <IntroScene onIntroComplete={() => setShowChat(true)} />
+      <AgenticChat visible={showChat} />
     </main>
   );
 }
