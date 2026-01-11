@@ -139,6 +139,10 @@ export default function Home() {
         localStorage.removeItem('mcai_user');
       }
     }
+
+    // Fallback: always show UI after 5 seconds in case 3D doesn't load
+    const fallback = setTimeout(() => setShowUI(true), 5000);
+    return () => clearTimeout(fallback);
   }, []);
 
   const handleAccessGranted = (userData: UserInfo) => {
@@ -149,12 +153,6 @@ export default function Home() {
   const handleLogout = () => {
     localStorage.removeItem('mcai_user');
     setUser(null);
-  };
-
-  const handleWidgetClick = () => {
-    if (!user) {
-      setShowAccessGate(true);
-    }
   };
 
   return (
@@ -179,27 +177,17 @@ export default function Home() {
         <AccessGate onAccessGranted={handleAccessGranted} />
       )}
 
-      {/* ElevenLabs Conversational AI Widget - always visible */}
+      {/* ElevenLabs Conversational AI Widget - always load script, show when UI ready */}
+      <Script
+        src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta"
+        strategy="afterInteractive"
+      />
       {showUI && (
-        <>
-          {/* Click interceptor for unauthenticated users */}
-          {!user && (
-            <div
-              onClick={handleWidgetClick}
-              className="fixed bottom-6 right-6 z-30 w-16 h-16 cursor-pointer"
-              title="Sign in to talk with Michael's AI"
-            />
-          )}
-          <div
-            dangerouslySetInnerHTML={{
-              __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
-            }}
-          />
-          <Script
-            src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta"
-            strategy="lazyOnload"
-          />
-        </>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
+          }}
+        />
       )}
     </main>
   );
