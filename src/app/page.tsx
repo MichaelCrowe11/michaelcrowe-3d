@@ -2,18 +2,16 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { AccessGate } from '@/components/auth/AccessGate';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { SalesProvider, useSales } from '@/components/sales/SalesProvider';
 import { CroweAIChat } from '@/components/conversation/CroweAIChat';
+import { AgentSelector } from '@/components/agents/AgentSelector';
+import { VoiceConversation } from '@/components/agents/VoiceConversation';
+import { useSessionStore } from '@/stores/sessionStore';
+import type { Agent } from '@/config/agents';
 
-interface UserInfo {
-  name: string;
-  email: string;
-  company?: string;
-  accessType: 'free' | 'paid';
-  timestamp: string;
-}
+type Phase = 'intro' | 'home' | 'agents' | 'conversation';
 
 const IntroScene = dynamic(
   () => import('@/components/three/IntroScene').then((mod) => mod.IntroScene),
@@ -41,7 +39,7 @@ function Branding() {
   );
 }
 
-function WelcomeText({ visible }: { visible: boolean }) {
+function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDeepDive: () => void }) {
   if (!visible) return null;
 
   return (
@@ -49,7 +47,7 @@ function WelcomeText({ visible }: { visible: boolean }) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.8, duration: 1 }}
-      className="fixed inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
+      className="fixed inset-0 z-10 flex flex-col items-center justify-center"
     >
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
@@ -57,16 +55,27 @@ function WelcomeText({ visible }: { visible: boolean }) {
         transition={{ delay: 1.2 }}
         className="text-4xl md:text-6xl font-extralight text-white/90 mb-4 text-center px-4"
       >
-        What can I build for you?
+        Deep Consulting Workflow
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="text-white/40 text-center max-w-md px-4"
+        className="text-white/40 text-center max-w-md px-4 mb-8"
       >
-        Click the orb to start a conversation
+        Voice-first consulting with domain experts. Pay only for what you use.
       </motion.p>
+      <motion.button
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.8 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onStartDeepDive}
+        className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity"
+      >
+        Start a Deep Dive
+      </motion.button>
     </motion.div>
   );
 }
@@ -86,44 +95,38 @@ function Footer() {
   );
 }
 
-function UserBadge({ user, onLogout }: { user: UserInfo; onLogout: () => void }) {
-  const firstName = user.name.split(' ')[0];
-
+function AuthButtons() {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="fixed top-6 right-6 z-20 flex items-center gap-3"
+      className="fixed top-6 right-6 z-20"
     >
-      <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center text-white text-sm font-medium">
-          {firstName.charAt(0).toUpperCase()}
-        </div>
-        <span className="text-white/70 text-sm">{firstName}</span>
-        {user.accessType === 'paid' && (
-          <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-medium">
-            PRO
-          </span>
-        )}
-      </div>
-      <button
-        onClick={onLogout}
-        className="p-2 rounded-full hover:bg-white/5 text-white/40 hover:text-white/70 transition-colors"
-        title="Sign out"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
-      </button>
+      <SignedOut>
+        <SignInButton mode="modal">
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:text-white transition-all">
+            Sign In
+          </button>
+        </SignInButton>
+      </SignedOut>
+      <SignedIn>
+        <UserButton
+          appearance={{
+            elements: {
+              avatarBox: 'w-10 h-10 ring-2 ring-cyan-500/30',
+            },
+          }}
+        />
+      </SignedIn>
     </motion.div>
   );
 }
 
 function HomeContent() {
-  const [showUI, setShowUI] = useState(false);
-  const [user, setUser] = useState<UserInfo | null>(null);
-  const [showAccessGate, setShowAccessGate] = useState(false);
+  const [phase, setPhase] = useState<Phase>('intro');
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const salesContextRef = useRef<ReturnType<typeof useSales> | null>(null);
+  const { reset: resetSession } = useSessionStore();
 
   // Try to get sales context (will work after provider mounts)
   try {
@@ -132,31 +135,16 @@ function HomeContent() {
     // Context not available yet
   }
 
-  // Check for existing session on mount
+  // Fallback timer in case 3D doesn't load
   useEffect(() => {
-    const stored = localStorage.getItem('mcai_user');
-    if (stored) {
-      try {
-        const userData = JSON.parse(stored) as UserInfo;
-        const sessionAge = Date.now() - new Date(userData.timestamp).getTime();
-        if (sessionAge < 24 * 60 * 60 * 1000) {
-          setUser(userData);
-        } else {
-          localStorage.removeItem('mcai_user');
-        }
-      } catch {
-        localStorage.removeItem('mcai_user');
-      }
-    }
-
-    // Fallback: always show UI after 5 seconds in case 3D doesn't load
-    const fallback = setTimeout(() => setShowUI(true), 5000);
+    const fallback = setTimeout(() => {
+      if (phase === 'intro') setPhase('home');
+    }, 5000);
     return () => clearTimeout(fallback);
-  }, []);
+  }, [phase]);
 
-  // Listen for ElevenLabs events
+  // Listen for ElevenLabs events (for sales integration)
   useEffect(() => {
-    // Handle client tool calls
     const handleClientTool = (event: CustomEvent) => {
       const { tool_name, parameters } = event.detail || {};
       const sales = salesContextRef.current;
@@ -164,39 +152,17 @@ function HomeContent() {
       if (tool_name === 'open_checkout' && parameters?.url) {
         sales?.openCheckout(parameters.url);
       }
-
-      if (tool_name === 'add_to_cart' && parameters?.product_id) {
-        sales?.showProduct(parameters.product_id);
-      }
-
       if (tool_name === 'show_product' && parameters?.product_id) {
         sales?.showProduct(parameters.product_id);
       }
     };
 
-    // Handle agent responses to detect product mentions
     const handleAgentResponse = (event: CustomEvent) => {
       const { message } = event.detail || {};
       const sales = salesContextRef.current;
       if (!message || !sales) return;
 
       const lowerMsg = message.toLowerCase();
-
-      // Show product cards when agent mentions products
-      if (lowerMsg.includes('digital edition') || lowerMsg.includes('digital masterclass')) {
-        sales.showProduct('prod_TluqIRTGNTLkXC');
-      }
-      if (lowerMsg.includes('hardcover') || lowerMsg.includes('premium edition')) {
-        sales.showProduct('prod_TVswtN5lJzcvjo');
-      }
-      if (lowerMsg.includes('consult') || lowerMsg.includes('session')) {
-        sales.showProduct('prod_TluqOymLTmLRHM');
-      }
-      if (lowerMsg.includes('ai access') || lowerMsg.includes('premium access')) {
-        sales.showProduct('prod_Tlt4EQ1eEP9KTd');
-      }
-
-      // Celebrate purchases
       if (lowerMsg.includes('purchase complete') || lowerMsg.includes('payment successful')) {
         sales.celebratePurchase();
       }
@@ -216,45 +182,74 @@ function HomeContent() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
       salesContextRef.current?.celebratePurchase();
-      // Clean URL
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
 
-  const handleAccessGranted = (userData: UserInfo) => {
-    setUser(userData);
-    setShowAccessGate(false);
+  const handleStartDeepDive = () => {
+    setPhase('agents');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('mcai_user');
-    setUser(null);
+  const handleAgentSelect = (agent: Agent) => {
+    setSelectedAgent(agent);
+    setPhase('conversation');
   };
+
+  const handleConversationEnd = () => {
+    resetSession();
+    setSelectedAgent(null);
+    setPhase('home');
+  };
+
+  const handleBackToHome = () => {
+    setPhase('home');
+  };
+
+  const showUI = phase !== 'intro';
 
   return (
     <main className="relative min-h-screen bg-[#030303] overflow-hidden">
       {/* 3D Background */}
-      <IntroScene onIntroComplete={() => setShowUI(true)} />
+      <IntroScene onIntroComplete={() => setPhase('home')} />
 
       {/* Branding */}
-      {showUI && <Branding />}
+      {showUI && phase !== 'conversation' && <Branding />}
 
-      {/* User Badge (top right) */}
-      {showUI && user && <UserBadge user={user} onLogout={handleLogout} />}
+      {/* Auth buttons (top right) */}
+      {showUI && phase !== 'conversation' && <AuthButtons />}
 
-      {/* Welcome text - always visible */}
-      <WelcomeText visible={showUI} />
+      {/* Phase content */}
+      <AnimatePresence mode="wait">
+        {phase === 'home' && (
+          <WelcomeText
+            key="welcome"
+            visible={true}
+            onStartDeepDive={handleStartDeepDive}
+          />
+        )}
 
-      {/* Footer */}
-      {showUI && <Footer />}
+        {phase === 'agents' && (
+          <AgentSelector
+            key="agents"
+            onSelect={handleAgentSelect}
+            onBack={handleBackToHome}
+          />
+        )}
 
-      {/* Access Gate Modal - only when triggered */}
-      {showAccessGate && !user && (
-        <AccessGate onAccessGranted={handleAccessGranted} />
-      )}
+        {phase === 'conversation' && selectedAgent && (
+          <VoiceConversation
+            key="conversation"
+            agent={selectedAgent}
+            onEnd={handleConversationEnd}
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Custom Crowe AI Chat - replaces ElevenLabs widget */}
-      {showUI && <CroweAIChat />}
+      {/* Footer - only on home */}
+      {phase === 'home' && <Footer />}
+
+      {/* Legacy chat orb - still available as fallback */}
+      {showUI && phase === 'home' && <CroweAIChat />}
     </main>
   );
 }

@@ -11,7 +11,10 @@
   "dependencies": {
     "@11labs/client": "^0.2.0",
     "@ai-sdk/gateway": "^3.0.11",
+    "@clerk/nextjs": "^6.36.7",
+    "@clerk/themes": "^2.4.47",
     "@elevenlabs/client": "^0.12.2",
+    "@elevenlabs/react": "^0.12.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@react-three/postprocessing": "^3.0.4",

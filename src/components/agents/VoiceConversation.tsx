@@ -1,0 +1,263 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import { useConversation } from '@elevenlabs/react';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { Agent } from '@/config/agents';
+import { useSessionStore } from '@/stores/sessionStore';
+
+interface VoiceConversationProps {
+  agent: Agent;
+  onEnd: () => void;
+}
+
+export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
+  const [signedUrl, setSignedUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const { elapsedSeconds, tick, startConversation, endConversation } = useSessionStore();
+
+  const conversation = useConversation({
+    onConnect: () => {
+      console.log('Connected to agent');
+      startConversation();
+    },
+    onDisconnect: () => {
+      console.log('Disconnected from agent');
+      endConversation();
+    },
+    onError: (err) => {
+      console.error('Conversation error:', err);
+      setError('Connection error. Please try again.');
+    },
+  });
+
+  const { status, isSpeaking } = conversation;
+
+  // Fetch signed URL on mount
+  useEffect(() => {
+    async function getSignedUrl() {
+      try {
+        const response = await fetch(`/api/agents/${agent.id}/session`, {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            setError('Please sign in to start a consultation');
+            return;
+          }
+          throw new Error('Failed to create session');
+        }
+
+        const data = await response.json();
+        setSignedUrl(data.signedUrl);
+      } catch (err) {
+        console.error('Session error:', err);
+        setError('Failed to start session. Please try again.');
+      }
+    }
+
+    getSignedUrl();
+  }, [agent.id]);
+
+  // Timer
+  useEffect(() => {
+    if (status !== 'connected') return;
+
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [status, tick]);
+
+  const handleStart = useCallback(async () => {
+    if (!signedUrl) return;
+    setError(null);
+
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      await conversation.startSession({ signedUrl });
+    } catch (err) {
+      console.error('Start error:', err);
+      setError('Microphone access required for voice conversation');
+    }
+  }, [signedUrl, conversation]);
+
+  const handleEnd = useCallback(async () => {
+    await conversation.endSession();
+    onEnd();
+  }, [conversation, onEnd]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const estimatedCost = (elapsedSeconds / 60) * agent.pricing.perMinute;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-10 flex flex-col items-center justify-center p-8"
+    >
+      {/* Back button */}
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        onClick={handleEnd}
+        className="absolute top-6 left-6 flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        End Session
+      </motion.button>
+
+      {/* Agent info */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8"
+      >
+        <h2 className="text-2xl md:text-3xl font-light text-white/90 mb-2">
+          {agent.name}
+        </h2>
+        <p className="text-white/50">{agent.tagline}</p>
+      </motion.div>
+
+      {/* Status orb */}
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="relative mb-12"
+      >
+        <div
+          className={`w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center transition-all duration-500 ${
+            status === 'connected'
+              ? isSpeaking
+                ? 'bg-gradient-to-br from-cyan-500 to-emerald-500 shadow-[0_0_60px_rgba(34,211,238,0.5)]'
+                : 'bg-gradient-to-br from-cyan-500/50 to-emerald-500/50 shadow-[0_0_30px_rgba(34,211,238,0.3)]'
+              : 'bg-white/10'
+          }`}
+        >
+          {status === 'connected' ? (
+            <motion.div
+              animate={isSpeaking ? { scale: [1, 1.1, 1] } : {}}
+              transition={{ duration: 0.5, repeat: Infinity }}
+              className="text-white/90 text-center"
+            >
+              <div className="text-lg font-medium">
+                {isSpeaking ? 'Speaking' : 'Listening'}
+              </div>
+              <div className="text-sm opacity-60">
+                {isSpeaking ? 'Agent responding...' : 'Your turn to speak'}
+              </div>
+            </motion.div>
+          ) : status === 'connecting' ? (
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <motion.span
+                  key={i}
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
+                  className="w-3 h-3 bg-cyan-400 rounded-full"
+                />
+              ))}
+            </div>
+          ) : (
+            <span className="text-white/40">Ready</span>
+          )}
+        </div>
+
+        {/* Pulse rings when speaking */}
+        <AnimatePresence>
+          {status === 'connected' && isSpeaking && (
+            <>
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={i}
+                  initial={{ scale: 1, opacity: 0.5 }}
+                  animate={{ scale: 1.5 + i * 0.2, opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+                  className="absolute inset-0 rounded-full border-2 border-cyan-400/30"
+                />
+              ))}
+            </>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Timer and cost */}
+      {status === 'connected' && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center mb-8"
+        >
+          <div className="text-4xl md:text-5xl font-mono text-white/90 mb-2">
+            {formatTime(elapsedSeconds)}
+          </div>
+          <div className="text-white/40 text-sm">
+            ${estimatedCost.toFixed(2)} estimated
+          </div>
+        </motion.div>
+      )}
+
+      {/* Error message */}
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mb-6 px-4 py-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Controls */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="flex gap-4"
+      >
+        {status === 'disconnected' && (
+          <button
+            onClick={handleStart}
+            disabled={!signedUrl}
+            className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            {signedUrl ? 'Start Deep Dive' : 'Connecting...'}
+          </button>
+        )}
+
+        {status === 'connected' && (
+          <button
+            onClick={handleEnd}
+            className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all"
+          >
+            End Session
+          </button>
+        )}
+      </motion.div>
+
+      {/* Hint */}
+      {status === 'disconnected' && !error && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-8 text-white/30 text-sm"
+        >
+          Microphone access required for voice conversation
+        </motion.p>
+      )}
+    </motion.div>
+  );
+}
