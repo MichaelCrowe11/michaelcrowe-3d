@@ -32,7 +32,7 @@ function Branding() {
       </div>
       <div>
         <h1 className="text-lg font-medium text-white/90">
-          michael<span className="text-cyan-400">crowe</span>.ai
+          michael<span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">crowe</span>.ai
         </h1>
         <p className="text-xs text-white/40">AI Consultant</p>
       </div>
@@ -177,18 +177,17 @@ export default function Home() {
         <AccessGate onAccessGranted={handleAccessGranted} />
       )}
 
-      {/* ElevenLabs Conversational AI Widget - always load script, show when UI ready */}
+      {/* ElevenLabs Conversational AI Widget - always visible */}
       <Script
-        src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta"
+        src="https://unpkg.com/@elevenlabs/convai-widget-embed"
         strategy="afterInteractive"
       />
-      {showUI && (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
-          }}
-        />
-      )}
+      <div
+        className="fixed bottom-0 right-0 z-50"
+        dangerouslySetInnerHTML={{
+          __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
+        }}
+      />
     </main>
   );
 }
