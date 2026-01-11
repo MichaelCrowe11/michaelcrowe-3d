@@ -7,6 +7,7 @@ import { BlendFunction } from 'postprocessing';
 import { Suspense, useState, useEffect } from 'react';
 import { BigBang } from './BigBang';
 import { InfiniteOrbs } from './InfiniteOrbs';
+import { AudioReactive } from './AudioReactive';
 
 function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntroComplete: () => void }) {
   return (
@@ -21,6 +22,9 @@ function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntr
 
       {!showOrbs && <BigBang onComplete={onIntroComplete} />}
       {showOrbs && <InfiniteOrbs />}
+
+      {/* Audio-reactive background elements */}
+      {showOrbs && <AudioReactive baseRadius={4} particleCount={200} />}
 
       <Environment preset="night" />
 

@@ -1,10 +1,11 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import Script from 'next/script';
 import { AccessGate } from '@/components/auth/AccessGate';
+import { SalesProvider, useSales } from '@/components/sales/SalesProvider';
+import { CroweAIChat } from '@/components/conversation/CroweAIChat';
 
 interface UserInfo {
   name: string;
@@ -118,10 +119,18 @@ function UserBadge({ user, onLogout }: { user: UserInfo; onLogout: () => void })
   );
 }
 
-export default function Home() {
+function HomeContent() {
   const [showUI, setShowUI] = useState(false);
   const [user, setUser] = useState<UserInfo | null>(null);
   const [showAccessGate, setShowAccessGate] = useState(false);
+  const salesContextRef = useRef<ReturnType<typeof useSales> | null>(null);
+
+  // Try to get sales context (will work after provider mounts)
+  try {
+    salesContextRef.current = useSales();
+  } catch {
+    // Context not available yet
+  }
 
   // Check for existing session on mount
   useEffect(() => {
@@ -143,6 +152,73 @@ export default function Home() {
     // Fallback: always show UI after 5 seconds in case 3D doesn't load
     const fallback = setTimeout(() => setShowUI(true), 5000);
     return () => clearTimeout(fallback);
+  }, []);
+
+  // Listen for ElevenLabs events
+  useEffect(() => {
+    // Handle client tool calls
+    const handleClientTool = (event: CustomEvent) => {
+      const { tool_name, parameters } = event.detail || {};
+      const sales = salesContextRef.current;
+
+      if (tool_name === 'open_checkout' && parameters?.url) {
+        sales?.openCheckout(parameters.url);
+      }
+
+      if (tool_name === 'add_to_cart' && parameters?.product_id) {
+        sales?.showProduct(parameters.product_id);
+      }
+
+      if (tool_name === 'show_product' && parameters?.product_id) {
+        sales?.showProduct(parameters.product_id);
+      }
+    };
+
+    // Handle agent responses to detect product mentions
+    const handleAgentResponse = (event: CustomEvent) => {
+      const { message } = event.detail || {};
+      const sales = salesContextRef.current;
+      if (!message || !sales) return;
+
+      const lowerMsg = message.toLowerCase();
+
+      // Show product cards when agent mentions products
+      if (lowerMsg.includes('digital edition') || lowerMsg.includes('digital masterclass')) {
+        sales.showProduct('prod_TluqIRTGNTLkXC');
+      }
+      if (lowerMsg.includes('hardcover') || lowerMsg.includes('premium edition')) {
+        sales.showProduct('prod_TVswtN5lJzcvjo');
+      }
+      if (lowerMsg.includes('consult') || lowerMsg.includes('session')) {
+        sales.showProduct('prod_TluqOymLTmLRHM');
+      }
+      if (lowerMsg.includes('ai access') || lowerMsg.includes('premium access')) {
+        sales.showProduct('prod_Tlt4EQ1eEP9KTd');
+      }
+
+      // Celebrate purchases
+      if (lowerMsg.includes('purchase complete') || lowerMsg.includes('payment successful')) {
+        sales.celebratePurchase();
+      }
+    };
+
+    window.addEventListener('elevenlabs-convai:client-tool' as any, handleClientTool as EventListener);
+    window.addEventListener('elevenlabs-convai:agent-response' as any, handleAgentResponse as EventListener);
+
+    return () => {
+      window.removeEventListener('elevenlabs-convai:client-tool' as any, handleClientTool as EventListener);
+      window.removeEventListener('elevenlabs-convai:agent-response' as any, handleAgentResponse as EventListener);
+    };
+  }, []);
+
+  // Listen for successful checkout (URL param)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') {
+      salesContextRef.current?.celebratePurchase();
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
   }, []);
 
   const handleAccessGranted = (userData: UserInfo) => {
@@ -177,16 +253,17 @@ export default function Home() {
         <AccessGate onAccessGranted={handleAccessGranted} />
       )}
 
-      {/* ElevenLabs Conversational AI Widget */}
-      <Script
-        src="https://elevenlabs.io/convai-widget/index.js"
-        strategy="afterInteractive"
-      />
-      <div
-        dangerouslySetInnerHTML={{
-          __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
-        }}
-      />
+      {/* Custom Crowe AI Chat - replaces ElevenLabs widget */}
+      {showUI && <CroweAIChat />}
     </main>
+  );
+}
+
+// Wrap with SalesProvider for product cards and celebrations
+export default function Home() {
+  return (
+    <SalesProvider>
+      <HomeContent />
+    </SalesProvider>
   );
 }
