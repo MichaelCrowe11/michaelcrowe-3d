@@ -177,13 +177,12 @@ export default function Home() {
         <AccessGate onAccessGranted={handleAccessGranted} />
       )}
 
-      {/* ElevenLabs Conversational AI Widget - always visible */}
+      {/* ElevenLabs Conversational AI Widget */}
       <Script
-        src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+        src="https://elevenlabs.io/convai-widget/index.js"
         strategy="afterInteractive"
       />
       <div
-        className="fixed bottom-0 right-0 z-50"
         dangerouslySetInnerHTML={{
           __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>'
         }}
