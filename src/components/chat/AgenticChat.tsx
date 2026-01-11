@@ -390,7 +390,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
               </div>
 
               <p className="text-center text-white/15 text-xs mt-3">
-                Powered by Claude 4.5 Opus via Vercel AI Gateway
+                Powered by GPT-4o on Azure
               </p>
             </motion.div>
           </div>

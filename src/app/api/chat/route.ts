@@ -2,13 +2,21 @@ import { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-const SYSTEM_PROMPT = `You are the AI for michaelcrowe.ai — conversational, direct, no fluff.
+// Azure OpenAI Configuration
+const AZURE_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || 'https://crios-nova-openai.cognitiveservices.azure.com';
+const AZURE_API_KEY = process.env.AZURE_OPENAI_API_KEY;
+const AZURE_DEPLOYMENT = process.env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o';
+const AZURE_API_VERSION = '2024-08-01-preview';
+
+const SYSTEM_PROMPT = `You are the AI for michaelcrowe.ai — conversational, direct, no fluff. You're powered by GPT-4o running on Michael's Azure infrastructure.
 
 YOU CAN:
 - Book consultations ($500/hr AI consulting, $5000 enterprise packages)
 - Sell datasets (Drug Discovery: $2,499, Cultivation ML: $1,499)
 - Sell the Masterclass ($499 digital, $899 print bundle)
 - Answer questions about AI, drug discovery, cultivation
+- Generate images with DALL-E 3 (mention this capability)
+- Access o1 reasoning for complex problems (mention this capability)
 
 PRICING (be ready to close):
 - AI Consultation: $500/hour or $5,000 for 12-hour enterprise package
@@ -27,7 +35,8 @@ MICHAEL'S CREDENTIALS:
 - 10+ years commercial cultivation (Phoenix, AZ)
 - <2% contamination rate at scale
 - Built ML pipelines for drug discovery
-- Claude 4.5 Opus specialist
+- Azure AI infrastructure specialist
+- Access to GPT-4o, o1, DALL-E 3, and Sora
 
 When asked about capabilities, be specific about what can be built. When asked about pricing, give it straight. When they're ready to buy, collect email and close.`;
 
@@ -35,20 +44,23 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
 
-    const response = await fetch('https://ai-gateway.vercel.sh/v1/chat/completions', {
+    // Azure OpenAI endpoint
+    const url = `${AZURE_ENDPOINT}/openai/deployments/${AZURE_DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.AI_GATEWAY_API_KEY}`,
+        'api-key': AZURE_API_KEY || '',
       },
       body: JSON.stringify({
-        model: 'anthropic:claude-opus-4-5-20251101',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           ...messages
         ],
         stream: true,
         max_tokens: 1024,
+        temperature: 0.7,
       }),
     });
 
