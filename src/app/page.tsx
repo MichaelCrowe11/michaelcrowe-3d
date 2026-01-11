@@ -1,12 +1,16 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Script from 'next/script';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const IntroScene = dynamic(
   () => import('@/components/three/IntroScene').then((mod) => mod.IntroScene),
+  { ssr: false }
+);
+
+const VoiceChat = dynamic(
+  () => import('@/components/chat/VoiceChat').then((mod) => mod.VoiceChat),
   { ssr: false }
 );
 
@@ -32,44 +36,43 @@ function Branding() {
 }
 
 function WelcomeText({ visible }: { visible: boolean }) {
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ delay: 0.8, duration: 1 }}
-          className="fixed inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
-        >
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
-            className="text-4xl md:text-6xl font-extralight text-white/90 mb-4 text-center px-4"
-          >
-            What can I build for you?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="text-white/40 text-center max-w-md px-4"
-          >
-            Click the orb below to start a conversation
-          </motion.p>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
+  if (!visible) return null;
 
-function Footer() {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 2 }}
+      transition={{ delay: 1.5, duration: 1 }}
+      className="fixed top-[20%] left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.8 }}
+        className="text-3xl md:text-5xl font-extralight text-white/80 mb-3"
+      >
+        What can I build for you?
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2 }}
+        className="text-white/30 text-sm"
+      >
+        Tap the orb to speak with AI
+      </motion.p>
+    </motion.div>
+  );
+}
+
+function Footer({ visible }: { visible: boolean }) {
+  if (!visible) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 2.5 }}
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-6 text-white/20 text-xs"
     >
       <a href="mailto:michael@crowelogic.com" className="hover:text-white/50 transition-colors">Contact</a>
@@ -81,56 +84,23 @@ function Footer() {
 
 export default function Home() {
   const [showUI, setShowUI] = useState(false);
-  const [widgetLoaded, setWidgetLoaded] = useState(false);
-
-  useEffect(() => {
-    // Add custom styles for the ElevenLabs widget
-    const style = document.createElement('style');
-    style.textContent = `
-      elevenlabs-convai {
-        position: fixed !important;
-        bottom: 24px !important;
-        right: 24px !important;
-        z-index: 50 !important;
-      }
-      elevenlabs-convai::part(widget) {
-        --elevenlabs-convai-widget-orb-color: linear-gradient(135deg, #22d3ee, #10b981);
-        box-shadow: 0 0 40px rgba(34, 211, 238, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
-      }
-    `;
-    document.head.appendChild(style);
-    return () => style.remove();
-  }, []);
 
   return (
     <main className="relative min-h-screen bg-[#030303] overflow-hidden">
       {/* 3D Background */}
       <IntroScene onIntroComplete={() => setShowUI(true)} />
-      
+
       {/* Branding */}
       {showUI && <Branding />}
-      
+
       {/* Welcome text */}
       <WelcomeText visible={showUI} />
-      
-      {/* Footer */}
-      {showUI && <Footer />}
 
-      {/* ElevenLabs Conversational AI Widget */}
-      {showUI && (
-        <>
-          <div 
-            dangerouslySetInnerHTML={{ 
-              __html: '<elevenlabs-convai agent-id="bBKor4JZfhlkTrCfFRa8"></elevenlabs-convai>' 
-            }} 
-          />
-          <Script 
-            src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta" 
-            strategy="lazyOnload"
-            onLoad={() => setWidgetLoaded(true)}
-          />
-        </>
-      )}
+      {/* Voice Chat Orb */}
+      <VoiceChat visible={showUI} />
+
+      {/* Footer */}
+      <Footer visible={showUI} />
     </main>
   );
 }
