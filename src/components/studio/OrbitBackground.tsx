@@ -17,20 +17,26 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Set canvas size
+    // Set canvas size with devicePixelRatio for sharp rendering
     const updateSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
     };
     updateSize();
     window.addEventListener('resize', updateSize);
     
-    // Starfield
+    // Starfield (use display dimensions for positioning)
     const stars: { x: number; y: number; size: number; opacity: number }[] = [];
+    const getDisplayWidth = () => canvas.getBoundingClientRect().width;
+    const getDisplayHeight = () => canvas.getBoundingClientRect().height;
+    
     for (let i = 0; i < 200; i++) {
       stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * getDisplayWidth(),
+        y: Math.random() * getDisplayHeight(),
         size: Math.random() * 1.5,
         opacity: Math.random() * 0.5 + 0.3,
       });
@@ -46,7 +52,9 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     let rotation = 0;
     
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const displayWidth = getDisplayWidth();
+      const displayHeight = getDisplayHeight();
+      ctx.clearRect(0, 0, displayWidth, displayHeight);
       
       // Draw stars
       stars.forEach((star) => {
@@ -57,8 +65,8 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
       });
       
       // Draw orbit rings
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      const centerX = displayWidth / 2;
+      const centerY = displayHeight / 2;
       
       rings.forEach((ring) => {
         ctx.strokeStyle = ring.color;
@@ -83,8 +91,8 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
   }, []);
   
   return (
-    <div className={`fixed inset-0 pointer-events-none ${className}`} style={{ zIndex: -1 }}>
-      <canvas ref={canvasRef} className="w-full h-full" />
+    <div className={`absolute inset-0 z-0 pointer-events-none ${className}`}>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
       {showNoise && (
         <div 
           className="absolute inset-0 opacity-[0.03]" 

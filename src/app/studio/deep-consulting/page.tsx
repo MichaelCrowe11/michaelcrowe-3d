@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlowButton } from '@/components/studio/GlowButton';
 import { getActiveAgents } from '@/config/agents';
 import { AgentSelector } from '@/components/agents/AgentSelector';
@@ -44,19 +42,14 @@ export default function DeepConsultingPage() {
   
   if (phase === 'selector') {
     return (
-      <div className="relative min-h-screen bg-[#030303]">
-        <OrbitBackground />
-        <FloatingBlobs count={2} />
+      <div className="relative min-h-screen">
         <AgentSelector onSelect={handleAgentSelect} onBack={handleBack} />
       </div>
     );
   }
   
   return (
-    <main className="relative min-h-screen bg-[#030303] flex items-center justify-center">
-      <OrbitBackground />
-      <FloatingBlobs count={3} />
-      
+    <main className="relative min-h-screen flex items-center justify-center">
       <div className="relative z-10 px-4 max-w-4xl mx-auto text-center">
         <Link href="/studio" className="inline-flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors mb-12">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

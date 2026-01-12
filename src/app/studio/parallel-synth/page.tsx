@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlowButton } from '@/components/studio/GlowButton';
 import { GlassCard } from '@/components/studio/GlassComponents';
 
@@ -15,10 +13,7 @@ export default function ParallelSynthPage() {
   ];
   
   return (
-    <main className="relative min-h-screen bg-[#030303]">
-      <OrbitBackground />
-      <FloatingBlobs count={3} />
-      
+    <main className="relative min-h-screen">
       <div className="relative z-10 px-4 pt-24 pb-12">
         <div className="max-w-6xl mx-auto">
           <Link href="/studio" className="inline-flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors mb-12">

@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlowButton } from '@/components/studio/GlowButton';
 import { GlassCard } from '@/components/studio/GlassComponents';
 import { PillTag, PriceChip } from '@/components/studio/PillTag';
@@ -126,10 +124,6 @@ export function StudioHero() {
   
   return (
     <div className="relative min-h-screen">
-      {/* Background layers */}
-      <OrbitBackground />
-      <FloatingBlobs count={3} />
-      
       {/* Brand pill (top-left) */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

@@ -23,7 +23,7 @@ export function FloatingBlobs({ count = 3, className = '' }: FloatingBlobsProps)
   }));
   
   return (
-    <div className={`fixed inset-0 overflow-hidden pointer-events-none ${className}`} style={{ zIndex: 0 }}>
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
       {blobs.map((blob) => (
         <motion.div
           key={blob.id}

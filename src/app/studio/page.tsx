@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlassCard } from '@/components/studio/GlassComponents';
 import { PillTag } from '@/components/studio/PillTag';
 import { getActiveAgents } from '@/config/agents';
@@ -12,10 +10,7 @@ export default function StudioPage() {
   const agents = getActiveAgents();
   
   return (
-    <main className="relative min-h-screen bg-[#030303]">
-      <OrbitBackground />
-      <FloatingBlobs count={2} />
-      
+    <main className="relative min-h-screen">
       {/* Header */}
       <div className="relative z-10 pt-24 pb-12 px-4">
         <div className="max-w-7xl mx-auto">
