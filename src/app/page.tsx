@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Only import Clerk if configured
 const hasClerk = typeof window !== 'undefined'
@@ -147,15 +147,8 @@ function AuthButtons() {
 function HomeContent() {
   const [phase, setPhase] = useState<Phase>('intro');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
-  const salesContextRef = useRef<ReturnType<typeof useSales> | null>(null);
+  const sales = useSales();
   const { reset: resetSession } = useSessionStore();
-
-  // Try to get sales context (will work after provider mounts)
-  try {
-    salesContextRef.current = useSales();
-  } catch {
-    // Context not available yet
-  }
 
   // Fallback timer in case 3D doesn't load
   useEffect(() => {
@@ -169,20 +162,18 @@ function HomeContent() {
   useEffect(() => {
     const handleClientTool = (event: CustomEvent) => {
       const { tool_name, parameters } = event.detail || {};
-      const sales = salesContextRef.current;
 
       if (tool_name === 'open_checkout' && parameters?.url) {
-        sales?.openCheckout(parameters.url);
+        sales.openCheckout(parameters.url);
       }
       if (tool_name === 'show_product' && parameters?.product_id) {
-        sales?.showProduct(parameters.product_id);
+        sales.showProduct(parameters.product_id);
       }
     };
 
     const handleAgentResponse = (event: CustomEvent) => {
       const { message } = event.detail || {};
-      const sales = salesContextRef.current;
-      if (!message || !sales) return;
+      if (!message) return;
 
       const lowerMsg = message.toLowerCase();
       if (lowerMsg.includes('purchase complete') || lowerMsg.includes('payment successful')) {
@@ -197,16 +188,16 @@ function HomeContent() {
       window.removeEventListener('elevenlabs-convai:client-tool' as any, handleClientTool as EventListener);
       window.removeEventListener('elevenlabs-convai:agent-response' as any, handleAgentResponse as EventListener);
     };
-  }, []);
+  }, [sales]);
 
   // Listen for successful checkout (URL param)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
-      salesContextRef.current?.celebratePurchase();
+      sales.celebratePurchase();
       window.history.replaceState({}, '', window.location.pathname);
     }
-  }, []);
+  }, [sales]);
 
   const handleStartDeepDive = () => {
     setPhase('agents');
