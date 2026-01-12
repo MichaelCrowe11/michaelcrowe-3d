@@ -24,6 +24,21 @@ const iconMap = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
     </svg>
   ),
+  Flask: (
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 15.5m14.8-.2l.2.2a9 9 0 01-2.1 5.7m-12.8-5.9l-.2.2a9 9 0 002.1 5.7M9 10.5h6" />
+    </svg>
+  ),
+  Dna: (
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3c-1.2 0-2.4.6-3 1.5C8.4 5.4 8 6.6 8 8c0 1.4.4 2.6 1 3.5.6.9 1.8 1.5 3 1.5s2.4-.6 3-1.5c.6-.9 1-2.1 1-3.5 0-1.4-.4-2.6-1-3.5-.6-.9-1.8-1.5-3-1.5zM12 13c-1.2 0-2.4.6-3 1.5-.6.9-1 2.1-1 3.5 0 1.4.4 2.6 1 3.5.6.9 1.8 1.5 3 1.5s2.4-.6 3-1.5c.6-.9 1-2.1 1-3.5 0-1.4-.4-2.6-1-3.5-.6-.9-1.8-1.5-3-1.5zM6 8h12M6 18h12M8 13h8" />
+    </svg>
+  ),
+  Atom: (
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 12m-1 0a1 1 0 102 0 1 1 0 10-2 0M12 12c-4.97 0-9 2.686-9 6s4.03 6 9 6 9-2.686 9-6-4.03-6-9-6zM12 12c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6zM12 3v18" />
+    </svg>
+  ),
 };
 
 const colorMap = {
@@ -51,6 +66,18 @@ const colorMap = {
     icon: 'text-amber-400',
     badge: 'bg-amber-500/20 text-amber-300',
   },
+  rose: {
+    bg: 'from-rose-500/20 to-rose-600/10',
+    border: 'border-rose-500/30 hover:border-rose-400/50',
+    icon: 'text-rose-400',
+    badge: 'bg-rose-500/20 text-rose-300',
+  },
+  indigo: {
+    bg: 'from-indigo-500/20 to-indigo-600/10',
+    border: 'border-indigo-500/30 hover:border-indigo-400/50',
+    icon: 'text-indigo-400',
+    badge: 'bg-indigo-500/20 text-indigo-300',
+  },
 };
 
 interface AgentSelectorProps {
@@ -66,7 +93,7 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8 overflow-y-auto"
     >
       <motion.button
         initial={{ opacity: 0, x: -20 }}
@@ -84,7 +111,7 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-center mb-10"
+        className="text-center mb-8 mt-16 md:mt-0"
       >
         <h2 className="text-3xl md:text-4xl font-light text-white/90 mb-3">
           Choose Your Expert
@@ -94,7 +121,7 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl w-full">
         {agents.map((agent, i) => {
           const colors = colorMap[agent.color];
           const Icon = iconMap[agent.icon];
@@ -104,24 +131,24 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
               key={agent.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
+              transition={{ delay: 0.2 + i * 0.08 }}
               whileHover={{ scale: 1.02, y: -4 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onSelect(agent)}
-              className={`relative p-6 rounded-2xl bg-gradient-to-br ${colors.bg} border ${colors.border} backdrop-blur-sm transition-all duration-300 text-left group`}
+              className={`relative p-5 rounded-2xl bg-gradient-to-br ${colors.bg} border ${colors.border} backdrop-blur-sm transition-all duration-300 text-left group`}
             >
-              <div className={`${colors.icon} mb-4`}>
+              <div className={`${colors.icon} mb-3`}>
                 {Icon}
               </div>
 
-              <h3 className="text-xl font-medium text-white/90 mb-1">
+              <h3 className="text-lg font-medium text-white/90 mb-1">
                 {agent.name}
               </h3>
-              <p className="text-sm text-white/50 mb-4">
+              <p className="text-sm text-white/50 mb-3">
                 {agent.tagline}
               </p>
 
-              <p className="text-xs text-white/40 mb-4 line-clamp-2">
+              <p className="text-xs text-white/40 mb-3 line-clamp-2">
                 {agent.description}
               </p>
 
@@ -143,8 +170,8 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-8 text-white/30 text-sm"
+        transition={{ delay: 0.8 }}
+        className="mt-8 mb-4 text-white/30 text-sm"
       >
         Microphone access required for voice conversation
       </motion.p>
