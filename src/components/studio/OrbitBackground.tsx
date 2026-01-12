@@ -17,6 +17,10 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
+    // Cache display dimensions
+    let displayWidth = 0;
+    let displayHeight = 0;
+    
     // Set canvas size with devicePixelRatio for sharp rendering
     const updateSize = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -26,26 +30,23 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
       // Reset transform before scaling to avoid cumulative scaling
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
+      // Update cached dimensions
+      displayWidth = rect.width;
+      displayHeight = rect.height;
     };
     updateSize();
     window.addEventListener('resize', updateSize);
     
     // Starfield (use display dimensions for positioning)
     const stars: { x: number; y: number; size: number; opacity: number }[] = [];
-    const initialWidth = canvas.getBoundingClientRect().width;
-    const initialHeight = canvas.getBoundingClientRect().height;
-    
     for (let i = 0; i < 200; i++) {
       stars.push({
-        x: Math.random() * initialWidth,
-        y: Math.random() * initialHeight,
+        x: Math.random() * displayWidth,
+        y: Math.random() * displayHeight,
         size: Math.random() * 1.5,
         opacity: Math.random() * 0.5 + 0.3,
       });
     }
-    
-    const getDisplayWidth = () => canvas.getBoundingClientRect().width;
-    const getDisplayHeight = () => canvas.getBoundingClientRect().height;
     
     // Orbit rings
     const rings = [
@@ -55,10 +56,9 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     ];
     
     let rotation = 0;
+    let animationFrameId: number;
     
     const animate = () => {
-      const displayWidth = getDisplayWidth();
-      const displayHeight = getDisplayHeight();
       ctx.clearRect(0, 0, displayWidth, displayHeight);
       
       // Draw stars
@@ -85,13 +85,14 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
       });
       
       rotation++;
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
     
     animate();
     
     return () => {
       window.removeEventListener('resize', updateSize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
   
