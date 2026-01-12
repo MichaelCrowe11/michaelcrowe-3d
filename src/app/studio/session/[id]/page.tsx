@@ -6,10 +6,12 @@ import { OrbitBackground } from '@/components/studio/OrbitBackground';
 import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { StatusOrb } from '@/components/studio/StatusOrb';
 import { Toast } from '@/components/studio/Toast';
+import { use } from 'react';
 
 type SessionState = 'ready' | 'connecting' | 'listening' | 'failed';
 
-export default function SessionPage({ params }: { params: { id: string } }) {
+export default function SessionPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const [state, setState] = useState<SessionState>('ready');
   const [showError, setShowError] = useState(false);
   
@@ -47,7 +49,7 @@ export default function SessionPage({ params }: { params: { id: string } }) {
           transition={{ delay: 0.5 }}
           className="text-center text-white/40 text-sm mt-8"
         >
-          Session ID: {params.id}
+          Session ID: {id}
         </motion.p>
       </div>
       
