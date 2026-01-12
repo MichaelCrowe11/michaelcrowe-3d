@@ -24,16 +24,16 @@ function Branding() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className="fixed top-6 left-6 z-20 flex items-center gap-3"
+      className="fixed top-6 left-6 z-20 flex items-center gap-3 p-2 pr-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/5 hover:border-white/10 transition-colors duration-300"
     >
-      <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+      <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
         <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
       </div>
       <div>
-        <h1 className="text-lg font-medium text-white/90">
+        <h1 className="text-lg font-display font-bold text-white tracking-tight">
           michael<span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">crowe</span>.ai
         </h1>
-        <p className="text-xs text-white/40">AI Consultant</p>
+        <p className="text-xs text-white/50 font-medium tracking-wide uppercase">AI Consultant</p>
       </div>
     </motion.div>
   );
@@ -53,7 +53,7 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2 }}
-        className="text-4xl md:text-6xl font-extralight text-white/90 mb-4 text-center px-4"
+        className="text-5xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-white/80 to-white/40 mb-6 text-center px-4 tracking-tighter drop-shadow-2xl"
       >
         Deep Consulting Workflow
       </motion.h2>
@@ -72,7 +72,7 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onStartDeepDive}
-        className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity"
+        className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-all duration-300 border border-white/20 backdrop-blur-sm"
       >
         Start a Deep Dive
       </motion.button>

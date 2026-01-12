@@ -12,7 +12,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-400 text-sm font-medium mb-8">
+          <span className="inline-block px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-cyan-400 text-sm font-medium mb-8 shadow-lg shadow-cyan-500/10">
             AI Consultant & Drug Discovery Specialist
           </span>
         </motion.div>
@@ -21,11 +21,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+          className="text-5xl md:text-7xl lg:text-9xl font-bold mb-6 leading-tight font-display tracking-tighter"
         >
-          <span className="text-white">Michael</span>
+          <span className="text-white drop-shadow-lg">Michael</span>
           <br />
-          <span className="gradient-text">Crowe</span>
+          <span className="gradient-text drop-shadow-lg">Crowe</span>
         </motion.h1>
 
         <motion.p
@@ -63,18 +63,22 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20"
         >
           {[
-            { value: '500+', label: 'Drug Targets Validated' },
+            { value: '500+', label: 'Cases Solved' },
             { value: '634K', label: 'ML Training Frames' },
-            { value: '46+', label: 'Hours of Expertise' },
+            { value: '46k+', label: 'Hours of Expertise' },
             { value: '10+', label: 'Years Experience' }
           ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">{stat.value}</div>
-              <div className="text-sm text-gray-500">{stat.label}</div>
-            </div>
+            <motion.div 
+              key={i} 
+              className="glass-card p-6 flex flex-col items-center justify-center text-center"
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-3xl md:text-4xl font-bold gradient-text mb-2 font-display">{stat.value}</div>
+              <div className="text-xs md:text-sm text-gray-400 font-medium">{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
