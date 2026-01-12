@@ -233,6 +233,61 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         </AnimatePresence>
       </motion.div>
 
+      {/* Quick action buttons (shown when connected but not speaking) */}
+      {status === 'connected' && !isSpeaking && agent.category === 'life-sciences' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+        >
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            Virtual screening
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            DFT / QM help
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            Roadmap + tools
+          </button>
+        </motion.div>
+      )}
+
+      {status === 'connected' && !isSpeaking && agent.category === 'cultivation' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+        >
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+            Substrate formulation
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+            Contamination help
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+            Scaling operations
+          </button>
+        </motion.div>
+      )}
+
+      {status === 'connected' && !isSpeaking && agent.category === 'ai-strategy' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+        >
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            LLM selection
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            Agent architecture
+          </button>
+          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+            Cost optimization
+          </button>
+        </motion.div>
+      )}
+
       {/* Timer and credits */}
       {status === 'connected' && (
         <motion.div
@@ -240,13 +295,40 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1 }}
           className="text-center mb-8"
         >
-          <div className="text-4xl md:text-5xl font-mono text-white/90 mb-2">
-            {formatTime(elapsedSeconds)}
-          </div>
-          <div className="text-white/40 text-sm">
-            {credits?.availableMinutes === -1
-              ? 'Unlimited plan'
-              : `${Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60))} min remaining`}
+          <div className="mb-6 p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 max-w-sm mx-auto">
+            {/* Elapsed time */}
+            <div className="mb-4">
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">Elapsed Time</div>
+              <div className="text-4xl md:text-5xl font-mono text-white/90">
+                {formatTime(elapsedSeconds)}
+              </div>
+            </div>
+            
+            {/* Current cost */}
+            <div className="mb-4 pb-4 border-b border-white/10">
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">Current Cost</div>
+              <div className="text-2xl font-semibold text-cyan-400">
+                ${estimatedCost.toFixed(2)}
+              </div>
+            </div>
+
+            {/* Free minutes remaining or balance */}
+            <div>
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">
+                {credits?.availableMinutes === -1 ? 'Plan Status' : 'Minutes Remaining'}
+              </div>
+              <div className={`text-lg font-medium ${
+                credits?.availableMinutes === -1 
+                  ? 'text-emerald-400' 
+                  : Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60)) < 5
+                  ? 'text-amber-400'
+                  : 'text-white/70'
+              }`}>
+                {credits?.availableMinutes === -1
+                  ? 'Unlimited'
+                  : `${Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60))} min`}
+              </div>
+            </div>
           </div>
         </motion.div>
       )}
@@ -313,9 +395,12 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         {status === 'connected' && (
           <button
             onClick={handleEnd}
-            className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all"
+            className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all flex items-center gap-2"
           >
-            End Session
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            End & Save Transcript
           </button>
         )}
       </motion.div>

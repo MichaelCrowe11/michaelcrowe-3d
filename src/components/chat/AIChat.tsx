@@ -13,7 +13,7 @@ export function AIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm the AI assistant for Michael Crowe. I can help you learn about AI consulting services, drug discovery AI, datasets, or the Mushroom Cultivator's Masterclass. What would you like to know?"
+      content: "Hi! I'm Crowe Logic, Michael Crowe's AI assistant. I can help you with AI consulting services, drug discovery, computational chemistry, or cultivation projects. What would you like to explore?"
     }
   ]);
   const [input, setInput] = useState('');
