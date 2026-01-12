@@ -30,13 +30,13 @@ function Branding() {
       className="fixed top-6 left-6 z-20 flex items-center gap-3 p-2 pr-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/5 hover:border-white/10 transition-colors duration-300"
     >
       <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-        <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
+        <img src="/crowe-avatar.png" alt="Crowe Logic" className="w-full h-full object-cover" />
       </div>
       <div>
         <h1 className="text-lg font-display font-bold text-white tracking-tight">
-          michael<span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">crowe</span>.ai
+          Crowe <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">Logic</span>
         </h1>
-        <p className="text-xs text-white/50 font-medium tracking-wide uppercase">AI Consultant</p>
+        <p className="text-xs text-white/50 font-medium tracking-wide">michaelcrowe.ai</p>
       </div>
     </motion.div>
   );
@@ -51,15 +51,25 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
             transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
-            className="fixed inset-0 z-10 flex flex-col items-center justify-center pointer-events-none" // pointer-events-none allows clicks to pass if needed, but we have a button so carefully check z-index
+            className="fixed inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
           >
-            {/* Inner container with pointer-events-auto for the button */}
-            <div className="pointer-events-auto flex flex-col items-center">
+            {/* Glass blur panel behind hero content */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 1 }}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <div className="w-full max-w-3xl mx-4 h-[500px] bg-black/20 backdrop-blur-md rounded-3xl border border-white/10" />
+            </motion.div>
+
+            {/* Inner container - pointer-events-auto allows button interaction while parent blocks background clicks */}
+            <div className="pointer-events-auto flex flex-col items-center relative z-10">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
-              className="text-5xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/50 mb-6 text-center px-4 tracking-tighter drop-shadow-2xl"
+              className="text-5xl md:text-7xl font-display font-bold text-white mb-6 text-center px-4 tracking-tighter drop-shadow-2xl"
             >
               Deep Consulting Workflow
             </motion.h2>
@@ -67,7 +77,7 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.8, duration: 1 }}
-              className="text-cyan-100/60 text-center max-w-md px-4 mb-10 text-lg font-light tracking-wide"
+              className="text-white/90 text-center max-w-md px-4 mb-10 text-xl font-medium tracking-wide leading-relaxed"
             >
               Voice-first consulting with domain experts. <br/> Pay only for what you use.
             </motion.p>
@@ -78,11 +88,19 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
               whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(34,211,238,0.4)" }}
               whileTap={{ scale: 0.95 }}
               onClick={onStartDeepDive}
-              className="px-10 py-5 rounded-full bg-white/5 backdrop-blur-md border border-white/20 text-white font-semibold text-lg hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
+              className="px-10 py-5 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold text-lg shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-500 group relative overflow-hidden"
             >
               <span className="relative z-10">Start a Deep Dive</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.button>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.6, duration: 0.8 }}
+              className="text-white/60 text-sm mt-4 text-center font-medium"
+            >
+              3 min free • then $0.75/min
+            </motion.p>
           </div>
         </motion.div>
       )}

@@ -233,6 +233,70 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         </AnimatePresence>
       </motion.div>
 
+      {/* Suggested topics (shown when connected but not speaking) */}
+      {status === 'connected' && !isSpeaking && agent.category === 'life-sciences' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
+        >
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Virtual screening
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            DFT / QM help
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Roadmap + tools
+          </span>
+        </motion.div>
+      )}
+
+      {status === 'connected' && !isSpeaking && agent.category === 'cultivation' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
+        >
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Substrate formulation
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Contamination help
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Scaling operations
+          </span>
+        </motion.div>
+      )}
+
+      {status === 'connected' && !isSpeaking && agent.category === 'ai-strategy' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
+        >
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            LLM selection
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Agent architecture
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
+            Cost optimization
+          </span>
+        </motion.div>
+      )}
+
       {/* Timer and credits */}
       {status === 'connected' && (
         <motion.div
@@ -240,13 +304,40 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1 }}
           className="text-center mb-8"
         >
-          <div className="text-4xl md:text-5xl font-mono text-white/90 mb-2">
-            {formatTime(elapsedSeconds)}
-          </div>
-          <div className="text-white/40 text-sm">
-            {credits?.availableMinutes === -1
-              ? 'Unlimited plan'
-              : `${Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60))} min remaining`}
+          <div className="mb-6 p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 max-w-sm mx-auto">
+            {/* Elapsed time */}
+            <div className="mb-4">
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">Elapsed Time</div>
+              <div className="text-4xl md:text-5xl font-mono text-white/90">
+                {formatTime(elapsedSeconds)}
+              </div>
+            </div>
+            
+            {/* Current cost */}
+            <div className="mb-4 pb-4 border-b border-white/10">
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">Current Cost</div>
+              <div className="text-2xl font-semibold text-cyan-400">
+                ${estimatedCost.toFixed(2)}
+              </div>
+            </div>
+
+            {/* Free minutes remaining or balance */}
+            <div>
+              <div className="text-white/50 text-xs uppercase tracking-wider mb-1">
+                {credits?.availableMinutes === -1 ? 'Plan Status' : 'Minutes Remaining'}
+              </div>
+              <div className={`text-lg font-medium ${
+                credits?.availableMinutes === -1 
+                  ? 'text-emerald-400' 
+                  : Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60)) < 5
+                  ? 'text-amber-400'
+                  : 'text-white/70'
+              }`}>
+                {credits?.availableMinutes === -1
+                  ? 'Unlimited'
+                  : `${Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60))} min`}
+              </div>
+            </div>
           </div>
         </motion.div>
       )}
@@ -313,9 +404,12 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         {status === 'connected' && (
           <button
             onClick={handleEnd}
-            className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all"
+            className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all flex items-center gap-2"
           >
-            End Session
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3" />
+            </svg>
+            End & Save Transcript
           </button>
         )}
       </motion.div>
