@@ -16,35 +16,36 @@ function SceneContent() {
         enableZoom={false}
         enablePan={false}
         autoRotate
-        autoRotateSpeed={0.5}
-        maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 3}
+        autoRotateSpeed={0.3}
+        maxPolarAngle={Math.PI / 1.8}
+        minPolarAngle={Math.PI / 2.2}
       />
 
       {/* Lighting */}
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={1} color="#22d3ee" />
-      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#8b5cf6" />
-      <spotLight position={[0, 10, 0]} intensity={0.8} color="#10b981" angle={0.5} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={1.5} color="#06b6d4" /> {/* Cyan */}
+      <pointLight position={[-10, -10, -10]} intensity={1} color="#a78bfa" /> {/* Violet */}
+      <spotLight position={[0, 10, 0]} intensity={1} color="#34d399" angle={0.6} penumbra={1} />
 
       {/* 3D Elements */}
       <NeuralNetwork />
       <FloatingOrbs />
 
       {/* Environment */}
-      <Environment preset="night" />
+      <Environment preset="night" blur={0.8} />
 
       {/* Post-processing effects */}
-      <EffectComposer>
+      <EffectComposer multisampling={0}>
         <Bloom
-          intensity={0.8}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.9}
+          intensity={0.5}
+          luminanceThreshold={0.4}
+          luminanceSmoothing={0.7}
           blendFunction={BlendFunction.ADD}
+          mipmapBlur
         />
         <ChromaticAberration
           blendFunction={BlendFunction.NORMAL}
-          offset={[0.0005, 0.0005]}
+          offset={[0.0003, 0.0003]}
         />
       </EffectComposer>
     </>
@@ -55,9 +56,15 @@ export function Scene() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        gl={{ 
+          antialias: false, // Post-processing handles AA usually, or disabling for perf
+          alpha: true, 
+          powerPreference: 'high-performance',
+          stencil: false,
+          depth: true
+        }}
         style={{ background: 'transparent' }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]} // Limit DPR for performance
       >
         <Suspense fallback={null}>
           <SceneContent />

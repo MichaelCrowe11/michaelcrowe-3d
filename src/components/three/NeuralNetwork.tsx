@@ -56,8 +56,8 @@ export function NeuralNetwork() {
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.1;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.1;
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.05; // Slower rotation
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.05;
     }
   });
 
@@ -66,18 +66,18 @@ export function NeuralNetwork() {
       {/* Neural network nodes */}
       {nodes.map((node, i) => (
         <mesh key={i} position={node.position}>
-          <sphereGeometry args={[0.08, 16, 16]} />
-          <meshStandardMaterial
-            color={i % 3 === 0 ? '#22d3ee' : i % 3 === 1 ? '#10b981' : '#8b5cf6'}
-            emissive={i % 3 === 0 ? '#22d3ee' : i % 3 === 1 ? '#10b981' : '#8b5cf6'}
-            emissiveIntensity={0.5}
+          <sphereGeometry args={[0.04, 8, 8]} /> {/* Smaller, lower poly */}
+          <meshBasicMaterial
+            color={i % 3 === 0 ? '#22d3ee' : i % 3 === 1 ? '#34d399' : '#a78bfa'}
+            transparent
+            opacity={0.6}
           />
         </mesh>
       ))}
 
       {/* Connection lines */}
       <lineSegments ref={linesRef} geometry={lineGeometry}>
-        <lineBasicMaterial color="#22d3ee" transparent opacity={0.3} />
+        <lineBasicMaterial color="#22d3ee" transparent opacity={0.15} linewidth={1} />
       </lineSegments>
     </group>
   );

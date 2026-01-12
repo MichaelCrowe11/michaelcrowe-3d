@@ -43,43 +43,50 @@ function Branding() {
 }
 
 function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDeepDive: () => void }) {
-  if (!visible) return null;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.8, duration: 1 }}
-      className="fixed inset-0 z-10 flex flex-col items-center justify-center"
-    >
-      <motion.h2
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        className="text-5xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-white/80 to-white/40 mb-6 text-center px-4 tracking-tighter drop-shadow-2xl"
-      >
-        Deep Consulting Workflow
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="text-white/40 text-center max-w-md px-4 mb-8"
-      >
-        Voice-first consulting with domain experts. Pay only for what you use.
-      </motion.p>
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.8 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={onStartDeepDive}
-        className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-all duration-300 border border-white/20 backdrop-blur-sm"
-      >
-        Start a Deep Dive
-      </motion.button>
-    </motion.div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+            transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
+            className="fixed inset-0 z-10 flex flex-col items-center justify-center pointer-events-none" // pointer-events-none allows clicks to pass if needed, but we have a button so carefully check z-index
+          >
+            {/* Inner container with pointer-events-auto for the button */}
+            <div className="pointer-events-auto flex flex-col items-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="text-5xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/50 mb-6 text-center px-4 tracking-tighter drop-shadow-2xl"
+            >
+              Deep Consulting Workflow
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.8, duration: 1 }}
+              className="text-cyan-100/60 text-center max-w-md px-4 mb-10 text-lg font-light tracking-wide"
+            >
+              Voice-first consulting with domain experts. <br/> Pay only for what you use.
+            </motion.p>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2, duration: 0.5 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(34,211,238,0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onStartDeepDive}
+              className="px-10 py-5 rounded-full bg-white/5 backdrop-blur-md border border-white/20 text-white font-semibold text-lg hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
+            >
+              <span className="relative z-10">Start a Deep Dive</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </motion.button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
