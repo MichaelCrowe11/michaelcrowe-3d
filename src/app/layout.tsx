@@ -17,21 +17,21 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "michaelcrowe.ai | Deep Consulting Workflow",
-  description: "Voice-first consulting with domain experts. Drug discovery, AI strategy, and beyond. Pay only for what you use.",
-  keywords: ["AI Consulting", "Drug Discovery", "Voice AI", "Claude AI", "Machine Learning", "Deep Consulting"],
+  title: "Crowe Logic Studio | MichaelCrowe.ai",
+  description: "Transform expertise into immersive, voice-first experiences. Deep Consulting, Drug Discovery, AI Strategy, and beyond.",
+  keywords: ["Crowe Logic", "AI Consulting", "Drug Discovery", "Voice AI", "Claude AI", "Machine Learning", "Deep Consulting", "ParallelSynth"],
   authors: [{ name: "Michael Crowe" }],
   openGraph: {
-    title: "michaelcrowe.ai | Deep Consulting Workflow",
-    description: "Voice-first consulting with domain experts. Pay only for what you use.",
+    title: "Crowe Logic Studio | MichaelCrowe.ai",
+    description: "Transform expertise into immersive, voice-first experiences.",
     url: "https://michaelcrowe.ai",
-    siteName: "michaelcrowe.ai",
+    siteName: "Crowe Logic Studio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "michaelcrowe.ai | Deep Consulting Workflow",
-    description: "Voice-first consulting with domain experts. Pay only for what you use.",
+    title: "Crowe Logic Studio | MichaelCrowe.ai",
+    description: "Transform expertise into immersive, voice-first experiences.",
   },
 };
 
