@@ -25,7 +25,7 @@ function Orb({ position, color, speed = 1, distort = 0.4, size = 1 }: OrbProps) 
   });
 
   return (
-    <Sphere ref={meshRef} args={[size, 64, 64]} position={position}>
+    <Sphere ref={meshRef} args={[size, 32, 32]} position={position}>
       <MeshDistortMaterial
         color={color}
         attach="material"

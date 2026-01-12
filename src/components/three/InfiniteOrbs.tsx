@@ -51,7 +51,7 @@ function FloatingOrb({ data }: { data: OrbProps }) {
   });
 
   return (
-    <Sphere ref={meshRef} args={[1, 32, 32]} position={data.position} scale={data.scale}>
+    <Sphere ref={meshRef} args={[1, 16, 16]} position={data.position} scale={data.scale}>
       <MeshDistortMaterial
         ref={materialRef}
         color={data.color}
@@ -59,11 +59,9 @@ function FloatingOrb({ data }: { data: OrbProps }) {
         emissiveIntensity={0.3}
         distort={data.distort}
         speed={data.speed}
-        roughness={0}
-        metalness={0.9}
-        envMapIntensity={3}
-        transparent
-        opacity={0.9}
+        roughness={0.2}
+        metalness={0.8}
+        envMapIntensity={2}
       />
     </Sphere>
   );

@@ -26,30 +26,30 @@ function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntr
       {/* Audio-reactive background elements */}
       {showOrbs && <AudioReactive baseRadius={4} particleCount={200} />}
 
-      <Environment preset="night" />
+      <Environment preset="night" blur={0.8} />
 
-      {/* Heavy post-processing */}
-      <EffectComposer multisampling={8}>
+      {/* Post-processing effects - Optimized */}
+      <EffectComposer multisampling={0} enableNormalPass={false}>
         <Bloom
-          intensity={2}
-          luminanceThreshold={0.05}
+          intensity={1.5}
+          luminanceThreshold={0.1}
           luminanceSmoothing={0.9}
           blendFunction={BlendFunction.ADD}
           mipmapBlur
         />
         <ChromaticAberration
           blendFunction={BlendFunction.NORMAL}
-          offset={[0.002, 0.002]}
+          offset={[0.001, 0.001]}
           radialModulation={true}
           modulationOffset={0.5}
         />
         <Vignette
           offset={0.3}
-          darkness={0.8}
+          darkness={0.7}
           blendFunction={BlendFunction.NORMAL}
         />
         <Noise
-          opacity={0.03}
+          opacity={0.02}
           blendFunction={BlendFunction.OVERLAY}
         />
       </EffectComposer>
