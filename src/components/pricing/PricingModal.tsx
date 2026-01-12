@@ -1,26 +1,76 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useUser } from '@clerk/nextjs';
 import { PRODUCTS } from '@/lib/stripe';
 
 interface PricingModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentMinutes?: number;
+  userEmail?: string;
+}
+
+interface PromoDiscount {
+  id: string;
+  code: string;
+  percentOff: number | null;
+  amountOff: number | null;
+  currency: string | null;
 }
 
 type TabType = 'packages' | 'subscriptions';
 
-export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingModalProps) {
+export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }: PricingModalProps) {
   const [activeTab, setActiveTab] = useState<TabType>('packages');
   const [loading, setLoading] = useState<string | null>(null);
-  const { user } = useUser();
+  const [emailInput, setEmailInput] = useState(userEmail || '');
+  const [promoCode, setPromoCode] = useState('');
+  const [promoDiscount, setPromoDiscount] = useState<PromoDiscount | null>(null);
+  const [promoError, setPromoError] = useState<string | null>(null);
+  const [validatingPromo, setValidatingPromo] = useState(false);
+
+  const email = userEmail || emailInput;
+
+  const validatePromoCode = useCallback(async () => {
+    if (!promoCode.trim()) return;
+
+    setValidatingPromo(true);
+    setPromoError(null);
+
+    try {
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: promoCode.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (data.valid) {
+        setPromoDiscount(data.discount);
+        setPromoError(null);
+      } else {
+        setPromoDiscount(null);
+        setPromoError('Invalid promo code');
+      }
+    } catch {
+      setPromoError('Failed to validate code');
+      setPromoDiscount(null);
+    } finally {
+      setValidatingPromo(false);
+    }
+  }, [promoCode]);
+
+  const clearPromo = () => {
+    setPromoCode('');
+    setPromoDiscount(null);
+    setPromoError(null);
+  };
 
   const handlePurchase = async (type: 'package' | 'subscription', productId: string) => {
-    if (!user?.primaryEmailAddress?.emailAddress) {
-      alert('Please sign in to purchase');
+    if (!email) {
+      alert('Please enter your email to purchase');
       return;
     }
 
@@ -33,7 +83,8 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingMod
         body: JSON.stringify({
           type,
           productId,
-          email: user.primaryEmailAddress.emailAddress,
+          email,
+          promoCode: promoDiscount ? promoCode.trim() : undefined,
         }),
       });
 
@@ -52,8 +103,20 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingMod
     }
   };
 
+  const getDiscountedPrice = (originalPrice: number) => {
+    if (!promoDiscount) return originalPrice;
+    if (promoDiscount.percentOff) {
+      return originalPrice * (1 - promoDiscount.percentOff / 100);
+    }
+    if (promoDiscount.amountOff) {
+      return Math.max(0, originalPrice - promoDiscount.amountOff);
+    }
+    return originalPrice;
+  };
+
   const packages = Object.entries(PRODUCTS.packages);
   const subscriptions = Object.entries(PRODUCTS.subscriptions);
+  const needsEmail = !userEmail;
 
   return (
     <AnimatePresence>
@@ -89,6 +152,71 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingMod
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
+              </div>
+
+              {/* Email input if needed */}
+              {needsEmail && (
+                <div className="mt-4">
+                  <input
+                    type="email"
+                    placeholder="Enter your email to purchase"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-500/50"
+                  />
+                </div>
+              )}
+
+              {/* Promo code input */}
+              <div className="mt-4">
+                <div className="flex gap-2">
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      placeholder="Promo code"
+                      value={promoCode}
+                      onChange={(e) => {
+                        setPromoCode(e.target.value);
+                        if (promoDiscount) setPromoDiscount(null);
+                        if (promoError) setPromoError(null);
+                      }}
+                      className={`w-full px-4 py-2 rounded-lg bg-white/5 border text-white placeholder-white/30 focus:outline-none transition-colors ${
+                        promoDiscount
+                          ? 'border-emerald-500/50'
+                          : promoError
+                          ? 'border-red-500/50'
+                          : 'border-white/10 focus:border-cyan-500/50'
+                      }`}
+                    />
+                    {promoDiscount && (
+                      <button
+                        onClick={clearPromo}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                  <button
+                    onClick={validatePromoCode}
+                    disabled={!promoCode.trim() || validatingPromo || !!promoDiscount}
+                    className="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {validatingPromo ? '...' : promoDiscount ? 'Applied' : 'Apply'}
+                  </button>
+                </div>
+                {promoDiscount && (
+                  <p className="text-emerald-400 text-sm mt-2">
+                    {promoDiscount.percentOff
+                      ? `${promoDiscount.percentOff}% off applied!`
+                      : `$${promoDiscount.amountOff} off applied!`}
+                  </p>
+                )}
+                {promoError && (
+                  <p className="text-red-400 text-sm mt-2">{promoError}</p>
+                )}
               </div>
 
               {/* Tabs */}
@@ -127,30 +255,41 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingMod
                     exit={{ opacity: 0, x: 20 }}
                     className="grid grid-cols-1 md:grid-cols-3 gap-4"
                   >
-                    {packages.map(([id, pkg]) => (
-                      <div
-                        key={id}
-                        className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all"
-                      >
-                        <h3 className="text-lg font-medium text-white/90">{pkg.name}</h3>
-                        <div className="mt-3">
-                          <span className="text-3xl font-light text-white">${pkg.price}</span>
-                        </div>
-                        <p className="text-white/50 text-sm mt-2">
-                          {pkg.minutes} minutes
-                          {'savings' in pkg && pkg.savings && (
-                            <span className="ml-2 text-emerald-400">Save {pkg.savings}</span>
-                          )}
-                        </p>
-                        <button
-                          onClick={() => handlePurchase('package', id)}
-                          disabled={loading === id}
-                          className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                    {packages.map(([id, pkg]) => {
+                      const discountedPrice = getDiscountedPrice(pkg.price);
+                      const hasDiscount = promoDiscount && discountedPrice < pkg.price;
+                      return (
+                        <div
+                          key={id}
+                          className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all"
                         >
-                          {loading === id ? 'Loading...' : 'Buy Now'}
-                        </button>
-                      </div>
-                    ))}
+                          <h3 className="text-lg font-medium text-white/90">{pkg.name}</h3>
+                          <div className="mt-3">
+                            {hasDiscount ? (
+                              <>
+                                <span className="text-lg text-white/40 line-through mr-2">${pkg.price}</span>
+                                <span className="text-3xl font-light text-emerald-400">${discountedPrice.toFixed(2)}</span>
+                              </>
+                            ) : (
+                              <span className="text-3xl font-light text-white">${pkg.price}</span>
+                            )}
+                          </div>
+                          <p className="text-white/50 text-sm mt-2">
+                            {pkg.minutes} minutes
+                            {'savings' in pkg && pkg.savings && !hasDiscount && (
+                              <span className="ml-2 text-emerald-400">Save {pkg.savings}</span>
+                            )}
+                          </p>
+                          <button
+                            onClick={() => handlePurchase('package', id)}
+                            disabled={loading === id || !email}
+                            className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                          >
+                            {loading === id ? 'Loading...' : 'Buy Now'}
+                          </button>
+                        </div>
+                      );
+                    })}
                   </motion.div>
                 )}
 
@@ -162,42 +301,53 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0 }: PricingMod
                     exit={{ opacity: 0, x: -20 }}
                     className="grid grid-cols-1 md:grid-cols-3 gap-4"
                   >
-                    {subscriptions.map(([id, sub]) => (
-                      <div
-                        key={id}
-                        className={`p-5 rounded-xl border transition-all ${
-                          id === 'professional'
-                            ? 'bg-gradient-to-b from-cyan-500/10 to-transparent border-cyan-500/30'
-                            : 'bg-white/5 border-white/10 hover:border-cyan-500/30'
-                        }`}
-                      >
-                        {id === 'professional' && (
-                          <span className="text-xs text-cyan-400 font-medium">MOST POPULAR</span>
-                        )}
-                        <h3 className="text-lg font-medium text-white/90 mt-1">{sub.name}</h3>
-                        <div className="mt-3">
-                          <span className="text-3xl font-light text-white">${sub.price}</span>
-                          <span className="text-white/50 text-sm">/month</span>
-                        </div>
-                        <p className="text-white/50 text-sm mt-2">
-                          {sub.monthlyMinutes === -1 ? 'Unlimited' : `${sub.monthlyMinutes} min/month`}
-                          {'savings' in sub && sub.savings && (
-                            <span className="ml-2 text-emerald-400">Save {sub.savings}</span>
-                          )}
-                        </p>
-                        <button
-                          onClick={() => handlePurchase('subscription', id)}
-                          disabled={loading === id}
-                          className={`w-full mt-4 px-4 py-2.5 rounded-lg text-sm font-medium transition-opacity disabled:opacity-50 ${
+                    {subscriptions.map(([id, sub]) => {
+                      const discountedPrice = getDiscountedPrice(sub.price);
+                      const hasDiscount = promoDiscount && discountedPrice < sub.price;
+                      return (
+                        <div
+                          key={id}
+                          className={`p-5 rounded-xl border transition-all ${
                             id === 'professional'
-                              ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white hover:opacity-90'
-                              : 'bg-white/10 text-white hover:bg-white/15'
+                              ? 'bg-gradient-to-b from-cyan-500/10 to-transparent border-cyan-500/30'
+                              : 'bg-white/5 border-white/10 hover:border-cyan-500/30'
                           }`}
                         >
-                          {loading === id ? 'Loading...' : 'Subscribe'}
-                        </button>
-                      </div>
-                    ))}
+                          {id === 'professional' && (
+                            <span className="text-xs text-cyan-400 font-medium">MOST POPULAR</span>
+                          )}
+                          <h3 className="text-lg font-medium text-white/90 mt-1">{sub.name}</h3>
+                          <div className="mt-3">
+                            {hasDiscount ? (
+                              <>
+                                <span className="text-lg text-white/40 line-through mr-2">${sub.price}</span>
+                                <span className="text-3xl font-light text-emerald-400">${discountedPrice.toFixed(2)}</span>
+                              </>
+                            ) : (
+                              <span className="text-3xl font-light text-white">${sub.price}</span>
+                            )}
+                            <span className="text-white/50 text-sm">/month</span>
+                          </div>
+                          <p className="text-white/50 text-sm mt-2">
+                            {sub.monthlyMinutes === -1 ? 'Unlimited' : `${sub.monthlyMinutes} min/month`}
+                            {'savings' in sub && sub.savings && !hasDiscount && (
+                              <span className="ml-2 text-emerald-400">Save {sub.savings}</span>
+                            )}
+                          </p>
+                          <button
+                            onClick={() => handlePurchase('subscription', id)}
+                            disabled={loading === id || !email}
+                            className={`w-full mt-4 px-4 py-2.5 rounded-lg text-sm font-medium transition-opacity disabled:opacity-50 ${
+                              id === 'professional'
+                                ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white hover:opacity-90'
+                                : 'bg-white/10 text-white hover:bg-white/15'
+                            }`}
+                          >
+                            {loading === id ? 'Loading...' : 'Subscribe'}
+                          </button>
+                        </div>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>

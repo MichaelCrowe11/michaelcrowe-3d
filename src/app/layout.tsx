@@ -35,6 +35,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LiquidCursor } from '@/components/ui/LiquidCursor';
+
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export default function RootLayout({
@@ -44,7 +46,8 @@ export default function RootLayout({
 }>) {
   const content = (
     <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="font-sans antialiased selection:bg-cyan-500/30">
+      <body className="font-sans antialiased selection:bg-cyan-500/30 cursor-none">
+        <LiquidCursor />
         {children}
       </body>
     </html>

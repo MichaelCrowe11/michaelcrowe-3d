@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
 import {
   getStripe,
-  createPackageCheckout,
-  createSubscriptionCheckout,
   PRODUCTS,
   type PackageId,
   type SubscriptionId,
 } from '@/lib/stripe';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
+
+// Safe auth helper - returns null if Clerk isn't configured
+async function getAuthUserId(): Promise<string | null> {
+  try {
+    if (!process.env.CLERK_SECRET_KEY) {
+      return null;
+    }
+    const { auth } = await import('@clerk/nextjs/server');
+    const { userId } = await auth();
+    return userId;
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,17 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get authenticated user
-    const { userId } = await auth();
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
-
     const body = await request.json();
-    const { type, productId, email } = body;
+    const { type, productId, email, promoCode } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -40,44 +42,104 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const clerkUserId = await getAuthUserId();
+    const userId = clerkUserId || `email_${Buffer.from(email).toString('base64').slice(0, 20)}`;
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://michaelcrowe.ai';
     const successUrl = `${baseUrl}?success=true&session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${baseUrl}?canceled=true`;
 
+    // Validate promo code if provided
+    let promotionCodeId: string | undefined;
+    if (promoCode) {
+      try {
+        const promoCodes = await stripe.promotionCodes.list({
+          code: promoCode,
+          active: true,
+          limit: 1,
+        });
+        if (promoCodes.data.length > 0) {
+          promotionCodeId = promoCodes.data[0].id;
+        } else {
+          return NextResponse.json(
+            { error: 'Invalid promo code' },
+            { status: 400 }
+          );
+        }
+      } catch {
+        return NextResponse.json(
+          { error: 'Failed to validate promo code' },
+          { status: 400 }
+        );
+      }
+    }
+
     let session;
 
     if (type === 'package') {
-      if (!PRODUCTS.packages[productId as PackageId]) {
+      const pkg = PRODUCTS.packages[productId as PackageId];
+      if (!pkg) {
         return NextResponse.json(
           { error: 'Invalid package' },
           { status: 400 }
         );
       }
 
-      session = await createPackageCheckout(
-        stripe,
-        productId as PackageId,
-        userId,
-        email,
-        successUrl,
-        cancelUrl
-      );
+      if (!pkg.priceId) {
+        return NextResponse.json(
+          { error: `Price ID not configured for package: ${productId}` },
+          { status: 500 }
+        );
+      }
+
+      session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        payment_method_types: ['card'],
+        customer_email: email,
+        line_items: [{ price: pkg.priceId, quantity: 1 }],
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+        allow_promotion_codes: !promotionCodeId, // Allow UI input if no code provided
+        discounts: promotionCodeId ? [{ promotion_code: promotionCodeId }] : undefined,
+        metadata: {
+          userId,
+          type: 'package',
+          packageId: productId,
+          minutes: pkg.minutes.toString(),
+        },
+      });
     } else if (type === 'subscription') {
-      if (!PRODUCTS.subscriptions[productId as SubscriptionId]) {
+      const sub = PRODUCTS.subscriptions[productId as SubscriptionId];
+      if (!sub) {
         return NextResponse.json(
           { error: 'Invalid subscription' },
           { status: 400 }
         );
       }
 
-      session = await createSubscriptionCheckout(
-        stripe,
-        productId as SubscriptionId,
-        userId,
-        email,
-        successUrl,
-        cancelUrl
-      );
+      if (!sub.priceId) {
+        return NextResponse.json(
+          { error: `Price ID not configured for subscription: ${productId}` },
+          { status: 500 }
+        );
+      }
+
+      session = await stripe.checkout.sessions.create({
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        customer_email: email,
+        line_items: [{ price: sub.priceId, quantity: 1 }],
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+        allow_promotion_codes: !promotionCodeId,
+        discounts: promotionCodeId ? [{ promotion_code: promotionCodeId }] : undefined,
+        metadata: {
+          userId,
+          type: 'subscription',
+          subscriptionId: productId,
+          monthlyMinutes: sub.monthlyMinutes.toString(),
+        },
+      });
     } else {
       return NextResponse.json(
         { error: 'Invalid checkout type' },
@@ -90,6 +152,69 @@ export async function POST(request: NextRequest) {
     console.error('Checkout error:', error);
     return NextResponse.json(
       { error: 'Checkout failed' },
+      { status: 500 }
+    );
+  }
+}
+
+// Validate promo code endpoint
+export async function PUT(request: NextRequest) {
+  try {
+    const stripe = getStripe();
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payments not configured' },
+        { status: 500 }
+      );
+    }
+
+    const { code } = await request.json();
+
+    if (!code) {
+      return NextResponse.json(
+        { error: 'Promo code required' },
+        { status: 400 }
+      );
+    }
+
+    const promoCodes = await stripe.promotionCodes.list({
+      code,
+      active: true,
+      limit: 1,
+    });
+
+    if (promoCodes.data.length === 0) {
+      return NextResponse.json({ valid: false });
+    }
+
+    const promoCodeData = promoCodes.data[0];
+    // Get coupon details - expand the coupon in a separate call
+    const expandedPromo = await stripe.promotionCodes.retrieve(promoCodeData.id, {
+      expand: ['coupon'],
+    }) as unknown as {
+      id: string;
+      code: string;
+      coupon: {
+        percent_off: number | null;
+        amount_off: number | null;
+        currency: string | null;
+      };
+    };
+
+    return NextResponse.json({
+      valid: true,
+      discount: {
+        id: expandedPromo.id,
+        code: expandedPromo.code,
+        percentOff: expandedPromo.coupon.percent_off,
+        amountOff: expandedPromo.coupon.amount_off ? expandedPromo.coupon.amount_off / 100 : null,
+        currency: expandedPromo.coupon.currency,
+      },
+    });
+  } catch (error) {
+    console.error('Promo validation error:', error);
+    return NextResponse.json(
+      { error: 'Failed to validate code' },
       { status: 500 }
     );
   }

@@ -1,16 +1,34 @@
-import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getUserCredits, canStartSession } from '@/lib/credits';
 
-export const runtime = 'nodejs'; // Need Node.js for Supabase
+export const runtime = 'nodejs';
 
-export async function GET() {
-  const { userId } = await auth();
+// Safe auth helper - returns null if Clerk isn't configured
+async function getAuthUserId(): Promise<string | null> {
+  try {
+    if (!process.env.CLERK_SECRET_KEY) {
+      return null;
+    }
+    const { auth } = await import('@clerk/nextjs/server');
+    const { userId } = await auth();
+    return userId;
+  } catch {
+    return null;
+  }
+}
+
+export async function GET(request: NextRequest) {
+  // Get userId from query param or auth
+  const searchParams = request.nextUrl.searchParams;
+  const queryUserId = searchParams.get('userId');
+  const clerkUserId = await getAuthUserId();
+
+  const userId = queryUserId || clerkUserId;
 
   if (!userId) {
     return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
+      { error: 'User ID required' },
+      { status: 400 }
     );
   }
 
@@ -19,10 +37,11 @@ export async function GET() {
 
   if (!credits) {
     return NextResponse.json({
-      balanceMinutes: 3, // Default free tier
+      balanceMinutes: 3,
       subscriptionTier: null,
       subscriptionMinutesRemaining: 0,
-      canStartSession: true,
+      subscriptionResetDate: null,
+      canStart: true,
       availableMinutes: 3,
       source: 'credits',
     });
@@ -33,7 +52,7 @@ export async function GET() {
     subscriptionTier: credits.subscription_tier,
     subscriptionMinutesRemaining: credits.subscription_minutes_remaining,
     subscriptionResetDate: credits.subscription_reset_date,
-    canStartSession: sessionStatus.canStart,
+    canStart: sessionStatus.canStart,
     availableMinutes: sessionStatus.availableMinutes,
     source: sessionStatus.source,
   });

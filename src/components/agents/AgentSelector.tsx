@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { getActiveAgents, type Agent } from '@/config/agents';
+import { HolographicCard } from '../ui/HolographicCard';
 
 const iconMap = {
   Microscope: (
@@ -93,76 +94,77 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8 overflow-y-auto"
+      className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8 overflow-y-auto h-[100dvh]"
     >
       <motion.button
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         onClick={onBack}
-        className="absolute top-6 left-6 flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors"
+        className="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors z-20 p-2 touch-manipulation"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Back
+        <span className="text-lg md:text-base">Back</span>
       </motion.button>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-center mb-8 mt-16 md:mt-0"
+        className="text-center mb-8 mt-20 md:mt-0 px-4"
       >
         <h2 className="text-3xl md:text-4xl font-light text-white/90 mb-3">
           Choose Your Expert
         </h2>
-        <p className="text-white/50 max-w-md">
+        <p className="text-white/50 max-w-md mx-auto text-sm md:text-base">
           Select a domain specialist for your deep consulting session
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl w-full pb-20 md:pb-0">
         {agents.map((agent, i) => {
           const colors = colorMap[agent.color];
           const Icon = iconMap[agent.icon];
 
           return (
-            <motion.button
+            <motion.div
               key={agent.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + i * 0.08 }}
-              whileHover={{ scale: 1.02, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => onSelect(agent)}
-              className={`relative p-5 rounded-2xl bg-gradient-to-br ${colors.bg} border ${colors.border} backdrop-blur-sm transition-all duration-300 text-left group`}
+              className="h-full"
             >
-              <div className={`${colors.icon} mb-3`}>
-                {Icon}
-              </div>
+              <HolographicCard
+                onClick={() => onSelect(agent)}
+                glareColor={agent.color}
+                className="h-full text-left"
+              >
+                <div className={`${colors.icon} mb-3`}>
+                  {Icon}
+                </div>
 
-              <h3 className="text-lg font-medium text-white/90 mb-1">
-                {agent.name}
-              </h3>
-              <p className="text-sm text-white/50 mb-3">
-                {agent.tagline}
-              </p>
+                <h3 className="text-lg font-medium text-white/90 mb-1">
+                  {agent.name}
+                </h3>
+                <p className="text-sm text-white/50 mb-3">
+                  {agent.tagline}
+                </p>
 
-              <p className="text-xs text-white/40 mb-3 line-clamp-2">
-                {agent.description}
-              </p>
+                <p className="text-xs text-white/40 mb-3 line-clamp-2">
+                  {agent.description}
+                </p>
 
-              <div className="flex items-center justify-between">
-                <span className={`text-xs px-2 py-1 rounded-full ${colors.badge}`}>
-                  {agent.freeTierMinutes} min free
-                </span>
-                <span className="text-xs text-white/40">
-                  ${agent.pricing.perMinute}/min
-                </span>
-              </div>
-
-              <div className="absolute inset-0 rounded-2xl bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-            </motion.button>
+                <div className="flex items-center justify-between mt-auto pt-2">
+                  <span className={`text-xs px-2 py-1 rounded-full ${colors.badge}`}>
+                    {agent.freeTierMinutes} min free
+                  </span>
+                  <span className="text-xs text-white/40">
+                    ${agent.pricing.perMinute}/min
+                  </span>
+                </div>
+              </HolographicCard>
+            </motion.div>
           );
         })}
       </div>

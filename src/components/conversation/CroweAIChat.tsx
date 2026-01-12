@@ -250,9 +250,11 @@ export function CroweAIChat() {
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
-            className={`fixed bottom-6 right-6 z-50 flex gap-4 ${
-              isExpanded ? 'w-[900px]' : 'w-[420px]'
-            } transition-all duration-300`}
+            className={`fixed z-50 flex gap-4 transition-all duration-300 
+              inset-0 items-center justify-center p-4 bg-black/60 backdrop-blur-sm flex-col md:flex-row
+              md:bg-transparent md:backdrop-blur-none md:inset-auto md:items-end md:justify-end md:bottom-6 md:right-6 md:p-0
+              ${isExpanded ? 'md:w-[900px]' : 'w-full md:w-[420px]'}
+            `}
           >
             {/* Checkout Browser Panel */}
             <AnimatePresence>
@@ -261,7 +263,7 @@ export function CroweAIChat() {
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 50 }}
-                  className="w-[450px] h-[600px] rounded-2xl overflow-hidden backdrop-blur-3xl"
+                  className="w-full max-w-[420px] h-[40vh] md:h-[600px] md:w-[450px] rounded-2xl overflow-hidden backdrop-blur-3xl order-2 md:order-1"
                   style={{
                     background: 'rgba(3,3,3,0.9)',
                     border: '1px solid rgba(255,255,255,0.08)',
@@ -289,7 +291,7 @@ export function CroweAIChat() {
 
             {/* Main Chat Panel */}
             <motion.div
-              className="w-[420px] h-[600px] rounded-2xl overflow-hidden flex flex-col backdrop-blur-3xl"
+              className="w-full max-w-[420px] h-[85vh] md:h-[600px] rounded-2xl overflow-hidden flex flex-col backdrop-blur-3xl"
               style={{
                 background: 'rgba(3, 3, 3, 0.85)',
                 border: '1px solid rgba(255,255,255,0.08)',

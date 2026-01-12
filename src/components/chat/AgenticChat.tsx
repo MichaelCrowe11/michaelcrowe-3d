@@ -208,14 +208,14 @@ export function AgenticChat({ visible }: { visible: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8"
+          className="fixed inset-0 z-10 flex flex-col items-center justify-center p-4 md:p-8 h-[100dvh]"
         >
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="absolute top-6 left-6 flex items-center gap-3"
+            className="hidden md:flex absolute top-6 left-6 items-center gap-3"
           >
             <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10">
               <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
@@ -229,7 +229,12 @@ export function AgenticChat({ visible }: { visible: boolean }) {
           </motion.div>
 
           {/* Chat container */}
-          <div className="w-full max-w-2xl h-full max-h-[85vh] flex flex-col">
+          <div className="w-full max-w-2xl h-full flex flex-col relative z-20">
+            {/* Mobile Header - Visible only on mobile */}
+            <div className="md:hidden flex items-center justify-center py-2 mb-2 opacity-60">
+                <span className="text-xs font-medium tracking-widest uppercase">michaelcrowe.ai</span>
+            </div>
+
             {/* Welcome */}
             <AnimatePresence>
               {showWelcome && messages.length === 0 && (
@@ -400,7 +405,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.8 }}
-            className="absolute bottom-6 flex gap-6 text-white/20 text-xs"
+            className="hidden md:flex absolute bottom-6 gap-6 text-white/20 text-xs"
           >
             <a href="mailto:michael@crowelogic.com" className="hover:text-white/50 transition-colors">Contact</a>
             <a href="https://github.com/MichaelCrowe11" className="hover:text-white/50 transition-colors">GitHub</a>
