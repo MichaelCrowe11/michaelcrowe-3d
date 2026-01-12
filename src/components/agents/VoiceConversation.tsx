@@ -5,15 +5,25 @@ import { useConversation } from '@elevenlabs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Agent } from '@/config/agents';
 import { useSessionStore } from '@/stores/sessionStore';
+import { PricingModal } from '@/components/pricing/PricingModal';
 
 interface VoiceConversationProps {
   agent: Agent;
   onEnd: () => void;
 }
 
+interface CreditsInfo {
+  canStartSession: boolean;
+  availableMinutes: number;
+  source: 'subscription' | 'credits' | 'none';
+  balanceMinutes: number;
+}
+
 export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [credits, setCredits] = useState<CreditsInfo | null>(null);
+  const [showPricing, setShowPricing] = useState(false);
   const { elapsedSeconds, tick, startConversation, endConversation } = useSessionStore();
 
   const conversation = useConversation({
@@ -33,10 +43,23 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
 
   const { status, isSpeaking } = conversation;
 
-  // Fetch signed URL on mount
+  // Check credits and fetch signed URL on mount
   useEffect(() => {
-    async function getSignedUrl() {
+    async function initialize() {
       try {
+        // First check credits
+        const creditsResponse = await fetch('/api/credits');
+        if (creditsResponse.ok) {
+          const creditsData = await creditsResponse.json();
+          setCredits(creditsData);
+
+          if (!creditsData.canStartSession) {
+            setShowPricing(true);
+            return;
+          }
+        }
+
+        // Then get signed URL
         const response = await fetch(`/api/agents/${agent.id}/session`, {
           method: 'POST',
         });
@@ -44,6 +67,10 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         if (!response.ok) {
           if (response.status === 401) {
             setError('Please sign in to start a consultation');
+            return;
+          }
+          if (response.status === 402) {
+            setShowPricing(true);
             return;
           }
           throw new Error('Failed to create session');
@@ -57,7 +84,7 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
       }
     }
 
-    getSignedUrl();
+    initialize();
   }, [agent.id]);
 
   // Timer
@@ -82,9 +109,25 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
   }, [signedUrl, conversation]);
 
   const handleEnd = useCallback(async () => {
+    // Record usage before ending
+    if (elapsedSeconds > 0) {
+      try {
+        await fetch('/api/usage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agentId: agent.id,
+            durationSeconds: elapsedSeconds,
+          }),
+        });
+      } catch (err) {
+        console.error('Failed to record usage:', err);
+      }
+    }
+
     await conversation.endSession();
     onEnd();
-  }, [conversation, onEnd]);
+  }, [conversation, onEnd, elapsedSeconds, agent.id]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -190,7 +233,7 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         </AnimatePresence>
       </motion.div>
 
-      {/* Timer and cost */}
+      {/* Timer and credits */}
       {status === 'connected' && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -201,8 +244,38 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
             {formatTime(elapsedSeconds)}
           </div>
           <div className="text-white/40 text-sm">
-            ${estimatedCost.toFixed(2)} estimated
+            {credits?.availableMinutes === -1
+              ? 'Unlimited plan'
+              : `${Math.max(0, (credits?.availableMinutes || 0) - Math.ceil(elapsedSeconds / 60))} min remaining`}
           </div>
+        </motion.div>
+      )}
+
+      {/* Credits balance (when not connected) */}
+      {status === 'disconnected' && credits && !showPricing && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mb-6 text-center"
+        >
+          <div className="text-white/50 text-sm">
+            {credits.availableMinutes === -1 ? (
+              <span className="text-emerald-400">Unlimited plan active</span>
+            ) : (
+              <>
+                <span className="text-white/70">{credits.availableMinutes} min</span> available
+                {credits.source === 'subscription' && (
+                  <span className="ml-2 text-cyan-400">(subscription)</span>
+                )}
+              </>
+            )}
+          </div>
+          <button
+            onClick={() => setShowPricing(true)}
+            className="mt-2 text-xs text-white/30 hover:text-white/50 transition-colors"
+          >
+            Get more minutes
+          </button>
         </motion.div>
       )}
 
@@ -248,7 +321,7 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
       </motion.div>
 
       {/* Hint */}
-      {status === 'disconnected' && !error && (
+      {status === 'disconnected' && !error && !showPricing && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -258,6 +331,18 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           Microphone access required for voice conversation
         </motion.p>
       )}
+
+      {/* Pricing Modal */}
+      <PricingModal
+        isOpen={showPricing}
+        onClose={() => {
+          setShowPricing(false);
+          if (!credits?.canStartSession) {
+            onEnd(); // Go back if no credits
+          }
+        }}
+        currentMinutes={credits?.balanceMinutes || 0}
+      />
     </motion.div>
   );
 }

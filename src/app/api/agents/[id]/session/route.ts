@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { getAgent } from '@/config/agents';
+import { canStartSession } from '@/lib/credits';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs'; // Need Node.js for Supabase
 
 export async function POST(
   request: NextRequest,
@@ -14,6 +15,15 @@ export async function POST(
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Check if user has credits
+  const creditStatus = await canStartSession(userId);
+  if (!creditStatus.canStart) {
+    return NextResponse.json(
+      { error: 'Insufficient credits', requiresPayment: true },
+      { status: 402 }
+    );
   }
 
   // Get agent config
