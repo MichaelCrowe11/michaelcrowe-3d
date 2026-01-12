@@ -42,6 +42,7 @@ export async function GET(request: NextRequest) {
       subscriptionMinutesRemaining: 0,
       subscriptionResetDate: null,
       canStart: true,
+      canStartSession: true, // Alias for VoiceConversation compatibility
       availableMinutes: 3,
       source: 'credits',
     });
@@ -53,6 +54,7 @@ export async function GET(request: NextRequest) {
     subscriptionMinutesRemaining: credits.subscription_minutes_remaining,
     subscriptionResetDate: credits.subscription_reset_date,
     canStart: sessionStatus.canStart,
+    canStartSession: sessionStatus.canStart, // Alias for VoiceConversation compatibility
     availableMinutes: sessionStatus.availableMinutes,
     source: sessionStatus.source,
   });

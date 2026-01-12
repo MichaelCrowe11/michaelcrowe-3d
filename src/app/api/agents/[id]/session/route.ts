@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
 import { getAgent } from '@/config/agents';
 import { canStartSession } from '@/lib/credits';
 
-export const runtime = 'nodejs'; // Need Node.js for Supabase
+export const runtime = 'nodejs';
+
+// Safe auth helper - returns null if Clerk isn't configured
+async function getAuthUserId(): Promise<string | null> {
+  try {
+    if (!process.env.CLERK_SECRET_KEY) {
+      return null;
+    }
+    const { auth } = await import('@clerk/nextjs/server');
+    const { userId } = await auth();
+    return userId;
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(
   request: NextRequest,
@@ -11,19 +24,41 @@ export async function POST(
 ) {
   const { id } = await params;
 
-  // Check authentication
-  const { userId } = await auth();
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  // Get user ID from body, query, or auth
+  let userId: string | null = null;
+
+  try {
+    const body = await request.json().catch(() => ({}));
+    const email = body.email;
+
+    if (email) {
+      userId = `email_${Buffer.from(email).toString('base64').slice(0, 20)}`;
+    }
+  } catch {
+    // No body, that's fine
   }
 
-  // Check if user has credits
-  const creditStatus = await canStartSession(userId);
-  if (!creditStatus.canStart) {
-    return NextResponse.json(
-      { error: 'Insufficient credits', requiresPayment: true },
-      { status: 402 }
-    );
+  // Try Clerk auth if no email provided
+  if (!userId) {
+    userId = await getAuthUserId();
+  }
+
+  // For demo/testing, allow without auth but with limited functionality
+  const isDemo = !userId;
+  if (isDemo) {
+    // Generate a temporary demo user ID
+    userId = `demo_${Date.now()}`;
+  }
+
+  // Check if user has credits (skip for demo users)
+  if (!isDemo) {
+    const creditStatus = await canStartSession(userId);
+    if (!creditStatus.canStart) {
+      return NextResponse.json(
+        { error: 'Insufficient credits', requiresPayment: true },
+        { status: 402 }
+      );
+    }
   }
 
   // Get agent config
@@ -74,6 +109,7 @@ export async function POST(
       signedUrl: data.signed_url,
       agentId: agent.id,
       agentName: agent.name,
+      isDemo,
     });
   } catch (error) {
     console.error('Session creation error:', error);

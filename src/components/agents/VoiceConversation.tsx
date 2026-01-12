@@ -47,8 +47,10 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
   useEffect(() => {
     async function initialize() {
       try {
-        // First check credits
-        const creditsResponse = await fetch('/api/credits');
+        // First check credits - include credentials for Clerk auth
+        const creditsResponse = await fetch('/api/credits', {
+          credentials: 'include',
+        });
         if (creditsResponse.ok) {
           const creditsData = await creditsResponse.json();
           setCredits(creditsData);
@@ -59,9 +61,10 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           }
         }
 
-        // Then get signed URL
+        // Then get signed URL - include credentials for Clerk auth
         const response = await fetch(`/api/agents/${agent.id}/session`, {
           method: 'POST',
+          credentials: 'include',
         });
 
         if (!response.ok) {
