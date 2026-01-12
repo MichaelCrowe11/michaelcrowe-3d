@@ -37,17 +37,6 @@ body {
   line-height: 1.5;
 }
 
-/* Strong contrast for body text on dark backgrounds */
-.text-white\/40,
-.text-white\/50 {
-  color: rgba(255, 255, 255, 0.7); /* Improved from 0.4 and 0.5 */
-}
-
-/* Even stronger contrast for primary text */
-.text-white\/60 {
-  color: rgba(255, 255, 255, 0.8); /* Improved from 0.6 */
-}
-
 /* Fixed background for better mobile performance */
 body::before {
   content: "";

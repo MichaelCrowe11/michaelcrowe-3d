@@ -240,16 +240,16 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Virtual screening">
             Virtual screening
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: DFT / QM help">
             DFT / QM help
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Roadmap + tools">
             Roadmap + tools
-          </button>
+          </span>
         </motion.div>
       )}
 
@@ -259,16 +259,16 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Substrate formulation">
             Substrate formulation
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Contamination help">
             Contamination help
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Scaling operations">
             Scaling operations
-          </button>
+          </span>
         </motion.div>
       )}
 
@@ -278,16 +278,16 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: LLM selection">
             LLM selection
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Agent architecture">
             Agent architecture
-          </button>
-          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Cost optimization">
             Cost optimization
-          </button>
+          </span>
         </motion.div>
       )}
 

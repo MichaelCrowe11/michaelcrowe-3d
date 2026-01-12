@@ -63,7 +63,7 @@ function WelcomeText({ visible, onStartDeepDive }: { visible: boolean; onStartDe
               <div className="w-full max-w-3xl mx-4 h-[500px] bg-black/20 backdrop-blur-md rounded-3xl border border-white/10" />
             </motion.div>
 
-            {/* Inner container with pointer-events-auto for the button */}
+            {/* Inner container - pointer-events-auto allows button interaction while parent blocks background clicks */}
             <div className="pointer-events-auto flex flex-col items-center relative z-10">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
