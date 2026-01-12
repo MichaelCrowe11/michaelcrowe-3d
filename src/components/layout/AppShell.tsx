@@ -11,7 +11,7 @@ interface AppShellProps {
 
 export function AppShell({ children, showBackground = true, blobCount = 3 }: AppShellProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)]">
+    <div className="relative min-h-screen overflow-hidden bg-[#030303] text-[#ededed]">
       {/* Background layers - absolute positioned with z-0 */}
       {showBackground && (
         <>

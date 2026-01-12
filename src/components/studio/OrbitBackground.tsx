@@ -23,6 +23,8 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
+      // Reset transform before scaling to avoid cumulative scaling
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
     updateSize();
@@ -30,17 +32,20 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     
     // Starfield (use display dimensions for positioning)
     const stars: { x: number; y: number; size: number; opacity: number }[] = [];
-    const getDisplayWidth = () => canvas.getBoundingClientRect().width;
-    const getDisplayHeight = () => canvas.getBoundingClientRect().height;
+    const initialWidth = canvas.getBoundingClientRect().width;
+    const initialHeight = canvas.getBoundingClientRect().height;
     
     for (let i = 0; i < 200; i++) {
       stars.push({
-        x: Math.random() * getDisplayWidth(),
-        y: Math.random() * getDisplayHeight(),
+        x: Math.random() * initialWidth,
+        y: Math.random() * initialHeight,
         size: Math.random() * 1.5,
         opacity: Math.random() * 0.5 + 0.3,
       });
     }
+    
+    const getDisplayWidth = () => canvas.getBoundingClientRect().width;
+    const getDisplayHeight = () => canvas.getBoundingClientRect().height;
     
     // Orbit rings
     const rings = [
