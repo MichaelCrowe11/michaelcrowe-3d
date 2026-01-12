@@ -240,13 +240,14 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Virtual screening
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             DFT / QM help
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Roadmap + tools
           </button>
         </motion.div>
@@ -258,13 +259,14 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Substrate formulation
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Contamination help
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-purple-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Scaling operations
           </button>
         </motion.div>
@@ -276,13 +278,14 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
         >
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics:</div>
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             LLM selection
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Agent architecture
           </button>
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:border-cyan-500/30 transition-all">
+          <button disabled className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm cursor-default">
             Cost optimization
           </button>
         </motion.div>
@@ -398,7 +401,7 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
             className="px-8 py-4 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-all flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3" />
             </svg>
             End & Save Transcript
           </button>
