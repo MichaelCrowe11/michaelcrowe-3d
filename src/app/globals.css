@@ -30,14 +30,6 @@ body {
   line-height: 1.6; /* Improved line height for better readability */
 }
 
-/* Accessibility: Minimum font sizes and weights for readability */
-body,
-p,
-span,
-div {
-  min-font-size: 14px;
-}
-
 /* Ensure small text is readable */
 .text-xs,
 .text-sm {
