@@ -62,10 +62,10 @@ export function Products() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
             Premium <span className="gradient-text">Products</span>
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
             Exclusive access to proprietary research, datasets, and expertise built over a decade.
           </p>
         </motion.div>
@@ -79,48 +79,47 @@ export function Products() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               whileHover={{ y: -10 }}
-              className="glass-card overflow-hidden group"
+              className="glass-card overflow-hidden group border-white/5 bg-white/5 backdrop-blur-sm"
             >
               {/* Product image placeholder */}
               <div className={`h-48 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
-                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
+                    className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl"
                     whileHover={{ rotate: 5, scale: 1.1 }}
                   >
                     {product.icon}
                   </motion.div>
                 </div>
                 {product.originalPrice && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-rose-500/90 backdrop-blur-sm text-white text-xs font-bold tracking-wider rounded-full shadow-lg">
                     SALE
                   </div>
                 )}
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-1">{product.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{product.subtitle}</p>
+              <div className="p-8">
+                <h3 className="text-2xl font-display font-bold text-white mb-2">{product.title}</h3>
+                <p className="text-cyan-200/60 text-sm mb-6 font-medium tracking-wide uppercase">{product.subtitle}</p>
 
                 {/* Features */}
-                <div className="grid grid-cols-2 gap-2 mb-6">
+                <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8">
                   {product.features.map((feature, j) => (
                     <div key={j} className="flex items-center gap-2 text-sm text-gray-300">
-                      <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+                      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                       {feature}
                     </div>
                   ))}
                 </div>
 
                 {/* Price */}
-                <div className="flex items-baseline gap-3 mb-6">
-                  <span className="text-3xl font-bold text-white">{product.price}</span>
+                <div className="flex items-baseline gap-3 mb-8">
+                  <span className="text-4xl font-display font-bold text-white">{product.price}</span>
                   {product.originalPrice && (
-                    <span className="text-lg text-gray-500 line-through">{product.originalPrice}</span>
+                    <span className="text-lg text-white/30 line-through decoration-white/30">{product.originalPrice}</span>
                   )}
                 </div>
 
@@ -129,7 +128,7 @@ export function Products() {
                   href={product.link}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`block w-full py-3 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-semibold text-center hover:opacity-90 transition-opacity`}
+                  className={`block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-bold tracking-wide text-center shadow-lg hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 border border-white/20`}
                 >
                   Get Started
                 </motion.a>

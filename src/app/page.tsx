@@ -3,7 +3,10 @@
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+// Only import Clerk if configured
+const hasClerk = typeof window !== 'undefined'
+  ? !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  : !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 import { SalesProvider, useSales } from '@/components/sales/SalesProvider';
 import { CroweAIChat } from '@/components/conversation/CroweAIChat';
 import { AgentSelector } from '@/components/agents/AgentSelector';
@@ -95,31 +98,43 @@ function Footer() {
   );
 }
 
+// Dynamic import for Clerk components (only when configured)
+const ClerkComponents = dynamic(
+  () => import('@clerk/nextjs').then((mod) => ({
+    default: function ClerkAuth() {
+      return (
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="fixed top-6 right-6 z-20"
+        >
+          <mod.SignedOut>
+            <mod.SignInButton mode="modal">
+              <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:text-white transition-all">
+                Sign In
+              </button>
+            </mod.SignInButton>
+          </mod.SignedOut>
+          <mod.SignedIn>
+            <mod.UserButton
+              appearance={{
+                elements: {
+                  avatarBox: 'w-10 h-10 ring-2 ring-cyan-500/30',
+                },
+              }}
+            />
+          </mod.SignedIn>
+        </motion.div>
+      );
+    },
+  })),
+  { ssr: false, loading: () => null }
+);
+
 function AuthButtons() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="fixed top-6 right-6 z-20"
-    >
-      <SignedOut>
-        <SignInButton mode="modal">
-          <button className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 hover:text-white transition-all">
-            Sign In
-          </button>
-        </SignInButton>
-      </SignedOut>
-      <SignedIn>
-        <UserButton
-          appearance={{
-            elements: {
-              avatarBox: 'w-10 h-10 ring-2 ring-cyan-500/30',
-            },
-          }}
-        />
-      </SignedIn>
-    </motion.div>
-  );
+  // Don't render Clerk components if not configured
+  if (!hasClerk) return null;
+  return <ClerkComponents />;
 }
 
 function HomeContent() {
