@@ -233,21 +233,23 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
         </AnimatePresence>
       </motion.div>
 
-      {/* Quick action buttons (shown when connected but not speaking) */}
+      {/* Suggested topics (shown when connected but not speaking) */}
       {status === 'connected' && !isSpeaking && agent.category === 'life-sciences' && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Virtual screening">
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Virtual screening
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: DFT / QM help">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             DFT / QM help
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Roadmap + tools">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Roadmap + tools
           </span>
         </motion.div>
@@ -258,15 +260,17 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Substrate formulation">
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Substrate formulation
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Contamination help">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Contamination help
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Scaling operations">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Scaling operations
           </span>
         </motion.div>
@@ -277,15 +281,17 @@ export function VoiceConversation({ agent, onEnd }: VoiceConversationProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex flex-wrap gap-2 justify-center max-w-md"
+          role="region"
+          aria-label="Suggested conversation topics"
         >
-          <div className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</div>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: LLM selection">
+          <p className="w-full text-center text-white/40 text-xs mb-2">Suggested topics (speak to ask):</p>
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             LLM selection
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Agent architecture">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Agent architecture
           </span>
-          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm" role="button" aria-disabled="true" aria-label="Suggested topic: Cost optimization">
+          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm">
             Cost optimization
           </span>
         </motion.div>
