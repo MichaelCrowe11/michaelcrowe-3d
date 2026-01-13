@@ -66,8 +66,6 @@ function LoadingScreen() {
   );
 }
 
-import { Loader } from '@/components/ui/Loader';
-
 // ... other imports will be preserved by using correct context
 
 export function IntroScene({ onIntroComplete }: { onIntroComplete: () => void }) {

@@ -180,7 +180,6 @@ body::after {
   animation: float 8s ease-in-out infinite;
 }
 
-<<<<<<< HEAD
 .animate-subtle-pulse {
   animation: subtle-pulse 4s ease-in-out infinite;
 }
@@ -189,31 +188,6 @@ body::after {
   animation: breathe 6s ease-in-out infinite;
 }
 
-/* Glass morphism - darker, more refined */
-.glass {
-  background: rgba(20, 20, 20, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-}
-
-.glass-card {
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.glass-card:hover {
-  background: rgba(26, 26, 26, 0.8);
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-=======
 .animate-float-slow {
   animation: float-slow 20s ease-in-out infinite;
 }
@@ -307,16 +281,11 @@ body::after {
   background: var(--panel-hover);
   border-color: var(--panel-border-hover);
   transform: translateY(-1px);
->>>>>>> e7e34c6198f0e1fddb802ec91ee96b97974340d3
 }
 
 /* Text gradient - warm tones */
 .gradient-text {
-<<<<<<< HEAD
-  background: linear-gradient(135deg, #c9a55c 0%, #e8d4a8 50%, #8b7355 100%);
-=======
   background: linear-gradient(135deg, #d0a980 0%, #7ad4b5 50%, #5bc9d6 100%);
->>>>>>> e7e34c6198f0e1fddb802ec91ee96b97974340d3
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
