@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Cal.com API integration
-const CALCOM_API_KEY = process.env.CALCOM_API_KEY;
-const CALCOM_USERNAME = process.env.CALCOM_USERNAME || 'michaelcrowe';
 const CALCOM_BASE_URL = 'https://api.cal.com/v1';
 
 // MCP Protocol types
@@ -109,10 +107,11 @@ async function executeCalendarTool(
     switch (name) {
       case 'get_availability': {
         const { dateFrom, dateTo, eventTypeId } = args;
+        const username = process.env.CALCOM_USERNAME || 'michaelcrowe';
         const params = new URLSearchParams({
           dateFrom: String(dateFrom),
           dateTo: String(dateTo),
-          username: CALCOM_USERNAME,
+          username,
         });
         if (eventTypeId) params.append('eventTypeId', String(eventTypeId));
 
@@ -308,7 +307,8 @@ export async function POST(request: NextRequest) {
       case 'tools/call':
         const toolName = params?.name as string;
         const toolArgs = params?.arguments as Record<string, unknown>;
-        const toolResult = await executeCalendarTool(toolName, toolArgs, CALCOM_API_KEY ?? null);
+        const apiKey = process.env.CALCOM_API_KEY || null;
+        const toolResult = await executeCalendarTool(toolName, toolArgs, apiKey);
         response = {
           jsonrpc: '2.0',
           id,
@@ -343,7 +343,7 @@ export async function GET() {
   return NextResponse.json({
     status: 'ok',
     service: 'calendar-mcp',
-    configured: !!CALCOM_API_KEY,
+    configured: !!process.env.CALCOM_API_KEY,
     tools: CALENDAR_TOOLS.map((t) => t.name),
   });
 }

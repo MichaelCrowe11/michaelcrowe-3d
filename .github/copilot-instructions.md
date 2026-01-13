@@ -17,34 +17,40 @@ The application exposes tools to AI agents via the **Model Context Protocol (MCP
 
 ### 2. Service Clients & Lazy Initialization
 Services like Supabase and Stripe must be lazily initialized to prevent build-time errors when environment variables are missing.
-- **Pattern**: Use a getter function (`getSupabase()`, `getStripe()`) with a singleton variable.
-- **Do Not**: Instantiate clients globally at the top level of a file.
+- **Pattern**: Use a getter function (`getSupabase()`, `getStripe()`) with a singleton variable. 
+- **Rule**: **Never** instantiate clients globally at the top level of a file. always wrap in a accessor function.
 - **Reference**: `src/lib/supabase.ts`, `src/app/api/mcp/stripe/route.ts`.
 
-### 3. Database & Auth
-- **Auth**: Clerk (`@clerk/nextjs`) handles frontend auth. Uses helper functions like `getAuthUserId` in API routes.
-- **Data**: Supabase is used primarily for conversation storage/memory.
-- **Pattern**: Access via `src/lib/supabase.ts`. Use exported helpers (e.g., `storeConversation`) instead of raw queries in components.
+### 3. State Management (Zustand)
+- **Store**: `src/stores/sessionStore.ts` manages the active agent session, connection status, and conversation timer.
+- **Usage**: Use `useSessionStore` hook in client components to track conversation state (`isInConversation`, `selectedAgent`).
 
 ### 4. 3D & Avatar System
-- **Three.js**: Scenes reside in `src/components/three`. Use `@react-three/fiber` for the canvas. Use `leva` for debug controls.
-- **Avatars**: Simli and ElevenLabs integrations are in `src/components/avatar`.
-  - **State**: Avatar state (idle/speaking) is event-driven via listeners on the widgets (`SimliAvatar.tsx`).
+- **Three.js**: Scenes in `src/components/three`. Use `@react-three/fiber`.
+- **Avatar Integration**:
+  - **Simli/ElevenLabs**: `SimliAvatar.tsx` listens for custom DOM events: `elevenlabs-convai:agent-response`, `elevenlabs-convai:user-transcript`, `elevenlabs-convai:conversation-ended`.
+  - **Voice**: `VoiceConversation.tsx` uses `@elevenlabs/react` hook `useConversation` to manage connection and status.
 
-## Development Workflow
+## Development Patterns
 
-### Environment & Scripts
-- **Strict Env Checks**: Creating service clients (`getXXX()`) throws errors if keys are missing. Ensure `.env.local` is populated.
-- **Setup Scripts**: Use `scripts/` for initialization tasks (e.g., `node scripts/setup-stripe-products.mjs`).
-- **Build**: `npm run dev` for development.
+### Authentication & User Identity
+- **Clerk**: Auth is handled by `@clerk/nextjs` but is often conditional.
+- **Pattern**: Use `getAuthUserId()` helper in API routes which gracefully handles missing Clerk keys or unauthenticated requests (falling back to demo IDs if appropriate).
+- **Reference**: `src/app/api/agents/[id]/session/route.ts`.
 
-### Coding Standards
-- **Imports**: Use `@/` aliases for `src` (e.g., `import { ... } from '@/lib/supabase'`).
-- **Styling**: Tailwind v4 syntax. Use `framer-motion` for complex animations (e.g., `HolographicCard`).
-- **Types**: Define shared interfaces in `src/lib/*.ts` matching the data source (Supabase/Stripe types), not inline in components.
-- **Error Handling**: API routes should return structured JSON errors with appropriate HTTP status codes (e.g. 401, 402).
-- **Route Handlers**: Use standard Next.js 16 convention. Chat/Streaming routes often use `export const runtime = 'edge'`.
+### Configuration & Types
+- **Agents**: All agent metadata (IDs, prices, ElevenLabs IDs) is strictly typed in `src/config/agents.ts`.
+- **Environment**: Access environment variables via `process.env`. Ensure `.env.local` is present for local dev.
 
-### AI & API Patterns
-- **Direct Fetch**: For Azure OpenAI, prefer direct `fetch` calls over SDK wrappers when standard control is needed (see `src/app/api/chat/route.ts`).
+### Routing & Runtime
+- **Runtime**: Be explicit about runtime. Chat/Streaming routes often benefit from `export const runtime = 'edge'`, while database/heavy routes should be `nodejs`.
+- **API Structure**:
+  - `src/app/api/agents/[id]/session`: Agent connection tokens.
+  - `src/app/api/mcp/*`: MCP endpoints.
+  
+## Coding Standards
+- **Style**: Tailwind CSS v4. Use `clsx` or `cn` helper if available for class conditional merging.
+- **Animation**: `framer-motion` for UI transitions; `@react-spring` or R3F built-ins for 3D.
+- **Imports**: Use `@/` aliases (e.g., `import { agents } from '@/config/agents'`).
+- **Error Handling**: API routes return structured JSON. 
 

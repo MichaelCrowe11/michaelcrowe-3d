@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -11,8 +11,10 @@ interface NodeData {
 
 export function NeuralNetwork() {
   const groupRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.InstancedMesh>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
 
+  // Generate nodes and connections once
   const { nodes, lineGeometry } = useMemo(() => {
     const nodeCount = 60;
     const nodes: NodeData[] = [];
@@ -54,6 +56,29 @@ export function NeuralNetwork() {
     return { nodes, lineGeometry };
   }, []);
 
+  // Set up InstancedMesh positions and colors
+  useEffect(() => {
+    if (!meshRef.current) return;
+
+    const tempObject = new THREE.Object3D();
+    const color = new THREE.Color();
+    const palette = ['#22d3ee', '#34d399', '#a78bfa']; // Cyan, Emerald, Violet
+
+    nodes.forEach((node, i) => {
+      tempObject.position.copy(node.position);
+      tempObject.updateMatrix();
+      
+      meshRef.current?.setMatrixAt(i, tempObject.matrix);
+      
+      // Assign color cyclically
+      color.set(palette[i % 3]);
+      meshRef.current?.setColorAt(i, color);
+    });
+
+    meshRef.current.instanceMatrix.needsUpdate = true;
+    if (meshRef.current.instanceColor) meshRef.current.instanceColor.needsUpdate = true;
+  }, [nodes]);
+
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.05; // Slower rotation
@@ -63,17 +88,11 @@ export function NeuralNetwork() {
 
   return (
     <group ref={groupRef}>
-      {/* Neural network nodes */}
-      {nodes.map((node, i) => (
-        <mesh key={i} position={node.position}>
-          <sphereGeometry args={[0.04, 8, 8]} /> {/* Smaller, lower poly */}
-          <meshBasicMaterial
-            color={i % 3 === 0 ? '#22d3ee' : i % 3 === 1 ? '#34d399' : '#a78bfa'}
-            transparent
-            opacity={0.6}
-          />
-        </mesh>
-      ))}
+      {/* Optimized: Single InstancedMesh for all nodes */}
+      <instancedMesh ref={meshRef} args={[undefined, undefined, nodes.length]}>
+        <sphereGeometry args={[0.04, 8, 8]} />
+        <meshBasicMaterial transparent opacity={0.6} toneMapped={false} />
+      </instancedMesh>
 
       {/* Connection lines */}
       <lineSegments ref={linesRef} geometry={lineGeometry}>

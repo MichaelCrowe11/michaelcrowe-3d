@@ -31,7 +31,7 @@ function ExplosionRing({ progress }: { progress: number }) {
   return (
     <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
       <ringGeometry args={[0.8, 1, 64]} />
-      <meshBasicMaterial color="#22d3ee" transparent side={THREE.DoubleSide} />
+      <meshBasicMaterial color="#c9a55c" transparent side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -49,7 +49,7 @@ function CoreGlow({ intensity }: { intensity: number }) {
   return (
     <mesh ref={glowRef}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.8} />
+      <meshBasicMaterial color="#f5f0e8" transparent opacity={0.8} />
     </mesh>
   );
 }
@@ -86,8 +86,8 @@ function Orb({ data, phase, explosionProgress }: { data: OrbData; phase: string;
 
   return (
     <Trail
-      width={phase === 'expand' ? 2 : 0.5}
-      length={phase === 'expand' ? 8 : 2}
+      width={phase === 'expand' ? 1.5 : 0.3}
+      length={phase === 'expand' ? 6 : 2}
       color={data.color}
       attenuation={(t) => t * t}
     >
@@ -96,9 +96,9 @@ function Orb({ data, phase, explosionProgress }: { data: OrbData; phase: string;
           color={data.color}
           distort={data.distort}
           speed={data.speed * 2}
-          roughness={0}
-          metalness={1}
-          envMapIntensity={2}
+          roughness={0.3}
+          metalness={0.9}
+          envMapIntensity={1.5}
         />
       </Sphere>
     </Trail>
@@ -113,11 +113,12 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
   const [coreIntensity, setCoreIntensity] = useState(0.5);
   const hasCalledComplete = useRef(false);
 
-  const colors = ['#22d3ee', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4', '#14b8a6'];
+  // Sophisticated warm palette
+  const colors = ['#c9a55c', '#8b7355', '#d4c4a8', '#a08060', '#6b5b4f', '#b8a080', '#e8d8c0', '#707070'];
 
   const orbs = useMemo(() => {
     const orbData: OrbData[] = [];
-    const count = 80;
+    const count = 60;
 
     for (let i = 0; i < count; i++) {
       const theta = Math.random() * Math.PI * 2;
@@ -133,10 +134,10 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
       orbData.push({
         position: pos,
         velocity: pos.clone().normalize().multiplyScalar(0.8 + Math.random() * 2),
-        scale: 0.05 + Math.random() * 0.15,
+        scale: 0.05 + Math.random() * 0.12,
         color: colors[Math.floor(Math.random() * colors.length)],
-        distort: 0.3 + Math.random() * 0.5,
-        speed: 1 + Math.random() * 3,
+        distort: 0.2 + Math.random() * 0.4,
+        speed: 1 + Math.random() * 2,
         delay: Math.random() * Math.PI * 2
       });
     }
@@ -152,7 +153,7 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
     // Explode
     const explodeTimer = setTimeout(() => {
       setPhase('explode');
-      setCoreIntensity(5);
+      setCoreIntensity(4);
       setRingProgress(0.01);
     }, 1000);
 
@@ -184,19 +185,19 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
     }
 
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.3;
+      groupRef.current.rotation.y += delta * 0.2;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Sparkles background */}
+      {/* Sparkles background - dimmer */}
       <Sparkles
-        count={200}
+        count={150}
         scale={20}
-        size={2}
-        speed={0.3}
-        opacity={0.5}
+        size={1.5}
+        speed={0.2}
+        opacity={0.3}
         color="#ffffff"
       />
 
@@ -213,15 +214,15 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
         <Orb key={i} data={orb} phase={phase} explosionProgress={explosionProgress} />
       ))}
 
-      {/* Dynamic lights */}
+      {/* Dynamic lights - warm */}
       <pointLight
         position={[0, 0, 0]}
-        intensity={phase === 'explode' ? 100 : coreIntensity * 10}
-        color="#ffffff"
+        intensity={phase === 'explode' ? 80 : coreIntensity * 8}
+        color="#f5f0e8"
         distance={100}
       />
-      <pointLight position={[5, 5, 5]} intensity={2} color="#22d3ee" />
-      <pointLight position={[-5, -5, -5]} intensity={2} color="#8b5cf6" />
+      <pointLight position={[5, 5, 5]} intensity={1.5} color="#c9a55c" />
+      <pointLight position={[-5, -5, -5]} intensity={1.5} color="#8b7355" />
     </group>
   );
 }

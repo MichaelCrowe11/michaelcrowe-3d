@@ -8,6 +8,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { BigBang } from './BigBang';
 import { InfiniteOrbs } from './InfiniteOrbs';
 import { AudioReactive } from './AudioReactive';
+import { Loader } from '@/components/ui/Loader';
 
 function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntroComplete: () => void }) {
   return (
@@ -65,6 +66,10 @@ function LoadingScreen() {
   );
 }
 
+import { Loader } from '@/components/ui/Loader';
+
+// ... other imports will be preserved by using correct context
+
 export function IntroScene({ onIntroComplete }: { onIntroComplete: () => void }) {
   const [showOrbs, setShowOrbs] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -82,25 +87,26 @@ export function IntroScene({ onIntroComplete }: { onIntroComplete: () => void })
 
   return (
     <div className="fixed inset-0 z-0">
-      {!isLoaded && <LoadingScreen />}
-      <Canvas
-        gl={{
-          antialias: true,
-          alpha: false,
-          powerPreference: 'high-performance',
-          stencil: false,
-        }}
-        style={{ background: '#030303' }}
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 8], fov: 75 }}
-        onCreated={() => setIsLoaded(true)}
-      >
-        <color attach="background" args={['#030303']} />
-        <fog attach="fog" args={['#030303', 30, 100]} />
-        <Suspense fallback={null}>
-          <SceneContent showOrbs={showOrbs} onIntroComplete={handleIntroComplete} />
-        </Suspense>
-      </Canvas>
+      <Suspense fallback={<Loader />}>
+        <Canvas
+          gl={{
+            antialias: true,
+            alpha: false,
+            powerPreference: 'high-performance',
+            stencil: false,
+          }}
+          style={{ background: '#030303' }}
+          dpr={[1, 1.5]}
+          camera={{ position: [0, 0, 8], fov: 75 }}
+          onCreated={() => setIsLoaded(true)}
+        >
+          <color attach="background" args={['#030303']} />
+          <fog attach="fog" args={['#030303', 30, 100]} />
+          <Suspense fallback={null}>
+            <SceneContent showOrbs={showOrbs} onIntroComplete={handleIntroComplete} />
+          </Suspense>
+        </Canvas>
+      </Suspense>
     </div>
   );
 }

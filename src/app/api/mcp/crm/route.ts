@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // HubSpot CRM API integration
-const HUBSPOT_API_KEY = process.env.HUBSPOT_API_KEY;
 const HUBSPOT_BASE_URL = 'https://api.hubapi.com';
 
 // MCP Protocol types
@@ -563,7 +562,8 @@ export async function POST(request: NextRequest) {
       case 'tools/call':
         const toolName = params?.name as string;
         const toolArgs = params?.arguments as Record<string, unknown>;
-        const toolResult = await executeCRMTool(toolName, toolArgs, HUBSPOT_API_KEY ?? null);
+        const apiKey = process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_API_KEY || null;
+        const toolResult = await executeCRMTool(toolName, toolArgs, apiKey);
         response = {
           jsonrpc: '2.0',
           id,
@@ -598,7 +598,7 @@ export async function GET() {
   return NextResponse.json({
     status: 'ok',
     service: 'crm-mcp',
-    configured: !!HUBSPOT_API_KEY,
+    configured: !!(process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_API_KEY),
     tools: CRM_TOOLS.map((t) => t.name),
   });
 }

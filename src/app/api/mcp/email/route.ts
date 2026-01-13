@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Resend Email API integration
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const DEFAULT_FROM_EMAIL = process.env.FROM_EMAIL || 'Michael Crowe <hello@michaelcrowe.ai>';
 const RESEND_BASE_URL = 'https://api.resend.com';
+const DEFAULT_FROM_EMAIL = process.env.FROM_EMAIL || 'Michael Crowe <hello@michaelcrowe.ai>';
 
 // MCP Protocol types
 interface MCPRequest {
@@ -446,7 +445,8 @@ export async function POST(request: NextRequest) {
       case 'tools/call':
         const toolName = params?.name as string;
         const toolArgs = params?.arguments as Record<string, unknown>;
-        const toolResult = await executeEmailTool(toolName, toolArgs, RESEND_API_KEY ?? null);
+        const apiKey = process.env.RESEND_API_KEY || null;
+        const toolResult = await executeEmailTool(toolName, toolArgs, apiKey);
         response = {
           jsonrpc: '2.0',
           id,
@@ -481,7 +481,7 @@ export async function GET() {
   return NextResponse.json({
     status: 'ok',
     service: 'email-mcp',
-    configured: !!RESEND_API_KEY,
+    configured: !!process.env.RESEND_API_KEY,
     tools: EMAIL_TOOLS.map((t) => t.name),
     templates: Object.keys(EMAIL_TEMPLATES),
   });

@@ -24,29 +24,29 @@ function FloatingOrb({ data }: { data: OrbProps }) {
 
     const time = state.clock.elapsedTime;
 
-    // Complex floating motion
-    const x = data.position.x + Math.sin(time * 0.2 + data.phase) * 3;
-    const y = data.position.y + Math.cos(time * 0.15 + data.phase) * 2 + Math.sin(time * 0.4) * 0.5;
-    const z = data.position.z + Math.sin(time * 0.1 + data.phase * 2) * 4;
+    // Complex floating motion - slower, more elegant
+    const x = data.position.x + Math.sin(time * 0.15 + data.phase) * 2.5;
+    const y = data.position.y + Math.cos(time * 0.12 + data.phase) * 1.5 + Math.sin(time * 0.3) * 0.3;
+    const z = data.position.z + Math.sin(time * 0.08 + data.phase * 2) * 3;
 
-    // Mouse parallax
-    const parallaxStrength = data.depth * 0.03;
-    const px = state.pointer.x * parallaxStrength * 5;
-    const py = state.pointer.y * parallaxStrength * 3;
+    // Mouse parallax - more subtle
+    const parallaxStrength = data.depth * 0.02;
+    const px = state.pointer.x * parallaxStrength * 4;
+    const py = state.pointer.y * parallaxStrength * 2;
 
     meshRef.current.position.set(x + px, y + py, z);
 
-    // Breathing scale
-    const breathe = 1 + Math.sin(time * data.speed + data.phase) * 0.15;
+    // Breathing scale - more subtle
+    const breathe = 1 + Math.sin(time * data.speed + data.phase) * 0.1;
     meshRef.current.scale.setScalar(data.scale * breathe);
 
-    // Rotate
-    meshRef.current.rotation.x = time * 0.1 + data.phase;
-    meshRef.current.rotation.y = time * 0.15 + data.phase;
+    // Rotate - slower
+    meshRef.current.rotation.x = time * 0.05 + data.phase;
+    meshRef.current.rotation.y = time * 0.08 + data.phase;
 
-    // Pulsing emissive
+    // Pulsing emissive - subtle
     if (materialRef.current) {
-      materialRef.current.emissiveIntensity = 0.3 + Math.sin(time * 2 + data.phase) * 0.2;
+      materialRef.current.emissiveIntensity = 0.15 + Math.sin(time * 1.5 + data.phase) * 0.1;
     }
   });
 
@@ -56,12 +56,12 @@ function FloatingOrb({ data }: { data: OrbProps }) {
         ref={materialRef}
         color={data.color}
         emissive={data.color}
-        emissiveIntensity={0.3}
+        emissiveIntensity={0.15}
         distort={data.distort}
         speed={data.speed}
-        roughness={0.2}
-        metalness={0.8}
-        envMapIntensity={2}
+        roughness={0.4}
+        metalness={0.9}
+        envMapIntensity={1.5}
       />
     </Sphere>
   );
@@ -72,7 +72,7 @@ function GlowSphere({ position, color, scale }: { position: [number, number, num
 
   useFrame((state) => {
     if (ref.current) {
-      const pulse = 1 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.5) * 0.2;
       ref.current.scale.setScalar(scale * pulse);
     }
   });
@@ -80,7 +80,7 @@ function GlowSphere({ position, color, scale }: { position: [number, number, num
   return (
     <mesh ref={ref} position={position}>
       <sphereGeometry args={[1, 16, 16]} />
-      <meshBasicMaterial color={color} transparent opacity={0.1} />
+      <meshBasicMaterial color={color} transparent opacity={0.04} />
     </mesh>
   );
 }
@@ -88,57 +88,67 @@ function GlowSphere({ position, color, scale }: { position: [number, number, num
 export function InfiniteOrbs() {
   const groupRef = useRef<THREE.Group>(null);
 
-  const colors = ['#22d3ee', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899', '#06b6d4', '#a855f7', '#14b8a6'];
+  // Sophisticated neutral palette - warm metallics, earth tones
+  const colors = [
+    '#c9a55c', // warm gold
+    '#8b7355', // bronze
+    '#6b5b4f', // dark bronze
+    '#a08060', // amber bronze
+    '#d4c4a8', // soft cream
+    '#4a423a', // deep earth
+    '#b8a080', // muted gold
+    '#707070', // neutral gray
+  ];
 
   const orbs = useMemo(() => {
     const orbData: OrbProps[] = [];
 
     // Near orbs (larger, more visible)
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 12; i++) {
       const x = (Math.random() - 0.5) * 30;
       const y = (Math.random() - 0.5) * 20;
       const z = -3 - Math.random() * 10;
 
       orbData.push({
         position: new THREE.Vector3(x, y, z),
-        scale: 0.4 + Math.random() * 0.8,
+        scale: 0.35 + Math.random() * 0.6,
         color: colors[Math.floor(Math.random() * colors.length)],
-        distort: 0.3 + Math.random() * 0.4,
-        speed: 0.5 + Math.random() * 1.5,
-        phase: Math.random() * Math.PI * 2,
-        depth: Math.abs(z)
-      });
-    }
-
-    // Mid orbs
-    for (let i = 0; i < 20; i++) {
-      const x = (Math.random() - 0.5) * 50;
-      const y = (Math.random() - 0.5) * 35;
-      const z = -10 - Math.random() * 20;
-
-      orbData.push({
-        position: new THREE.Vector3(x, y, z),
-        scale: 0.3 + Math.random() * 0.5,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        distort: 0.2 + Math.random() * 0.4,
+        distort: 0.2 + Math.random() * 0.3,
         speed: 0.3 + Math.random() * 1,
         phase: Math.random() * Math.PI * 2,
         depth: Math.abs(z)
       });
     }
 
+    // Mid orbs
+    for (let i = 0; i < 18; i++) {
+      const x = (Math.random() - 0.5) * 50;
+      const y = (Math.random() - 0.5) * 35;
+      const z = -10 - Math.random() * 20;
+
+      orbData.push({
+        position: new THREE.Vector3(x, y, z),
+        scale: 0.25 + Math.random() * 0.4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        distort: 0.15 + Math.random() * 0.3,
+        speed: 0.2 + Math.random() * 0.8,
+        phase: Math.random() * Math.PI * 2,
+        depth: Math.abs(z)
+      });
+    }
+
     // Far orbs (smaller, subtle)
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
       const x = (Math.random() - 0.5) * 80;
       const y = (Math.random() - 0.5) * 50;
       const z = -25 - Math.random() * 40;
 
       orbData.push({
         position: new THREE.Vector3(x, y, z),
-        scale: 0.15 + Math.random() * 0.3,
+        scale: 0.12 + Math.random() * 0.25,
         color: colors[Math.floor(Math.random() * colors.length)],
-        distort: 0.1 + Math.random() * 0.3,
-        speed: 0.2 + Math.random() * 0.5,
+        distort: 0.08 + Math.random() * 0.2,
+        speed: 0.15 + Math.random() * 0.4,
         phase: Math.random() * Math.PI * 2,
         depth: Math.abs(z)
       });
@@ -149,61 +159,61 @@ export function InfiniteOrbs() {
 
   useFrame((state) => {
     if (groupRef.current) {
-      // Subtle rotation
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.01;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.02;
+      // Very subtle rotation
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.005;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.03) * 0.01;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Star field */}
+      {/* Star field - dimmer, more sparse */}
       <Sparkles
-        count={500}
+        count={300}
         scale={100}
-        size={1.5}
-        speed={0.2}
-        opacity={0.6}
+        size={1}
+        speed={0.1}
+        opacity={0.35}
         color="#ffffff"
       />
 
-      {/* Colored sparkles */}
+      {/* Subtle warm sparkles */}
       <Sparkles
-        count={100}
+        count={60}
         scale={60}
-        size={3}
-        speed={0.3}
-        opacity={0.4}
-        color="#22d3ee"
+        size={2}
+        speed={0.15}
+        opacity={0.2}
+        color="#c9a55c"
       />
       <Sparkles
-        count={100}
+        count={40}
         scale={60}
-        size={3}
-        speed={0.3}
-        opacity={0.4}
-        color="#8b5cf6"
+        size={2}
+        speed={0.15}
+        opacity={0.15}
+        color="#8b7355"
       />
 
-      {/* Ambient glow spheres */}
-      <GlowSphere position={[-15, 10, -20]} color="#22d3ee" scale={8} />
-      <GlowSphere position={[20, -8, -30]} color="#8b5cf6" scale={10} />
-      <GlowSphere position={[0, 15, -25]} color="#10b981" scale={6} />
+      {/* Ambient glow spheres - warm, subtle */}
+      <GlowSphere position={[-15, 10, -20]} color="#c9a55c" scale={10} />
+      <GlowSphere position={[20, -8, -30]} color="#8b7355" scale={12} />
+      <GlowSphere position={[0, 15, -25]} color="#6b5b4f" scale={8} />
 
       {/* Floating orbs */}
       {orbs.map((orb, i) => (
         <FloatingOrb key={i} data={orb} />
       ))}
 
-      {/* Dynamic lights that move */}
-      <Float speed={1} rotationIntensity={0} floatIntensity={2}>
-        <pointLight position={[10, 10, 5]} intensity={3} color="#22d3ee" distance={50} />
+      {/* Dynamic lights - warm tones */}
+      <Float speed={0.8} rotationIntensity={0} floatIntensity={1.5}>
+        <pointLight position={[10, 10, 5]} intensity={1.5} color="#c9a55c" distance={50} />
       </Float>
-      <Float speed={0.8} rotationIntensity={0} floatIntensity={2}>
-        <pointLight position={[-10, -5, 0]} intensity={2} color="#8b5cf6" distance={40} />
+      <Float speed={0.6} rotationIntensity={0} floatIntensity={1.5}>
+        <pointLight position={[-10, -5, 0]} intensity={1} color="#8b7355" distance={40} />
       </Float>
-      <Float speed={1.2} rotationIntensity={0} floatIntensity={3}>
-        <pointLight position={[0, 5, -10]} intensity={2} color="#10b981" distance={40} />
+      <Float speed={0.9} rotationIntensity={0} floatIntensity={2}>
+        <pointLight position={[0, 5, -10]} intensity={1} color="#d4c4a8" distance={40} />
       </Float>
     </group>
   );
