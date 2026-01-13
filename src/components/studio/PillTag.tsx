@@ -2,16 +2,16 @@
 
 interface PillTagProps {
   children: React.ReactNode;
-  variant?: 'cyan' | 'violet' | 'emerald' | 'amber';
+  variant?: 'cyan' | 'sky' | 'emerald' | 'amber';
   className?: string;
 }
 
 export function PillTag({ children, variant = 'cyan', className = '' }: PillTagProps) {
   const variantClasses = {
-    cyan: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
-    violet: 'bg-violet-500/20 text-violet-300 border-violet-500/30',
-    emerald: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-    amber: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+    cyan: 'bg-cyan-400/15 text-cyan-200 border-cyan-300/30',
+    sky: 'bg-sky-400/15 text-sky-200 border-sky-300/30',
+    emerald: 'bg-emerald-400/15 text-emerald-200 border-emerald-300/30',
+    amber: 'bg-amber-400/15 text-amber-200 border-amber-300/30',
   };
   
   return (

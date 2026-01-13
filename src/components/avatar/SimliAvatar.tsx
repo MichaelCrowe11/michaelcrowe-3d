@@ -167,7 +167,10 @@ export function SimliAvatar() {
                   animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <span className="text-2xl">🎤</span>
+                  <svg className="w-7 h-7 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 18.75a4.5 4.5 0 004.5-4.5V6a4.5 4.5 0 10-9 0v8.25a4.5 4.5 0 004.5 4.5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M7.5 10.5v3a4.5 4.5 0 009 0v-3M12 18.75v2.25" />
+                  </svg>
                 </motion.div>
               </div>
             )}

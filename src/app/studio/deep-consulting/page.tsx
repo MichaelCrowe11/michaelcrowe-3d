@@ -44,7 +44,7 @@ export default function DeepConsultingPage() {
   
   if (phase === 'selector') {
     return (
-      <div className="relative min-h-screen bg-[#030303]">
+      <div className="relative min-h-screen bg-[#060607]">
         <OrbitBackground />
         <FloatingBlobs count={2} />
         <AgentSelector onSelect={handleAgentSelect} onBack={handleBack} />
@@ -53,7 +53,7 @@ export default function DeepConsultingPage() {
   }
   
   return (
-    <main className="relative min-h-screen bg-[#030303] flex items-center justify-center">
+    <main className="relative min-h-screen bg-[#060607] flex items-center justify-center">
       <OrbitBackground />
       <FloatingBlobs count={3} />
       
@@ -76,7 +76,7 @@ export default function DeepConsultingPage() {
           
           <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-2xl mx-auto">
             Voice-first consulting with domain experts. <br className="hidden md:block" />
-            Pay only for what you use.
+            Built for clarity, rigor, and real decisions.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
@@ -89,7 +89,7 @@ export default function DeepConsultingPage() {
           </div>
           
           <p className="text-white/40 text-sm">
-            3 min free • then from $0.40/min
+            3 min included - $0.40/min after
           </p>
         </motion.div>
         
@@ -101,9 +101,36 @@ export default function DeepConsultingPage() {
           className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {[
-            { icon: '🎙️', title: 'Voice-First', desc: 'Natural conversation with AI experts' },
-            { icon: '🔬', title: 'Domain Experts', desc: 'Specialized knowledge across fields' },
-            { icon: '💰', title: 'Pay-As-You-Go', desc: 'Only pay for the time you use' },
+            {
+              icon: (
+                <svg className="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18.75a4.5 4.5 0 004.5-4.5V6a4.5 4.5 0 10-9 0v8.25a4.5 4.5 0 004.5 4.5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7.5 10.5v3a4.5 4.5 0 009 0v-3M12 18.75v2.25" />
+                </svg>
+              ),
+              title: 'Voice-first',
+              desc: 'Natural conversation that preserves context and intent.',
+            },
+            {
+              icon: (
+                <svg className="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.5 6h3m-4.5 3h6m-7.5 3h9m-10.5 3h12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 3h12l-1.5 18h-9L6 3z" />
+                </svg>
+              ),
+              title: 'Domain experts',
+              desc: 'Specialized knowledge across life sciences and R&D.',
+            },
+            {
+              icon: (
+                <svg className="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6l4 2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ),
+              title: 'Session-based',
+              desc: 'Transparent timing and clear session boundaries.',
+            },
           ].map((feature, i) => (
             <motion.div
               key={feature.title}
@@ -112,7 +139,7 @@ export default function DeepConsultingPage() {
               transition={{ delay: 0.6 + i * 0.1 }}
               className="glass-card p-6"
             >
-              <div className="text-4xl mb-3">{feature.icon}</div>
+              <div className="mb-4 flex items-center justify-center">{feature.icon}</div>
               <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
               <p className="text-white/60 text-sm">{feature.desc}</p>
             </motion.div>

@@ -16,9 +16,9 @@ export function FloatingBlobs({ count = 3, className = '' }: FloatingBlobsProps)
     delay: i * 2,
     duration: 20 + Math.random() * 10,
     gradient: [
-      'from-cyan-500/20 to-emerald-500/10',
-      'from-violet-500/20 to-magenta-500/10',
-      'from-emerald-500/20 to-cyan-500/10',
+      'from-amber-400/18 to-emerald-400/10',
+      'from-slate-400/18 to-sky-400/10',
+      'from-emerald-400/18 to-cyan-400/10',
     ][i % 3],
   }));
   

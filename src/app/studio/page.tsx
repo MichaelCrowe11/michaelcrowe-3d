@@ -12,7 +12,7 @@ export default function StudioPage() {
   const agents = getActiveAgents();
   
   return (
-    <main className="relative min-h-screen bg-[#030303]">
+    <main className="relative min-h-screen bg-[#060607]">
       <OrbitBackground />
       <FloatingBlobs count={2} />
       

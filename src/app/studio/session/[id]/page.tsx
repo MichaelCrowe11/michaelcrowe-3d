@@ -34,7 +34,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
   };
   
   return (
-    <main className="relative min-h-screen bg-[#030303] flex items-center justify-center">
+    <main className="relative min-h-screen bg-[#060607] flex items-center justify-center">
       <OrbitBackground />
       <FloatingBlobs count={2} />
       

@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-space",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -45,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const content = (
-    <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`dark ${manrope.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased selection:bg-cyan-500/30 cursor-none">
         <LiquidCursor />
         {children}
@@ -63,7 +64,7 @@ export default function RootLayout({
         baseTheme: dark,
         variables: {
           colorPrimary: "#22d3ee",
-          colorBackground: "#030303",
+          colorBackground: "#060607",
         },
       }}
     >

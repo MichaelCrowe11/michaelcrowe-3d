@@ -1,42 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030303;
-  --foreground: #ededed;
+  --background: #060607;
+  --foreground: #f3f1ed;
   
-  /* Crowe Logic Design Tokens - Cosmic Glass Console */
-  --bg: #030303;
-  --bg-elevated: #0a0a0a;
-  --panel: rgba(255, 255, 255, 0.03);
-  --panel-hover: rgba(255, 255, 255, 0.05);
+  /* Crowe Logic design tokens */
+  --bg: #060607;
+  --bg-elevated: #0e0f11;
+  --panel: rgba(18, 18, 20, 0.55);
+  --panel-hover: rgba(26, 26, 30, 0.7);
   --panel-border: rgba(255, 255, 255, 0.08);
-  --panel-border-hover: rgba(255, 255, 255, 0.15);
+  --panel-border-hover: rgba(255, 255, 255, 0.16);
   
-  --text: #ededed;
-  --text-muted: rgba(255, 255, 255, 0.7);
-  --text-subtle: rgba(255, 255, 255, 0.5);
-  --text-disabled: rgba(255, 255, 255, 0.3);
+  --text: #f3f1ed;
+  --text-muted: rgba(243, 241, 237, 0.7);
+  --text-subtle: rgba(243, 241, 237, 0.5);
+  --text-disabled: rgba(243, 241, 237, 0.3);
   
-  /* Neon accent colors */
-  --cyan: #22d3ee;
-  --cyan-bright: #06b6d4;
-  --teal: #14b8a6;
-  --violet: #8b5cf6;
-  --magenta: #d946ef;
-  --emerald: #10b981;
+  /* Accent colors */
+  --cyan: #5bc9d6;
+  --cyan-bright: #3cb8c7;
+  --teal: #39b7a4;
+  --violet: #7aa2f7;
+  --magenta: #d0a980;
+  --emerald: #7ad4b5;
   
   /* Glow effects */
-  --glow-cyan: 0 0 20px rgba(34, 211, 238, 0.3);
-  --glow-cyan-strong: 0 0 40px rgba(34, 211, 238, 0.6);
-  --glow-violet: 0 0 20px rgba(139, 92, 246, 0.3);
-  --glow-magenta: 0 0 20px rgba(217, 70, 239, 0.3);
+  --glow-cyan: 0 0 20px rgba(91, 201, 214, 0.24);
+  --glow-cyan-strong: 0 0 40px rgba(91, 201, 214, 0.5);
+  --glow-violet: 0 0 20px rgba(122, 162, 247, 0.25);
+  --glow-magenta: 0 0 20px rgba(208, 169, 128, 0.3);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
 }
 
 * {
@@ -74,8 +74,21 @@ body::before {
   height: 100%;
   z-index: -1;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 0%, rgba(208, 169, 128, 0.18) 0%, transparent 52%),
+    radial-gradient(circle at 85% 80%, rgba(91, 201, 214, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.25;
   pointer-events: none;
 }
 
@@ -107,7 +120,7 @@ body::before {
 
 /* Selection */
 ::selection {
-  background: rgba(34, 211, 238, 0.3);
+  background: rgba(91, 201, 214, 0.35);
   color: #fff;
 }
 
@@ -117,11 +130,11 @@ body::before {
 }
 
 *:focus-visible {
-  outline: 1px solid rgba(34, 211, 238, 0.5);
+  outline: 1px solid rgba(91, 201, 214, 0.45);
   outline-offset: 2px;
 }
 
-/* Animations - Cosmic Glass Console */
+/* Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -134,8 +147,8 @@ body::before {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
-  50% { opacity: 1; box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 20px rgba(91, 201, 214, 0.25); }
+  50% { opacity: 1; box-shadow: 0 0 40px rgba(91, 201, 214, 0.5); }
 }
 
 @keyframes gradient-shift {
@@ -207,7 +220,7 @@ body::before {
   }
 }
 
-/* Utility classes - Cosmic Glass Console */
+/* Utility classes */
 .glass {
   background: var(--panel);
   backdrop-filter: blur(20px);
@@ -224,20 +237,20 @@ body::before {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--panel-border);
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 18px 50px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   border-radius: 1.5rem;
-  transition: all 0.3s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
 }
 
 .glass-card:hover {
   background: var(--panel-hover);
   border-color: var(--panel-border-hover);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: 
-    0 12px 48px -12px rgba(34, 211, 238, 0.2),
-    0 0 0 1px rgba(34, 211, 238, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 28px 70px -20px rgba(91, 201, 214, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .glass-panel {
@@ -246,8 +259,8 @@ body::before {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--panel-border);
   box-shadow: 
-    0 8px 40px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .glass-button {
@@ -265,7 +278,7 @@ body::before {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #22d3ee 0%, #34d399 50%, #a78bfa 100%);
+  background: linear-gradient(135deg, #d0a980 0%, #7ad4b5 50%, #5bc9d6 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

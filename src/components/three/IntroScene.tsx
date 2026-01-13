@@ -59,7 +59,7 @@ function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntr
 
 function LoadingScreen() {
   return (
-    <div className="absolute inset-0 z-50 bg-[#030303] flex items-center justify-center">
+    <div className="absolute inset-0 z-50 bg-[#060607] flex items-center justify-center">
       <div className="w-12 h-12 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
     </div>
   );
@@ -90,13 +90,13 @@ export function IntroScene({ onIntroComplete }: { onIntroComplete: () => void })
           powerPreference: 'high-performance',
           stencil: false,
         }}
-        style={{ background: '#030303' }}
+        style={{ background: '#060607' }}
         dpr={[1, 2]}
         camera={{ position: [0, 0, 8], fov: 75 }}
         onCreated={() => setIsLoaded(true)}
       >
-        <color attach="background" args={['#030303']} />
-        <fog attach="fog" args={['#030303', 30, 100]} />
+        <color attach="background" args={['#060607']} />
+        <fog attach="fog" args={['#060607', 30, 100]} />
         <Suspense fallback={null}>
           <SceneContent showOrbs={showOrbs} onIntroComplete={handleIntroComplete} />
         </Suspense>
