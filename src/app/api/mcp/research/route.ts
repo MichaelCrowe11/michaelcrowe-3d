@@ -1,22 +1,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-// Constants
-const SEARCH_PROVIDER = 'tavily'; // Default provider
-
 // MCP Protocol types
 interface MCPRequest {
   jsonrpc: '2.0';
   id: string | number;
   method: string;
   params?: Record<string, unknown>;
-}
-
-interface MCPResponse {
-  jsonrpc: '2.0';
-  id: string | number;
-  result?: unknown;
-  error?: { code: number; message: string };
 }
 
 // Tool definitions
@@ -139,8 +129,6 @@ export async function POST(request: NextRequest) {
   try {
     const body: MCPRequest = await request.json();
     const { id, method, params } = body;
-
-    let response: MCPResponse;
 
     switch (method) {
       case 'initialize':

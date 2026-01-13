@@ -1,7 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+
+type MCPTool = {
+  name: string;
+  description: string;
+  inputSchema: Record<string, unknown>;
+};
 
 const MCP_SERVICES = [
   { id: 'stripe', name: 'Stripe' },
@@ -12,7 +17,7 @@ const MCP_SERVICES = [
 
 export default function MCPTester() {
   const [selectedService, setSelectedService] = useState(MCP_SERVICES[0].id);
-  const [tools, setTools] = useState<any[]>([]);
+  const [tools, setTools] = useState<MCPTool[]>([]);
   const [selectedTool, setSelectedTool] = useState<string>('');
   const [toolArgs, setToolArgs] = useState<string>('{}');
   const [output, setOutput] = useState<string>('');
@@ -50,7 +55,7 @@ export default function MCPTester() {
       let parsedArgs = {};
       try {
         parsedArgs = JSON.parse(toolArgs);
-      } catch (e) {
+      } catch {
         throw new Error('Invalid JSON in arguments');
       }
 
