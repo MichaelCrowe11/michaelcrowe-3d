@@ -7,9 +7,34 @@ import { GlassCard } from '@/components/studio/GlassComponents';
 
 export default function ParallelSynthPage() {
   const actions = [
-    { title: 'Start a Run', icon: '▶️', desc: 'Begin a new synthesis workflow' },
-    { title: 'New Synthesis', icon: '✨', desc: 'Create custom synthesis pipeline' },
-    { title: 'Import Library', icon: '📚', desc: 'Import existing templates' },
+    {
+      title: 'Start a run',
+      icon: (
+        <svg className="w-9 h-9 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M8.25 6.75v10.5L17.25 12 8.25 6.75z" />
+        </svg>
+      ),
+      desc: 'Begin a new synthesis workflow.',
+    },
+    {
+      title: 'New synthesis',
+      icon: (
+        <svg className="w-9 h-9 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+      ),
+      desc: 'Create a custom synthesis pipeline.',
+    },
+    {
+      title: 'Import library',
+      icon: (
+        <svg className="w-9 h-9 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M7.5 4.5h9a1.5 1.5 0 011.5 1.5v12a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 18V6a1.5 1.5 0 011.5-1.5z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 8.25h6M9 12h6M9 15.75h4.5" />
+        </svg>
+      ),
+      desc: 'Bring existing templates into the workspace.',
+    },
   ];
   
   return (
@@ -53,7 +78,7 @@ export default function ParallelSynthPage() {
             </p>
             
             <GlowButton variant="primary" size="lg">
-              Explore Now
+              Enter ParallelSynth
             </GlowButton>
           </motion.div>
           
@@ -72,7 +97,7 @@ export default function ParallelSynthPage() {
                 transition={{ delay: 0.6 + i * 0.1 }}
               >
                 <GlassCard className="p-8 text-center cursor-pointer">
-                  <div className="text-5xl mb-4">{action.icon}</div>
+                  <div className="mb-4 flex items-center justify-center">{action.icon}</div>
                   <h3 className="text-xl font-bold text-white mb-2">{action.title}</h3>
                   <p className="text-white/60 text-sm">{action.desc}</p>
                 </GlassCard>
@@ -89,21 +114,20 @@ export default function ParallelSynthPage() {
           >
             <h2 className="text-2xl font-bold text-white mb-4">What is ParallelSynth?</h2>
             <p className="text-white/70 leading-relaxed">
-              ParallelSynth is a first-class Studio module that enables sophisticated orchestration
-              of multiple AI agents working in parallel. Build complex workflows, manage distributed
-              computations, and synthesize insights from diverse domain experts—all with the same
-              cosmic glass console aesthetic that defines Crowe Logic Studio.
+              ParallelSynth is a Studio module that orchestrates multiple agents working in parallel.
+              Build complex workflows, manage distributed computation, and synthesize insights across
+              specialized domains with a single, focused workspace.
             </p>
             
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-sm border border-cyan-500/30">
-                Beta Access
+              <span className="px-4 py-2 rounded-full bg-cyan-500/15 text-cyan-200 text-sm border border-cyan-500/20">
+                Studio pilot
               </span>
-              <span className="px-4 py-2 rounded-full bg-violet-500/20 text-violet-300 text-sm border border-violet-500/30">
-                Custom Pricing
+              <span className="px-4 py-2 rounded-full bg-violet-500/15 text-violet-200 text-sm border border-violet-500/20">
+                Tailored scope
               </span>
-              <span className="px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-300 text-sm border border-emerald-500/30">
-                Enterprise Ready
+              <span className="px-4 py-2 rounded-full bg-emerald-500/15 text-emerald-200 text-sm border border-emerald-500/20">
+                Audit-ready
               </span>
             </div>
           </motion.div>

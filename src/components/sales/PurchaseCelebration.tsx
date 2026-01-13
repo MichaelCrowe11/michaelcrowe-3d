@@ -107,16 +107,20 @@ export function PurchaseCelebration({ show, productName, onComplete }: PurchaseC
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                className="text-6xl mb-4"
+                className="mb-4 flex items-center justify-center"
               >
-                🎉
+                <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center bg-white/5">
+                  <svg className="w-8 h-8 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
               </motion.div>
               <h2 className="text-2xl font-bold text-white mb-2">
-                Purchase Complete!
+                Access confirmed
               </h2>
               {productName && (
                 <p className="text-white/70">
-                  Thank you for purchasing<br />
+                  Access enabled for<br />
                   <span className="text-cyan-400 font-semibold">{productName}</span>
                 </p>
               )}

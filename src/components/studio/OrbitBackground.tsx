@@ -50,9 +50,9 @@ export function OrbitBackground({ showNoise = true, className = '' }: OrbitBackg
     
     // Orbit rings
     const rings = [
-      { radius: 300, speed: 0.0003, color: 'rgba(34, 211, 238, 0.15)' },
-      { radius: 450, speed: 0.0002, color: 'rgba(139, 92, 246, 0.1)' },
-      { radius: 600, speed: 0.00015, color: 'rgba(16, 185, 129, 0.08)' },
+      { radius: 280, speed: 0.0003, color: 'rgba(208, 169, 128, 0.14)' },
+      { radius: 420, speed: 0.0002, color: 'rgba(91, 201, 214, 0.12)' },
+      { radius: 560, speed: 0.00015, color: 'rgba(122, 212, 181, 0.1)' },
     ];
     
     let rotation = 0;

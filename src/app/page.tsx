@@ -6,8 +6,9 @@ import { SalesProvider } from '@/components/sales/SalesProvider';
 export default function Home() {
   return (
     <SalesProvider>
-      <StudioHero />
+      <main className="relative min-h-screen bg-[#060607]">
+        <StudioHero />
+      </main>
     </SalesProvider>
   );
 }
-

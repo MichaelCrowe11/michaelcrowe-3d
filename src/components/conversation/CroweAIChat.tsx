@@ -377,7 +377,7 @@ export function CroweAIChat() {
                           onClick={() => openCheckout(activeProduct.checkoutUrl)}
                           className="flex-1 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-bold tracking-wide shadow-lg hover:shadow-cyan-500/20 transition-all active:scale-95"
                         >
-                          Buy Now
+                          Continue
                         </button>
                         <button
                           onClick={() => setActiveProduct(null)}

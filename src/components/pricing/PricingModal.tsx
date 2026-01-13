@@ -305,7 +305,7 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                             disabled={loading === id || !email}
                             className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
                           >
-                            {loading === id ? 'Loading...' : 'Buy Now'}
+                            {loading === id ? 'Loading...' : 'Continue'}
                           </button>
                         </div>
                       );
