@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { HolographicCard } from '@/components/ui/HolographicCard';
 
 const products = [
   {
@@ -78,61 +79,64 @@ export function Products() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              whileHover={{ y: -10 }}
-              className="glass-card overflow-hidden group border-white/5 bg-white/5 backdrop-blur-sm"
             >
-              {/* Product image placeholder */}
-              <div className={`h-48 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
-                <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl"
-                    whileHover={{ rotate: 5, scale: 1.1 }}
-                  >
-                    {product.icon}
-                  </motion.div>
-                </div>
-                {product.originalPrice && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-rose-500/90 backdrop-blur-sm text-white text-xs font-bold tracking-wider rounded-full shadow-lg">
-                    SALE
+              <HolographicCard
+                className="overflow-hidden group h-full bg-white/5 backdrop-blur-sm"
+                glareColor={i === 1 ? 'cyan' : i === 2 ? 'purple' : 'emerald'}
+              >
+                {/* Product image placeholder */}
+                <div className={`h-48 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                  <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div
+                      className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl"
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                    >
+                      {product.icon}
+                    </motion.div>
                   </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-8">
-                <h3 className="text-2xl font-display font-bold text-white mb-2">{product.title}</h3>
-                <p className="text-cyan-200/60 text-sm mb-6 font-medium tracking-wide uppercase">{product.subtitle}</p>
-
-                {/* Features */}
-                <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8">
-                  {product.features.map((feature, j) => (
-                    <div key={j} className="flex items-center gap-2 text-sm text-gray-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-                      {feature}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Price */}
-                <div className="flex items-baseline gap-3 mb-8">
-                  <span className="text-4xl font-display font-bold text-white">{product.price}</span>
                   {product.originalPrice && (
-                    <span className="text-lg text-white/30 line-through decoration-white/30">{product.originalPrice}</span>
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-rose-500/90 backdrop-blur-sm text-white text-xs font-bold tracking-wider rounded-full shadow-lg">
+                      SALE
+                    </div>
                   )}
                 </div>
 
-                {/* CTA */}
-                <motion.a
-                  href={product.link}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-bold tracking-wide text-center shadow-lg hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 border border-white/20`}
-                >
-                  Get Started
-                </motion.a>
-              </div>
+                {/* Content */}
+                <div className="p-8">
+                  <h3 className="text-2xl font-display font-bold text-white mb-2">{product.title}</h3>
+                  <p className="text-cyan-200/60 text-sm mb-6 font-medium tracking-wide uppercase">{product.subtitle}</p>
+
+                  {/* Features */}
+                  <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8">
+                    {product.features.map((feature, j) => (
+                      <div key={j} className="flex items-center gap-2 text-sm text-gray-300">
+                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Price */}
+                  <div className="flex items-baseline gap-3 mb-8">
+                    <span className="text-4xl font-display font-bold text-white">{product.price}</span>
+                    {product.originalPrice && (
+                      <span className="text-lg text-white/30 line-through decoration-white/30">{product.originalPrice}</span>
+                    )}
+                  </div>
+
+                  {/* CTA */}
+                  <motion.a
+                    href={product.link}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-bold tracking-wide text-center shadow-lg hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 border border-white/20`}
+                  >
+                    Get Started
+                  </motion.a>
+                </div>
+              </HolographicCard>
             </motion.div>
           ))}
         </div>

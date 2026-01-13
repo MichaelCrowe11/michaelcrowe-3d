@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 
-export function Hero() {
+
+export function Hero({ onStartDeepDive }: { onStartDeepDive?: () => void }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
@@ -25,7 +26,7 @@ export function Hero() {
         >
           <span className="text-white drop-shadow-lg">Michael</span>
           <br />
-          <span className="gradient-text drop-shadow-lg">Crowe</span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400 animate-gradient-x drop-shadow-lg p-2">Crowe</span>
         </motion.h1>
 
         <motion.p
@@ -35,7 +36,7 @@ export function Hero() {
           className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-10"
         >
           Pioneering AI solutions in drug discovery, cultivating intelligence from code to cultivation.
-          Building the future with Claude 4.5 Opus and cutting-edge ML systems.
+          Building the future with Agents and cutting-edge ML systems.
         </motion.p>
 
         <motion.div
@@ -44,6 +45,14 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="flex flex-wrap gap-4 justify-center"
         >
+          {onStartDeepDive && (
+             <button
+             onClick={onStartDeepDive}
+             className="px-8 py-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold text-lg hover:bg-white/20 transition-all shadow-lg hover:shadow-cyan-500/20"
+           >
+             Start Deep Dive
+           </button>
+          )}
           <a
             href="#services"
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-cyan-500/25"

@@ -51,7 +51,7 @@ export async function POST(
   }
 
   // Check if user has credits (skip for demo users)
-  if (!isDemo) {
+  if (!isDemo && userId) {
     const creditStatus = await canStartSession(userId);
     if (!creditStatus.canStart) {
       return NextResponse.json(
