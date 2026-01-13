@@ -20,38 +20,63 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
   // Get product visual based on type
-  const getProductVisual = (name: string): { icon: string; gradient: string; badge?: string } => {
+  const getProductVisual = (name: string): { icon: React.ReactNode; gradient: string; badge?: string } => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('hardcover') || lowerName.includes('premium')) {
       return {
-        icon: '📚',
+        icon: (
+          <svg className="w-16 h-16 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M6.75 4.5h9a2.25 2.25 0 012.25 2.25v10.5A2.25 2.25 0 0115.75 19.5h-9A2.25 2.25 0 014.5 17.25V6.75A2.25 2.25 0 016.75 4.5z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 7.5h6M9 11.25h6M9 15h4.5" />
+          </svg>
+        ),
         gradient: 'from-amber-600/40 to-orange-700/40',
         badge: 'PREMIUM',
       };
     }
     if (lowerName.includes('digital')) {
       return {
-        icon: '💻',
+        icon: (
+          <svg className="w-16 h-16 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M4.5 6.75h15a1.5 1.5 0 011.5 1.5v7.5a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 15.75v-7.5a1.5 1.5 0 011.5-1.5z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M8.25 19.5h7.5" />
+          </svg>
+        ),
         gradient: 'from-blue-600/40 to-cyan-600/40',
         badge: 'DIGITAL',
       };
     }
     if (lowerName.includes('consult')) {
       return {
-        icon: '🎯',
+        icon: (
+          <svg className="w-16 h-16 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="7" strokeWidth={1.6} />
+            <circle cx="12" cy="12" r="3" strokeWidth={1.6} />
+          </svg>
+        ),
         gradient: 'from-purple-600/40 to-pink-600/40',
         badge: '1:1',
       };
     }
     if (lowerName.includes('ai') || lowerName.includes('access')) {
       return {
-        icon: '🤖',
+        icon: (
+          <svg className="w-16 h-16 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M7.5 8.25h9A2.25 2.25 0 0118.75 10.5v6.75A2.25 2.25 0 0116.5 19.5h-9A2.25 2.25 0 015.25 17.25V10.5A2.25 2.25 0 017.5 8.25z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 12h.01M15 12h.01M8.25 6.75h7.5" />
+          </svg>
+        ),
         gradient: 'from-emerald-600/40 to-teal-600/40',
-        badge: 'AI',
+        badge: 'AGENT',
       };
     }
     return {
-      icon: '🍄',
+      icon: (
+        <svg className="w-16 h-16 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 6c-4.5 0-8 2.25-8 5.25 0 2.25 2.1 4.15 5.25 4.95V18a2.75 2.75 0 005.5 0v-1.8C17.9 15.4 20 13.5 20 11.25 20 8.25 16.5 6 12 6z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M10.5 18h3" />
+        </svg>
+      ),
       gradient: 'from-cyan-900/30 to-emerald-900/30',
     };
   };
@@ -91,7 +116,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 200 }}
-              className="text-7xl drop-shadow-lg"
+              className="drop-shadow-lg"
             >
               {visual.icon}
             </motion.div>
@@ -136,7 +161,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
                 onClick={() => onBuy(product)}
                 className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-shadow z-20 relative pointer-events-auto"
               >
-                Buy Now
+                Continue
               </motion.button>
             )}
           </div>

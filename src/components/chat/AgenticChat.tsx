@@ -73,7 +73,7 @@ function Avatar({ isAI }: { isAI: boolean }) {
             }}
           />
         </div>
-        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#030303] animate-pulse" />
+        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#060607] animate-pulse" />
       </div>
     );
   }

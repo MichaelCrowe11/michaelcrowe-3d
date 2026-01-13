@@ -50,7 +50,7 @@ export function CreditAlert({ email, onUpgradeClick }: CreditAlertProps) {
             </h4>
             <p className="text-white/70 text-sm mt-1">
               {isOut
-                ? 'Purchase minutes to continue using AI agents.'
+                ? 'Add minutes to continue using agents.'
                 : `Only ${credits.availableMinutes} minutes remaining.`}
             </p>
 
@@ -64,7 +64,7 @@ export function CreditAlert({ email, onUpgradeClick }: CreditAlertProps) {
                       : 'bg-amber-500 text-black hover:bg-amber-400'
                   } transition-colors`}
                 >
-                  Get Minutes
+                  Add minutes
                 </button>
               )}
               {!isOut && (

@@ -169,7 +169,7 @@ export function AccountDashboard({ isOpen, onClose, userEmail }: AccountDashboar
                       {credits.isLowCredits && (
                         <div className="mt-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
                           <p className="text-amber-400 text-sm">
-                            Running low on minutes. Purchase more to continue using agents.
+                            Running low on minutes. Add more to continue using agents.
                           </p>
                         </div>
                       )}
@@ -199,7 +199,7 @@ export function AccountDashboard({ isOpen, onClose, userEmail }: AccountDashboar
                         onClick={() => setShowPricing(true)}
                         className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity"
                       >
-                        {credits.hasSubscription ? 'Upgrade Plan' : 'Get Minutes'}
+                        {credits.hasSubscription ? 'Extend access' : 'Add minutes'}
                       </button>
                       {credits.hasSubscription && (
                         <button
@@ -207,7 +207,7 @@ export function AccountDashboard({ isOpen, onClose, userEmail }: AccountDashboar
                           disabled={loadingPortal}
                           className="px-4 py-3 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors disabled:opacity-50"
                         >
-                          {loadingPortal ? 'Loading...' : 'Manage Billing'}
+                          {loadingPortal ? 'Loading...' : 'Manage plan'}
                         </button>
                       )}
                     </div>
@@ -286,30 +286,30 @@ export function AccountDashboard({ isOpen, onClose, userEmail }: AccountDashboar
 
                     {/* Billing Portal */}
                     <div className="p-5 rounded-xl bg-white/5 border border-white/10">
-                      <h3 className="text-lg font-medium text-white/90">Billing Portal</h3>
+                      <h3 className="text-lg font-medium text-white/90">Account Portal</h3>
                       <p className="text-white/50 mt-2 text-sm">
-                        Access your complete billing history, update payment methods, and download invoices.
+                        Manage account history, payment methods, and invoices.
                       </p>
                       <button
                         onClick={openBillingPortal}
                         disabled={loadingPortal}
                         className="mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
                       >
-                        {loadingPortal ? 'Opening...' : 'Open Billing Portal'}
+                        {loadingPortal ? 'Opening...' : 'Open account portal'}
                       </button>
                     </div>
 
-                    {/* Purchase Options */}
+                    {/* Access Options */}
                     <div className="p-5 rounded-xl bg-white/5 border border-white/10">
-                      <h3 className="text-lg font-medium text-white/90">Need More Minutes?</h3>
+                      <h3 className="text-lg font-medium text-white/90">Need more minutes?</h3>
                       <p className="text-white/50 mt-2 text-sm">
-                        Purchase minute packs or subscribe for monthly allowances.
+                        Add minute packs or set a monthly allowance.
                       </p>
                       <button
                         onClick={() => setShowPricing(true)}
                         className="mt-4 px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors"
                       >
-                        View Pricing
+                        View options
                       </button>
                     </div>
                   </div>

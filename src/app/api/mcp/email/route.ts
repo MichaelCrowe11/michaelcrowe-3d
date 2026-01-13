@@ -155,13 +155,13 @@ const EMAIL_TEMPLATES: Record<string, { subject: string; html: (vars: Record<str
     `,
   },
   thank_you: {
-    subject: 'Thank You for Your Purchase',
+    subject: 'Access Confirmed',
     html: (vars) => `
       <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-        <h1 style="color: #06b6d4; margin-bottom: 24px;">Thank You!</h1>
+        <h1 style="color: #06b6d4; margin-bottom: 24px;">Access confirmed</h1>
         <p style="color: #374151; line-height: 1.6;">Hi ${vars.name || 'there'},</p>
         <p style="color: #374151; line-height: 1.6;">
-          Thank you for your purchase! Your account has been credited with <strong>${vars.minutes || '0'} minutes</strong>.
+          Your account has been credited with <strong>${vars.minutes || '0'} minutes</strong>.
         </p>
         <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p style="margin: 0; color: #374151;"><strong>Order:</strong> ${vars.orderId || 'N/A'}</p>
@@ -169,7 +169,7 @@ const EMAIL_TEMPLATES: Record<string, { subject: string; html: (vars: Record<str
           <p style="margin: 8px 0 0; color: #374151;"><strong>Minutes Added:</strong> ${vars.minutes || '0'}</p>
         </div>
         <a href="https://michaelcrowe.ai" style="display: inline-block; background: linear-gradient(to right, #06b6d4, #10b981); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 16px;">
-          Start Using Your Minutes
+          Open your minutes
         </a>
       </div>
     `,

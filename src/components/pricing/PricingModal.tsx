@@ -280,12 +280,32 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                               <span className="ml-2 text-emerald-400">Save {pkg.savings}</span>
                             )}
                           </p>
+                          <ul className="mt-4 space-y-2 text-xs text-white/60">
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Voice consultations with AI experts</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Full conversation transcripts</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Never expires</span>
+                            </li>
+                          </ul>
                           <button
                             onClick={() => handlePurchase('package', id)}
                             disabled={loading === id || !email}
                             className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
                           >
-                            {loading === id ? 'Loading...' : 'Buy Now'}
+                            {loading === id ? 'Loading...' : 'Continue'}
                           </button>
                         </div>
                       );
@@ -334,6 +354,26 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                               <span className="ml-2 text-emerald-400">Save {sub.savings}</span>
                             )}
                           </p>
+                          <ul className="mt-4 space-y-2 text-xs text-white/60">
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>{sub.monthlyMinutes === -1 ? 'Unlimited' : `${sub.monthlyMinutes}`} minutes per month</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>All conversation transcripts</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Priority support</span>
+                            </li>
+                          </ul>
                           <button
                             onClick={() => handlePurchase('subscription', id)}
                             disabled={loading === id || !email}
@@ -354,9 +394,29 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-white/10 text-center">
+            <div className="px-6 py-4 border-t border-white/10 text-center space-y-2">
+              <div className="flex items-center justify-center gap-4 text-xs text-white/50">
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <span>Secure checkout</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Cancel anytime</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Transcript delivered</span>
+                </div>
+              </div>
               <p className="text-white/30 text-xs">
-                Secure payments powered by Stripe. Cancel anytime.
+                Secure payments powered by Stripe
               </p>
             </div>
           </motion.div>

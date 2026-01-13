@@ -60,7 +60,7 @@ function SceneContent({ showOrbs, onIntroComplete }: { showOrbs: boolean; onIntr
 
 function LoadingScreen() {
   return (
-    <div className="absolute inset-0 z-50 bg-[#030303] flex items-center justify-center">
+    <div className="absolute inset-0 z-50 bg-[#060607] flex items-center justify-center">
       <div className="w-12 h-12 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
     </div>
   );

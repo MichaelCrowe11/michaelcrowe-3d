@@ -1,25 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-space",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "michaelcrowe.ai | Agentic AI Platform",
-  description: "Voice-first AI platform with local models. Private, powerful, and always available.",
-  keywords: ["AI Platform", "Voice AI", "Local AI", "Ollama", "Machine Learning", "Private AI"],
+  description: "Transform expertise into immersive, voice-first experiences. Deep Consulting, Drug Discovery, AI Strategy, and beyond. Private, powerful, and always available.",
+  keywords: ["AI Platform", "Voice AI", "Local AI", "Crowe Logic", "AI Consulting", "Drug Discovery", "Machine Learning", "Private AI"],
   authors: [{ name: "Michael Crowe" }],
   manifest: "/manifest.json",
   appleWebApp: {
@@ -32,15 +33,15 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "michaelcrowe.ai | Agentic AI Platform",
-    description: "Voice-first AI platform with local models. Private and powerful.",
+    description: "Transform expertise into immersive, voice-first experiences.",
     url: "https://michaelcrowe.ai",
-    siteName: "michaelcrowe.ai",
+    siteName: "Crowe Logic Studio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "michaelcrowe.ai | Agentic AI Platform",
-    description: "Voice-first AI platform with local models.",
+    description: "Transform expertise into immersive, voice-first experiences.",
   },
 };
 
@@ -55,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const content = (
-    <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`dark ${manrope.variable} ${cormorant.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         <meta name="theme-color" content="#0a0a0a" />
@@ -63,10 +64,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className="font-sans antialiased selection:bg-amber-500/20 cursor-none md:cursor-none">
+      <body className="font-sans antialiased selection:bg-cyan-500/30 cursor-none">
         <LiquidCursor />
         {children}
-        <ServiceWorkerRegistration />
+        <PWARegistration />
       </body>
     </html>
   );
@@ -80,8 +81,8 @@ export default function RootLayout({
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: "#c9a55c",
-          colorBackground: "#0a0a0a",
+          colorPrimary: "#5bc9d6",
+          colorBackground: "#060607",
         },
       }}
     >

@@ -1,13 +1,13 @@
 'use client';
 
 /**
- * Monetization Integration Example
+ * Access Integration Example
  *
- * This component demonstrates how to integrate all monetization features:
+ * This component demonstrates how to integrate access features:
  * - Credit balance display and alerts
- * - Pricing modal for purchases
- * - Account dashboard for billing management
- * - Admin dashboard for revenue tracking
+ * - Pricing modal for access changes
+ * - Account dashboard for plan management
+ * - Admin dashboard for usage tracking
  * - Session usage tracking
  *
  * Copy and adapt this pattern for your own pages.
@@ -110,7 +110,7 @@ export function MonetizationExample({ userEmail, isAdmin = false }: Monetization
             onClick={() => setShowPricing(true)}
             className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium hover:opacity-90 transition-opacity"
           >
-            Get More Minutes
+            Add minutes
           </button>
           <button
             onClick={() => setShowAccount(true)}
