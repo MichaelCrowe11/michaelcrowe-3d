@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlassCard } from '@/components/studio/GlassComponents';
 import { PillTag } from '@/components/studio/PillTag';
 import { getActiveAgents } from '@/config/agents';

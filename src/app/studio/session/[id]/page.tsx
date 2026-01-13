@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { StatusOrb } from '@/components/studio/StatusOrb';
 import { Toast } from '@/components/studio/Toast';
 import { use } from 'react';
@@ -34,10 +32,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
   };
   
   return (
-    <main className="relative min-h-screen bg-[#060607] flex items-center justify-center">
-      <OrbitBackground />
-      <FloatingBlobs count={2} />
-      
+    <main className="relative min-h-screen flex items-center justify-center">
       <div className="relative z-10 px-4">
         {/* Status Orb */}
         <StatusOrb status={state === 'failed' ? 'ready' : state} />

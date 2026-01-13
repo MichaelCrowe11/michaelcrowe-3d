@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlowButton } from '@/components/studio/GlowButton';
 import { GlassCard } from '@/components/studio/GlassComponents';
 import { PillTag, PriceChip } from '@/components/studio/PillTag';
@@ -225,12 +223,21 @@ export function StudioHero() {
   
   return (
     <div className="relative min-h-screen">
-      {/* Background layers */}
-      <OrbitBackground className="opacity-80" />
-      <FloatingBlobs count={4} className="opacity-80" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-white/[0.06] to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.06),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(122,212,181,0.08),transparent_40%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(208,169,128,0.08),transparent_45%)]" />
+      {/* Brand pill (top-left) */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="fixed top-6 left-6 z-20 flex items-center gap-3 px-3 py-2 glass-button rounded-full"
+      >
+        <div className="w-10 h-10 rounded-full overflow-hidden ring-1 ring-cyan-500/30">
+          <img src="/crowe-avatar.png" alt="Crowe Logic" className="w-full h-full object-cover" />
+        </div>
+        <div className="pr-2">
+          <div className="text-sm font-bold text-white">MichaelCrowe.ai</div>
+          <div className="text-[10px] text-cyan-400 font-medium tracking-wider">AI CONSULTANT</div>
+        </div>
+      </motion.div>
       
       {/* Hero section */}
       <div className="relative z-10 pt-16 pb-24 px-6">

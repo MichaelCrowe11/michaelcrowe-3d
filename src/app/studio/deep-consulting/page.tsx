@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { OrbitBackground } from '@/components/studio/OrbitBackground';
-import { FloatingBlobs } from '@/components/studio/FloatingBlobs';
 import { GlowButton } from '@/components/studio/GlowButton';
 import { getActiveAgents } from '@/config/agents';
 import { AgentSelector } from '@/components/agents/AgentSelector';
@@ -53,6 +51,7 @@ export default function DeepConsultingPage() {
   }
   
   return (
+    <main className="relative min-h-screen flex items-center justify-center">
     <main className="relative min-h-screen bg-[#060607] flex items-center justify-center">
       <OrbitBackground />
       <FloatingBlobs count={3} />
