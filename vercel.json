@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/mcp/:path*",
+      "destination": "https://michaelcrowe-agents.vercel.app/api/mcp/:path*"
+    },
+    {
+      "source": "/api/webhooks/:path*",
+      "destination": "https://michaelcrowe-agents.vercel.app/api/webhooks/:path*"
+    },
+    {
+      "source": "/api/checkout",
+      "destination": "https://michaelcrowe-agents.vercel.app/api/checkout"
+    },
+    {
+      "source": "/api/credits/:path*",
+      "destination": "https://michaelcrowe-agents.vercel.app/api/credits/:path*"
+    },
+    {
+      "source": "/api/stripe/:path*",
+      "destination": "https://michaelcrowe-agents.vercel.app/api/stripe/:path*"
+    }
+  ]
+}
