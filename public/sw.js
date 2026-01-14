@@ -1,4 +1,4 @@
-const CACHE_NAME = 'croweai-v1';
+const CACHE_NAME = 'croweai-v2';
 const STATIC_ASSETS = [
   '/',
   '/workspace',
@@ -35,17 +35,27 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // Only handle same-origin requests.
+  if (url.origin !== self.location.origin) return;
+
   // Skip API requests - always go to network
-  if (event.request.url.includes('/api/')) return;
+  if (url.pathname.startsWith('/api/')) return;
+
+  // Never cache Next.js build assets to avoid stale chunk errors.
+  if (url.pathname.startsWith('/_next/')) return;
 
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Clone the response before caching
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
+        if (response && response.ok) {
+          // Clone the response before caching
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
         return response;
       })
       .catch(() => {
