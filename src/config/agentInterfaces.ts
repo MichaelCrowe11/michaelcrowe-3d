@@ -72,7 +72,7 @@ export const agentInterfaceConfigs: Record<string, AgentInterfaceConfig> = {
       'Deal sizing',
       'Objection handling',
     ],
-    welcomeMessage: 'Let\'s qualify and convert your leads',
+    welcomeMessage: "Let's qualify and convert your leads",
     orbStyle: 'pulsing',
     backgroundStyle: 'corporate',
     customFeatures: {
