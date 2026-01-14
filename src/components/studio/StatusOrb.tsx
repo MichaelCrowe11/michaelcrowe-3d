@@ -10,18 +10,18 @@ interface StatusOrbProps {
 export function StatusOrb({ status, className = '' }: StatusOrbProps) {
   const statusConfig = {
     ready: {
-      color: 'from-emerald-400 to-cyan-400',
-      glow: 'shadow-emerald-400/50',
+      color: 'from-[#6fd6cc] to-[#2f7f77]',
+      glow: 'shadow-[0_0_20px_rgba(111,214,204,0.5)]',
       label: 'Ready',
     },
     connecting: {
-      color: 'from-amber-400 to-orange-400',
-      glow: 'shadow-amber-400/50',
+      color: 'from-[#d4a15f] to-[#9a7b4a]',
+      glow: 'shadow-[0_0_20px_rgba(212,161,95,0.5)]',
       label: 'Connecting…',
     },
     listening: {
-      color: 'from-cyan-400 to-violet-400',
-      glow: 'shadow-cyan-400/50',
+      color: 'from-[#d4a15f] to-[#6fd6cc]',
+      glow: 'shadow-[0_0_20px_rgba(212,161,95,0.5)]',
       label: 'Listening…',
     },
   };

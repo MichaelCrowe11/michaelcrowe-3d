@@ -31,16 +31,16 @@ function Branding() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className="fixed top-6 left-6 z-20 flex items-center gap-3 p-2 pr-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/5 hover:border-white/10 transition-colors duration-300"
+      className="fixed top-6 left-6 z-20 flex items-center gap-3 px-3 py-2 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/20 transition-colors duration-300"
     >
-      <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+      <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_16px_rgba(212,161,95,0.35)]">
         <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
       </div>
       <div>
         <h1 className="text-lg font-display font-bold text-white tracking-tight">
-          michael<span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">crowe</span>.ai
+          Crowe <span className="gradient-text">Logic</span>
         </h1>
-        <p className="text-xs text-white/50 font-medium tracking-wide uppercase">AI Consultant</p>
+        <p className="text-xs text-white/50 font-medium tracking-[0.25em] uppercase">Research Studio</p>
       </div>
     </motion.div>
   );
@@ -71,7 +71,7 @@ const ClerkComponents = dynamic(
             <mod.UserButton
               appearance={{
                 elements: {
-                  avatarBox: 'w-10 h-10 ring-2 ring-cyan-500/30',
+                  avatarBox: 'w-10 h-10 ring-2 ring-[#d4a15f]/30',
                 },
               }}
             />
@@ -166,7 +166,7 @@ function HomeContent() {
   const showUI = phase !== 'intro';
 
   return (
-    <main className={`relative min-h-screen bg-[#030303] ${phase === 'home' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'}`}>
+    <main className={`relative min-h-screen bg-[#050506] ${phase === 'home' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'}`}>
       {/* 3D Background - Fixed */}
       <div className="fixed inset-0 z-0">
         <IntroScene onIntroComplete={() => setPhase('home')} />

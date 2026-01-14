@@ -149,7 +149,7 @@ export function CroweLogicDisplay() {
           background: 'linear-gradient(135deg, rgba(3,3,3,0.98), rgba(15,15,15,0.95))',
           border: '1px solid rgba(255,255,255,0.1)',
           boxShadow: isSpeaking && mode !== 'browser'
-            ? `0 0 ${30 + audioLevel * 30}px rgba(6, 182, 212, ${0.3 + audioLevel * 0.3}), 0 15px 50px rgba(0,0,0,0.6)`
+            ? `0 0 ${30 + audioLevel * 30}px rgba(212, 161, 95, ${0.28 + audioLevel * 0.3}), 0 15px 50px rgba(0,0,0,0.6)`
             : '0 15px 50px rgba(0,0,0,0.6)',
         }}
         layout
@@ -194,7 +194,7 @@ export function CroweLogicDisplay() {
                 {[...Array(16)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="w-1.5 bg-gradient-to-t from-cyan-500 to-emerald-400 rounded-full"
+                    className="w-1.5 bg-gradient-to-t from-[#d4a15f] to-[#6fd6cc] rounded-full"
                     animate={{
                       height: `${4 + audioLevel * 24 * Math.abs(Math.sin(Date.now() / 80 + i * 0.5))}px`,
                     }}
@@ -238,7 +238,7 @@ export function CroweLogicDisplay() {
                 {/* URL bar */}
                 <div className="flex-1 mx-2">
                   <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/10">
-                    <svg className="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-[#6fd6cc]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
                     <span className="text-xs text-white/60 truncate">{browserTitle || 'Secure Checkout'}</span>
@@ -283,7 +283,7 @@ export function CroweLogicDisplay() {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="absolute inset-0 rounded-2xl border border-cyan-400/30 pointer-events-none"
+                className="absolute inset-0 rounded-2xl border border-[#d4a15f]/30 pointer-events-none"
                 initial={{ scale: 1, opacity: 0.5 }}
                 animate={{ scale: 1.08 + i * 0.04, opacity: 0 }}
                 transition={{
@@ -301,7 +301,7 @@ export function CroweLogicDisplay() {
           <div className="absolute top-3 right-3">
             <div className={`px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
               isSpeaking
-                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+                ? 'bg-[#d4a15f]/20 text-[#d4a15f] border border-[#d4a15f]/30'
                 : 'bg-white/10 text-white/50 border border-white/10'
             }`}>
               {isSpeaking ? 'Speaking' : 'Ready'}

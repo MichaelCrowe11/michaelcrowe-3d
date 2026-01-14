@@ -66,16 +66,16 @@ export default function ParallelSynthPage() {
               transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
               className="w-32 h-32 mx-auto mb-8 relative"
             >
-              <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30" />
-              <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 rotate-60" />
-              <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 -rotate-60" />
+              <div className="absolute inset-0 rounded-full border-2 border-[#6fd6cc]/30" />
+              <div className="absolute inset-0 rounded-full border-2 border-[#6fd6cc]/30 rotate-60" />
+              <div className="absolute inset-0 rounded-full border-2 border-[#6fd6cc]/30 -rotate-60" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-violet-400 shadow-lg shadow-cyan-400/50" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc] shadow-lg shadow-[0_0_16px_rgba(212,161,95,0.45)]" />
               </div>
             </motion.div>
             
             <h1 className="text-6xl md:text-7xl font-display font-bold text-white mb-6 tracking-tight">
-              Parallel<span className="text-cyan-400">Synth</span>
+              Parallel<span className="text-[#d4a15f]">Synth</span>
             </h1>
             
             <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
@@ -125,13 +125,13 @@ export default function ParallelSynthPage() {
             </p>
             
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="px-4 py-2 rounded-full bg-cyan-500/15 text-cyan-200 text-sm border border-cyan-500/20">
+              <span className="px-4 py-2 rounded-full bg-[#6fd6cc]/15 text-[#b7f1e9] text-sm border border-[#6fd6cc]/20">
                 Studio pilot
               </span>
-              <span className="px-4 py-2 rounded-full bg-violet-500/15 text-violet-200 text-sm border border-violet-500/20">
+              <span className="px-4 py-2 rounded-full bg-[#d4a15f]/15 text-[#f1d2a8] text-sm border border-[#d4a15f]/20">
                 Tailored scope
               </span>
-              <span className="px-4 py-2 rounded-full bg-emerald-500/15 text-emerald-200 text-sm border border-emerald-500/20">
+              <span className="px-4 py-2 rounded-full bg-[#6fd6cc]/15 text-[#b7f1e9] text-sm border border-[#6fd6cc]/20">
                 Audit-ready
               </span>
             </div>

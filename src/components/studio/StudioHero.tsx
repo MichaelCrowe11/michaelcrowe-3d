@@ -195,7 +195,7 @@ export function StudioHero() {
       href: '/studio/parallel-synth',
       accentColor: 'cyan',
     },
-  ];
+  ] satisfies ModuleCardProps[];
 
   const rituals = [
     {
@@ -229,8 +229,8 @@ export function StudioHero() {
       <OrbitBackground className="opacity-80" />
       <FloatingBlobs count={4} className="opacity-80" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-white/[0.06] to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.06),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(122,212,181,0.08),transparent_40%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(208,169,128,0.08),transparent_45%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.05),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(111,214,204,0.12),transparent_40%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(212,161,95,0.14),transparent_45%)]" />
       
       {/* Hero section */}
       <div className="relative z-10 pt-16 pb-24 px-6">
@@ -246,7 +246,7 @@ export function StudioHero() {
                 <img src="/crowe-avatar.png" alt="Crowe Logic" className="w-full h-full object-cover" />
               </div>
               <div className="pr-2">
-                <div className="text-sm font-semibold text-white">MichaelCrowe.ai</div>
+                <div className="text-sm font-semibold text-white">Crowe Logic</div>
                 <div className="text-[10px] text-white/50 font-medium tracking-[0.35em] uppercase">Studio</div>
               </div>
             </div>
@@ -270,11 +270,11 @@ export function StudioHero() {
               <h1 className="text-5xl md:text-7xl font-display font-semibold text-white mt-6 mb-6 tracking-tight">
                 Crowe Logic <span className="gradient-text">Studio</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/70 max-w-xl">
-                A timeless studio for builders: craft, test, and ship decisions with clarity. Guided by the
-                MichaelCrowe.ai persona and connected to{' '}
-                <a
-                  href="https://crowelogic.com"
+                <p className="text-lg md:text-xl text-white/70 max-w-xl">
+                  A timeless studio for builders: craft, test, and ship decisions with clarity. Guided by the
+                  Crowe Logic and connected to{' '}
+                  <a
+                    href="https://crowelogic.com"
                   className="text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white/70 transition-colors"
                 >
                   CroweLogic.com

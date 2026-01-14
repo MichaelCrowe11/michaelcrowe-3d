@@ -102,13 +102,13 @@ These appear when the agent is listening (not speaking) to provide helpful conve
 
 ### After
 - **"What You Get" bullet lists** (3 items each):
-  - Voice consultations with AI experts ✓
-  - Full conversation transcripts ✓
-  - Never expires / Priority support ✓
+  - Voice consultations with AI experts
+  - Full conversation transcripts
+  - Never expires / Priority support
 - **Trust microcopy with icons**:
-  - 🔒 Secure checkout
-  - ✓ Cancel anytime
-  - 📄 Transcript delivered
+  - Secure checkout
+  - Cancel anytime
+  - Transcript delivered
 - **Consistent positioning** of price badges and savings indicators
 
 ### Example Card Structure
@@ -118,9 +118,9 @@ These appear when the agent is listening (not speaking) to provide helpful conve
 │ $15                   │
 │ 30 minutes            │
 │                       │
-│ ✓ Voice consultations │
-│ ✓ Full transcripts    │
-│ ✓ Never expires       │
+│ Voice consultations   │
+│ Full transcripts      │
+│ Never expires         │
 │                       │
 │ [  Buy Now  ]         │
 └───────────────────────┘
@@ -158,7 +158,7 @@ These changes improve contrast ratios to better meet WCAG AA standards for reada
 ### Visual Identity
 ```
 ┌──────────────────────────┐
-│ 🖼️  Crowe Logic         │ ← Bold, gradient on "Logic"
+│ Crowe Logic             │ ← Bold, gradient on "Logic"
 │     michaelcrowe.ai      │ ← Subdomain, smaller
 └──────────────────────────┘
 ```

@@ -179,14 +179,14 @@ export function VoiceChat({ visible }: { visible: boolean }) {
               opacity: orbState === 'idle' ? 0.5 : 0.8
             }}
             transition={{ duration: 1.5, repeat: orbState !== 'idle' ? Infinity : 0 }}
-            className="absolute w-[400px] h-[400px] rounded-full bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 blur-3xl"
+            className="absolute w-[400px] h-[400px] rounded-full bg-gradient-to-r from-[#d4a15f]/12 to-[#6fd6cc]/10 blur-3xl"
           />
           <motion.div
             animate={{
               scale: orbState === 'listening' ? [1, 1.3, 1] : 1,
             }}
             transition={{ duration: 1, repeat: orbState === 'listening' ? Infinity : 0 }}
-            className="absolute w-[280px] h-[280px] rounded-full bg-gradient-to-r from-violet-500/15 to-cyan-500/15 blur-2xl"
+            className="absolute w-[280px] h-[280px] rounded-full bg-gradient-to-r from-[#d4a15f]/15 to-[#6fd6cc]/12 blur-2xl"
           />
 
           {/* Main orb button */}
@@ -198,8 +198,8 @@ export function VoiceChat({ visible }: { visible: boolean }) {
               boxShadow: orbState === 'listening'
                 ? ['0 0 60px rgba(239, 68, 68, 0.5)', '0 0 100px rgba(239, 68, 68, 0.8)', '0 0 60px rgba(239, 68, 68, 0.5)']
                 : orbState === 'speaking'
-                ? ['0 0 60px rgba(34, 211, 238, 0.5)', '0 0 100px rgba(34, 211, 238, 0.8)', '0 0 60px rgba(34, 211, 238, 0.5)']
-                : '0 0 60px rgba(34, 211, 238, 0.3)'
+                ? ['0 0 60px rgba(111, 214, 204, 0.5)', '0 0 100px rgba(111, 214, 204, 0.8)', '0 0 60px rgba(111, 214, 204, 0.5)']
+                : '0 0 60px rgba(212, 161, 95, 0.3)'
             }}
             transition={{ duration: 0.8, repeat: orbState !== 'idle' && orbState !== 'thinking' ? Infinity : 0 }}
             className={`relative w-[160px] h-[160px] rounded-full backdrop-blur-sm border border-white/20 flex items-center justify-center cursor-pointer transition-all duration-300 ${
@@ -208,7 +208,7 @@ export function VoiceChat({ visible }: { visible: boolean }) {
               orbState === 'listening'
                 ? 'bg-gradient-to-br from-red-500/30 to-orange-500/20'
                 : orbState === 'speaking'
-                ? 'bg-gradient-to-br from-cyan-500/30 to-emerald-500/20'
+                ? 'bg-gradient-to-br from-[#d4a15f]/30 to-[#6fd6cc]/20'
                 : 'bg-gradient-to-br from-white/[0.08] to-white/[0.02]'
             }`}
           >

@@ -90,11 +90,11 @@ export function InfiniteOrbs() {
 
   // Sophisticated neutral palette - warm metallics, earth tones
   const colors = [
-    '#c9a55c', // warm gold
-    '#8b7355', // bronze
+    '#d4a15f', // warm gold
+    '#9a7b4a', // bronze
     '#6b5b4f', // dark bronze
     '#a08060', // amber bronze
-    '#d4c4a8', // soft cream
+    '#e0ccb0', // soft cream
     '#4a423a', // deep earth
     '#b8a080', // muted gold
     '#707070', // neutral gray
@@ -184,7 +184,7 @@ export function InfiniteOrbs() {
         size={2}
         speed={0.15}
         opacity={0.2}
-        color="#c9a55c"
+        color="#d4a15f"
       />
       <Sparkles
         count={40}
@@ -192,12 +192,12 @@ export function InfiniteOrbs() {
         size={2}
         speed={0.15}
         opacity={0.15}
-        color="#8b7355"
+        color="#9a7b4a"
       />
 
       {/* Ambient glow spheres - warm, subtle */}
-      <GlowSphere position={[-15, 10, -20]} color="#c9a55c" scale={10} />
-      <GlowSphere position={[20, -8, -30]} color="#8b7355" scale={12} />
+      <GlowSphere position={[-15, 10, -20]} color="#d4a15f" scale={10} />
+      <GlowSphere position={[20, -8, -30]} color="#9a7b4a" scale={12} />
       <GlowSphere position={[0, 15, -25]} color="#6b5b4f" scale={8} />
 
       {/* Floating orbs */}
@@ -207,13 +207,13 @@ export function InfiniteOrbs() {
 
       {/* Dynamic lights - warm tones */}
       <Float speed={0.8} rotationIntensity={0} floatIntensity={1.5}>
-        <pointLight position={[10, 10, 5]} intensity={1.5} color="#c9a55c" distance={50} />
+        <pointLight position={[10, 10, 5]} intensity={1.5} color="#d4a15f" distance={50} />
       </Float>
       <Float speed={0.6} rotationIntensity={0} floatIntensity={1.5}>
-        <pointLight position={[-10, -5, 0]} intensity={1} color="#8b7355" distance={40} />
+        <pointLight position={[-10, -5, 0]} intensity={1} color="#9a7b4a" distance={40} />
       </Float>
       <Float speed={0.9} rotationIntensity={0} floatIntensity={2}>
-        <pointLight position={[0, 5, -10]} intensity={1} color="#d4c4a8" distance={40} />
+        <pointLight position={[0, 5, -10]} intensity={1} color="#e0ccb0" distance={40} />
       </Float>
     </group>
   );

@@ -44,40 +44,40 @@ const iconMap = {
 
 const colorMap = {
   emerald: {
-    bg: 'from-emerald-500/20 to-emerald-600/10',
-    border: 'border-emerald-500/30 hover:border-emerald-400/50',
-    icon: 'text-emerald-400',
-    badge: 'bg-emerald-500/20 text-emerald-300',
+    bg: 'from-[#6fd6cc]/20 to-[#3faea1]/10',
+    border: 'border-white/10 hover:border-[#6fd6cc]/40',
+    icon: 'text-[#6fd6cc]',
+    badge: 'bg-[#6fd6cc]/15 text-[#b7f1e9]',
   },
   cyan: {
-    bg: 'from-cyan-500/20 to-cyan-600/10',
-    border: 'border-cyan-500/30 hover:border-cyan-400/50',
-    icon: 'text-cyan-400',
-    badge: 'bg-cyan-500/20 text-cyan-300',
+    bg: 'from-[#6fd6cc]/20 to-[#2f7f77]/10',
+    border: 'border-white/10 hover:border-[#6fd6cc]/40',
+    icon: 'text-[#6fd6cc]',
+    badge: 'bg-[#6fd6cc]/15 text-[#b7f1e9]',
   },
   purple: {
-    bg: 'from-purple-500/20 to-purple-600/10',
-    border: 'border-purple-500/30 hover:border-purple-400/50',
-    icon: 'text-purple-400',
-    badge: 'bg-purple-500/20 text-purple-300',
+    bg: 'from-[#d4a15f]/22 to-[#8f6a3f]/10',
+    border: 'border-white/10 hover:border-[#d4a15f]/40',
+    icon: 'text-[#d4a15f]',
+    badge: 'bg-[#d4a15f]/15 text-[#f1d2a8]',
   },
   amber: {
-    bg: 'from-amber-500/20 to-amber-600/10',
-    border: 'border-amber-500/30 hover:border-amber-400/50',
-    icon: 'text-amber-400',
-    badge: 'bg-amber-500/20 text-amber-300',
+    bg: 'from-[#f0c27b]/25 to-[#d4a15f]/10',
+    border: 'border-white/10 hover:border-[#d4a15f]/40',
+    icon: 'text-[#f0c27b]',
+    badge: 'bg-[#f0c27b]/15 text-[#ffe0b5]',
   },
   rose: {
-    bg: 'from-rose-500/20 to-rose-600/10',
-    border: 'border-rose-500/30 hover:border-rose-400/50',
-    icon: 'text-rose-400',
-    badge: 'bg-rose-500/20 text-rose-300',
+    bg: 'from-[#d4a15f]/20 to-[#6b4f2c]/10',
+    border: 'border-white/10 hover:border-[#d4a15f]/40',
+    icon: 'text-[#d4a15f]',
+    badge: 'bg-[#d4a15f]/15 text-[#f1d2a8]',
   },
   indigo: {
-    bg: 'from-indigo-500/20 to-indigo-600/10',
-    border: 'border-indigo-500/30 hover:border-indigo-400/50',
-    icon: 'text-indigo-400',
-    badge: 'bg-indigo-500/20 text-indigo-300',
+    bg: 'from-[#6fd6cc]/20 to-[#244a44]/10',
+    border: 'border-white/10 hover:border-[#6fd6cc]/40',
+    icon: 'text-[#6fd6cc]',
+    badge: 'bg-[#6fd6cc]/15 text-[#b7f1e9]',
   },
 };
 
@@ -114,11 +114,11 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
         transition={{ delay: 0.1 }}
         className="text-center mb-8 mt-20 md:mt-0 px-4"
       >
-        <h2 className="text-3xl md:text-4xl font-light text-white/90 mb-3">
-          Choose Your Expert
+        <h2 className="text-3xl md:text-4xl font-display text-white/90 mb-3">
+          Select Your Specialist
         </h2>
-        <p className="text-white/50 max-w-md mx-auto text-sm md:text-base">
-          Select a domain specialist for your deep consulting session
+        <p className="text-white/55 max-w-md mx-auto text-sm md:text-base">
+          Choose a domain lead to start a focused consultation session.
         </p>
       </motion.div>
 

@@ -59,12 +59,12 @@ export default function RootLayout({
     <html lang="en" className={`dark ${manrope.variable} ${cormorant.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-        <meta name="theme-color" content="#0a0a0a" />
+        <meta name="theme-color" content="#050506" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className="font-sans antialiased selection:bg-cyan-500/30 cursor-none">
+      <body className="font-sans antialiased selection:bg-[#d4a15f]/40 selection:text-black cursor-none">
         <LiquidCursor />
         {children}
         <PWARegistration />
@@ -81,8 +81,8 @@ export default function RootLayout({
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: "#5bc9d6",
-          colorBackground: "#060607",
+          colorPrimary: "#d4a15f",
+          colorBackground: "#050506",
         },
       }}
     >

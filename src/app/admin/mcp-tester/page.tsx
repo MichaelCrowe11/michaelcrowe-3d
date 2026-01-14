@@ -82,13 +82,13 @@ export default function MCPTester() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8 font-mono cursor-auto">
+    <div className="min-h-screen bg-[#050506] text-white p-8 font-mono cursor-auto">
       <div className="max-w-4xl mx-auto space-y-8">
         <header className="flex items-center justify-between border-b border-white/10 pb-6">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] bg-clip-text text-transparent">
             MCP Debugger
           </h1>
-          <div className="text-xs text-gray-500">michaelcrowe.ai</div>
+          <div className="text-xs text-white/40">Crowe Logic</div>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -102,7 +102,7 @@ export default function MCPTester() {
                   setSelectedService(e.target.value);
                   fetchTools(e.target.value);
                 }}
-                className="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#d4a15f]/50"
               >
                 {MCP_SERVICES.map(s => (
                   <option key={s.id} value={s.id}>{s.name}</option>
@@ -115,7 +115,7 @@ export default function MCPTester() {
               <select 
                 value={selectedTool}
                 onChange={(e) => setSelectedTool(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#d4a15f]/50"
               >
                 {tools.map(t => (
                   <option key={t.name} value={t.name}>{t.name}</option>
@@ -138,7 +138,7 @@ export default function MCPTester() {
               <textarea
                 value={toolArgs}
                 onChange={(e) => setToolArgs(e.target.value)}
-                className="w-full h-32 bg-gray-900 border border-white/10 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full h-32 bg-[#0b0c0f] border border-white/10 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a15f]/50"
                 placeholder="{}"
               />
             </div>
@@ -146,14 +146,14 @@ export default function MCPTester() {
             <button
               onClick={executeTool}
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-cyan-600 to-purple-600 rounded-lg font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-full py-3 bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] rounded-lg font-bold text-black hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {loading ? 'Executing...' : 'Run Tool'}
             </button>
 
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-wider text-gray-400">Output</label>
-              <div className="w-full h-96 bg-gray-950 border border-white/10 rounded-lg p-4 overflow-auto">
+              <div className="w-full h-96 bg-[#0a0a0c] border border-white/10 rounded-lg p-4 overflow-auto">
                 <pre className="text-xs text-green-400 whitespace-pre-wrap">
                   {output || '// Waiting for execution...'}
                 </pre>

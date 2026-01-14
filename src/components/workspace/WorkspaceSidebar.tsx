@@ -76,7 +76,7 @@ export function WorkspaceSidebar({
                   <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
                 </div>
                 <span className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">
-                  crowe<span className="text-[#c9a55c]">AI</span>
+                  Crowe <span className="text-[#d4a15f]">Logic</span>
                 </span>
               </Link>
             </motion.div>
@@ -94,11 +94,11 @@ export function WorkspaceSidebar({
       <div className="p-3">
         <button
           onClick={onNewConversation}
-          className={`w-full flex items-center gap-3 p-3 rounded-xl border border-white/10 hover:border-[#c9a55c]/30 hover:bg-[#c9a55c]/5 transition-all ${
+          className={`w-full flex items-center gap-3 p-3 rounded-xl border border-white/10 hover:border-[#d4a15f]/30 hover:bg-[#d4a15f]/5 transition-all ${
             isCollapsed ? 'justify-center' : ''
           }`}
         >
-          <Plus size={18} className="text-[#c9a55c]" />
+          <Plus size={18} className="text-[#d4a15f]" />
           {!isCollapsed && (
             <span className="text-sm text-white/80">New conversation</span>
           )}
@@ -115,7 +115,7 @@ export function WorkspaceSidebar({
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-white/5 border border-white/5 rounded-lg text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:border-[#c9a55c]/30"
+              className="w-full pl-9 pr-3 py-2 bg-white/5 border border-white/5 rounded-lg text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:border-[#d4a15f]/30"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ export function WorkspaceSidebar({
                     onClick={() => onSelectConversation(conv.id)}
                     className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all group ${
                       activeConversationId === conv.id
-                        ? 'bg-[#c9a55c]/10 border-l-2 border-[#c9a55c]'
+                        ? 'bg-[#d4a15f]/10 border-l-2 border-[#d4a15f]'
                         : 'hover:bg-white/5'
                     }`}
                   >
@@ -149,7 +149,7 @@ export function WorkspaceSidebar({
                       size={16}
                       className={
                         activeConversationId === conv.id
-                          ? 'text-[#c9a55c]'
+                          ? 'text-[#d4a15f]'
                           : 'text-white/40'
                       }
                     />
@@ -183,7 +183,7 @@ export function WorkspaceSidebar({
                 onClick={() => onSelectConversation(conv.id)}
                 className={`p-2 rounded-lg transition-colors ${
                   activeConversationId === conv.id
-                    ? 'bg-[#c9a55c]/10 text-[#c9a55c]'
+                    ? 'bg-[#d4a15f]/10 text-[#d4a15f]'
                     : 'text-white/40 hover:bg-white/5 hover:text-white/60'
                 }`}
                 title={conv.title}

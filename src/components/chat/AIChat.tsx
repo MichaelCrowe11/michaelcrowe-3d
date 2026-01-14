@@ -142,8 +142,8 @@ export function AIChat() {
                 />
               </div>
               <div className="flex-1">
-                <h4 className="text-white font-semibold">Crowe AI Assistant</h4>
-                <span className="text-xs text-cyan-400">Claude 4.5 Opus</span>
+                <h4 className="text-white font-semibold">Crowe Logic Assistant</h4>
+                <span className="text-xs text-[#d4a15f]">Claude 4.5 Opus</span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -166,8 +166,8 @@ export function AIChat() {
                 >
                   <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-br from-violet-500 to-purple-600 text-white'
-                      : 'bg-gradient-to-br from-cyan-500 to-emerald-500'
+                      ? 'bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc] text-black'
+                      : 'bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc]'
                   }`}>
                     {msg.role === 'user' ? 'MC' : (
                       <img
@@ -182,7 +182,7 @@ export function AIChat() {
                   </div>
                   <div className={`max-w-[75%] p-3 rounded-2xl ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-br from-violet-500/20 to-purple-600/20 border border-violet-500/30'
+                      ? 'bg-gradient-to-br from-[#d4a15f]/20 to-[#6fd6cc]/15 border border-white/10'
                       : 'bg-white/5 border border-white/10'
                   }`}>
                     <p className="text-sm text-gray-200 leading-relaxed">{msg.content}</p>
@@ -192,14 +192,14 @@ export function AIChat() {
 
               {isTyping && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc] flex items-center justify-center">
                     <img src="/crowe-avatar.png" alt="AI" className="w-6 h-6 rounded-full object-cover" />
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-2xl">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <span className="w-2 h-2 bg-[#d4a15f] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-2 h-2 bg-[#d4a15f] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-2 h-2 bg-[#d4a15f] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
                   </div>
                 </div>
@@ -216,14 +216,14 @@ export function AIChat() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                   placeholder="Ask about AI consulting..."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#d4a15f]/50 transition-colors"
                 />
                 <button
                   onClick={sendMessage}
                   disabled={isTyping}
-                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"
+                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc] flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black">
                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                   </svg>
                 </button>

@@ -133,13 +133,13 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-3xl bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden"
+            className="w-full max-w-3xl bg-[#0b0c0f] border border-white/10 rounded-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="p-6 border-b border-white/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-light text-white/90">Get More Minutes</h2>
+              <div className="p-6 border-b border-white/10">
+                <div className="flex items-center justify-between">
+                  <div>
+                  <h2 className="text-2xl font-display text-white/90">Secure Additional Minutes</h2>
                   <p className="text-white/50 text-sm mt-1">
                     Current balance: {currentMinutes} minutes
                   </p>
@@ -162,7 +162,7 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                     placeholder="Enter your email to purchase"
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-500/50"
+                    className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d4a15f]/50"
                   />
                 </div>
               )}
@@ -182,10 +182,10 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                       }}
                       className={`w-full px-4 py-2 rounded-lg bg-white/5 border text-white placeholder-white/30 focus:outline-none transition-colors ${
                         promoDiscount
-                          ? 'border-emerald-500/50'
+                          ? 'border-[#6fd6cc]/50'
                           : promoError
                           ? 'border-red-500/50'
-                          : 'border-white/10 focus:border-cyan-500/50'
+                          : 'border-white/10 focus:border-[#d4a15f]/50'
                       }`}
                     />
                     {promoDiscount && (
@@ -208,7 +208,7 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                   </button>
                 </div>
                 {promoDiscount && (
-                  <p className="text-emerald-400 text-sm mt-2">
+                  <p className="text-[#6fd6cc] text-sm mt-2">
                     {promoDiscount.percentOff
                       ? `${promoDiscount.percentOff}% off applied!`
                       : `$${promoDiscount.amountOff} off applied!`}
@@ -261,14 +261,14 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                       return (
                         <div
                           key={id}
-                          className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all"
+                          className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-[#d4a15f]/30 transition-all"
                         >
                           <h3 className="text-lg font-medium text-white/90">{pkg.name}</h3>
                           <div className="mt-3">
                             {hasDiscount ? (
                               <>
                                 <span className="text-lg text-white/40 line-through mr-2">${pkg.price}</span>
-                                <span className="text-3xl font-light text-emerald-400">${discountedPrice.toFixed(2)}</span>
+                                <span className="text-3xl font-light text-[#6fd6cc]">${discountedPrice.toFixed(2)}</span>
                               </>
                             ) : (
                               <span className="text-3xl font-light text-white">${pkg.price}</span>
@@ -277,24 +277,24 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                           <p className="text-white/50 text-sm mt-2">
                             {pkg.minutes} minutes
                             {'savings' in pkg && pkg.savings && !hasDiscount && (
-                              <span className="ml-2 text-emerald-400">Save {pkg.savings}</span>
+                              <span className="ml-2 text-[#6fd6cc]">Save {pkg.savings}</span>
                             )}
                           </p>
                           <ul className="mt-4 space-y-2 text-xs text-white/60">
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>Voice consultations with AI experts</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>Full conversation transcripts</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>Never expires</span>
@@ -303,7 +303,7 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                           <button
                             onClick={() => handlePurchase('package', id)}
                             disabled={loading === id || !email}
-                            className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                            className="w-full mt-4 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] text-black text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
                           >
                             {loading === id ? 'Loading...' : 'Continue'}
                           </button>
@@ -329,19 +329,19 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                           key={id}
                           className={`p-5 rounded-xl border transition-all ${
                             id === 'professional'
-                              ? 'bg-gradient-to-b from-cyan-500/10 to-transparent border-cyan-500/30'
-                              : 'bg-white/5 border-white/10 hover:border-cyan-500/30'
+                              ? 'bg-gradient-to-b from-[#d4a15f]/12 to-transparent border-[#d4a15f]/30'
+                              : 'bg-white/5 border-white/10 hover:border-[#d4a15f]/30'
                           }`}
                         >
                           {id === 'professional' && (
-                            <span className="text-xs text-cyan-400 font-medium">MOST POPULAR</span>
+                            <span className="text-xs text-[#d4a15f] font-medium">MOST POPULAR</span>
                           )}
                           <h3 className="text-lg font-medium text-white/90 mt-1">{sub.name}</h3>
                           <div className="mt-3">
                             {hasDiscount ? (
                               <>
                                 <span className="text-lg text-white/40 line-through mr-2">${sub.price}</span>
-                                <span className="text-3xl font-light text-emerald-400">${discountedPrice.toFixed(2)}</span>
+                                <span className="text-3xl font-light text-[#6fd6cc]">${discountedPrice.toFixed(2)}</span>
                               </>
                             ) : (
                               <span className="text-3xl font-light text-white">${sub.price}</span>
@@ -351,24 +351,24 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                           <p className="text-white/50 text-sm mt-2">
                             {sub.monthlyMinutes === -1 ? 'Unlimited' : `${sub.monthlyMinutes} min/month`}
                             {'savings' in sub && sub.savings && !hasDiscount && (
-                              <span className="ml-2 text-emerald-400">Save {sub.savings}</span>
+                              <span className="ml-2 text-[#6fd6cc]">Save {sub.savings}</span>
                             )}
                           </p>
                           <ul className="mt-4 space-y-2 text-xs text-white/60">
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>{sub.monthlyMinutes === -1 ? 'Unlimited' : `${sub.monthlyMinutes}`} minutes per month</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>All conversation transcripts</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#d4a15f] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               <span>Priority support</span>
@@ -379,7 +379,7 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
                             disabled={loading === id || !email}
                             className={`w-full mt-4 px-4 py-2.5 rounded-lg text-sm font-medium transition-opacity disabled:opacity-50 ${
                               id === 'professional'
-                                ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white hover:opacity-90'
+                                ? 'bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] text-black hover:opacity-90'
                                 : 'bg-white/10 text-white hover:bg-white/15'
                             }`}
                           >
@@ -397,19 +397,19 @@ export function PricingModal({ isOpen, onClose, currentMinutes = 0, userEmail }:
             <div className="px-6 py-4 border-t border-white/10 text-center space-y-2">
               <div className="flex items-center justify-center gap-4 text-xs text-white/50">
                 <div className="flex items-center gap-1">
-                  <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#6fd6cc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <span>Secure checkout</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#d4a15f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>Cancel anytime</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span>Transcript delivered</span>

@@ -113,7 +113,7 @@ export function CroweAIChat() {
         onConnect: () => {
           setConnectionStatus('connected');
           setAgentStatus('listening');
-          addMessage('assistant', "Hi! I'm Michael's AI assistant. How can I help you today?");
+          addMessage('assistant', "Hi. I'm the Crowe Logic assistant. How can I help you today?");
         },
         onDisconnect: () => {
           setConnectionStatus('disconnected');
@@ -214,9 +214,9 @@ export function CroweAIChat() {
   // Status colors
   const statusConfig = {
     idle: { color: 'bg-gray-500', label: 'Ready' },
-    listening: { color: 'bg-emerald-500', label: 'Listening...' },
+    listening: { color: 'bg-[#6fd6cc]', label: 'Listening...' },
     thinking: { color: 'bg-yellow-500', label: 'Thinking...' },
-    speaking: { color: 'bg-cyan-500', label: 'Speaking' },
+    speaking: { color: 'bg-[#d4a15f]', label: 'Speaking' },
   };
 
 

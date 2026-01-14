@@ -100,7 +100,7 @@ export function WorkspaceChat({
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-[#0a0a0a]">
+    <div className="flex-1 flex flex-col h-full bg-[#050506]">
       {/* Model Selector Header */}
       <div className="border-b border-white/5 p-4">
         <div className="max-w-3xl mx-auto">
@@ -109,7 +109,7 @@ export function WorkspaceChat({
               onClick={() => setShowModelSelector(!showModelSelector)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
             >
-              <Sparkles size={16} className="text-[#c9a55c]" />
+              <Sparkles size={16} className="text-[#d4a15f]" />
               <span className="text-sm text-white/80">
                 {selectedModel?.name || 'Select Model'}
               </span>
@@ -177,8 +177,8 @@ export function WorkspaceChat({
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#c9a55c]/20 to-[#8b7355]/20 flex items-center justify-center">
-                  <Zap size={32} className="text-[#c9a55c]" />
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#d4a15f]/20 to-[#9a7b4a]/20 flex items-center justify-center">
+                  <Zap size={32} className="text-[#d4a15f]" />
                 </div>
                 <h2 className="text-2xl font-light text-white mb-2">
                   How can I help you today?
@@ -219,8 +219,8 @@ export function WorkspaceChat({
                 >
                   <div className="flex items-start gap-3">
                     {message.role === 'assistant' && (
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c9a55c]/30 to-[#8b7355]/30 flex items-center justify-center flex-shrink-0">
-                        <Sparkles size={16} className="text-[#c9a55c]" />
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#d4a15f]/30 to-[#9a7b4a]/30 flex items-center justify-center flex-shrink-0">
+                        <Sparkles size={16} className="text-[#d4a15f]" />
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
@@ -246,8 +246,8 @@ export function WorkspaceChat({
                       </div>
                     </div>
                     {message.role === 'user' && (
-                      <div className="w-8 h-8 rounded-lg bg-[#c9a55c]/20 flex items-center justify-center flex-shrink-0">
-                        <span className="text-xs font-medium text-[#c9a55c]">You</span>
+                      <div className="w-8 h-8 rounded-lg bg-[#d4a15f]/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-xs font-medium text-[#d4a15f]">You</span>
                       </div>
                     )}
                   </div>
@@ -261,8 +261,8 @@ export function WorkspaceChat({
                   className="workspace-message p-4 mr-12"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c9a55c]/30 to-[#8b7355]/30 flex items-center justify-center">
-                      <Loader2 size={16} className="text-[#c9a55c] animate-spin" />
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#d4a15f]/30 to-[#9a7b4a]/30 flex items-center justify-center">
+                      <Loader2 size={16} className="text-[#d4a15f] animate-spin" />
                     </div>
                     <div className="flex gap-1">
                       <span className="w-2 h-2 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -324,7 +324,7 @@ export function WorkspaceChat({
                   disabled={!input.trim() || isLoading}
                   className={`p-2 rounded-lg transition-all ${
                     input.trim() && !isLoading
-                      ? 'bg-[#c9a55c] text-black hover:bg-[#d4b46a]'
+                      ? 'bg-[#d4a15f] text-black hover:bg-[#e2b577]'
                       : 'bg-white/5 text-white/20'
                   }`}
                 >
@@ -343,7 +343,7 @@ export function WorkspaceChat({
                 animate={{ opacity: 1, y: 0 }}
                 className="absolute -top-12 left-0 right-0 flex items-center justify-center"
               >
-                <div className="px-4 py-2 rounded-full bg-[#c9a55c]/10 border border-[#c9a55c]/20">
+                <div className="px-4 py-2 rounded-full bg-[#d4a15f]/10 border border-[#d4a15f]/20">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                     <span className="text-sm text-white/60">Listening...</span>

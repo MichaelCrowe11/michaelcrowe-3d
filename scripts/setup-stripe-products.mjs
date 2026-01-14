@@ -22,7 +22,7 @@ dotenv.config({ path: '.env.local' });
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
 if (!stripeSecretKey) {
-  console.error('❌ STRIPE_SECRET_KEY not found in environment');
+  console.error('STRIPE_SECRET_KEY not found in environment');
   console.log('\nTo set up Stripe products, you need a Stripe API key.');
   console.log('1. Go to https://dashboard.stripe.com/apikeys');
   console.log('2. Copy your secret key (starts with sk_test_ or sk_live_)');
@@ -99,7 +99,7 @@ const products: ProductConfig[] = [
 async function createProducts(): Promise<Map<string, string>> {
   const priceIds = new Map<string, string>();
 
-  console.log('🚀 Creating Stripe products...\n');
+  console.log('Creating Stripe products...\n');
 
   for (const config of products) {
     try {
@@ -110,7 +110,7 @@ async function createProducts(): Promise<Map<string, string>> {
         metadata: config.metadata,
       });
 
-      console.log(`✅ Created product: ${product.name} (${product.id})`);
+      console.log(`Created product: ${product.name} (${product.id})`);
 
       // Create price
       const priceData: Stripe.PriceCreateParams = {
@@ -129,7 +129,7 @@ async function createProducts(): Promise<Map<string, string>> {
 
       console.log(`   Price: $${config.price / 100} ${config.type === 'recurring' ? '/month' : 'one-time'} (${price.id})\n`);
     } catch (error) {
-      console.error(`❌ Failed to create ${config.name}:`, error);
+      console.error(`Failed to create ${config.name}:`, error);
     }
   }
 
@@ -155,7 +155,7 @@ function updateEnvFile(priceIds: Map<string, string>): void {
   }
 
   fs.writeFileSync(envPath, envContent.trim() + '\n');
-  console.log('📝 Updated .env.local with price IDs');
+  console.log('Updated .env.local with price IDs');
 }
 
 async function main(): Promise<void> {
@@ -167,7 +167,7 @@ async function main(): Promise<void> {
     const hasExisting = products.some(p => existingNames.includes(p.name));
 
     if (hasExisting) {
-      console.log('⚠️  Some products already exist in your Stripe account.');
+      console.log('Some products already exist in your Stripe account.');
       console.log('   Existing products will be skipped.\n');
     }
 
@@ -175,7 +175,7 @@ async function main(): Promise<void> {
 
     if (priceIds.size > 0) {
       console.log('\n' + '='.repeat(50));
-      console.log('📋 Environment Variables to add to .env.local:\n');
+      console.log('Environment Variables to add to .env.local:\n');
 
       for (const [key, value] of priceIds) {
         console.log(`${key}=${value}`);
@@ -186,7 +186,7 @@ async function main(): Promise<void> {
       // Ask to update .env.local
       updateEnvFile(priceIds);
 
-      console.log('\n✨ Setup complete! Your Stripe products are ready.');
+      console.log('\nSetup complete! Your Stripe products are ready.');
       console.log('\nNext steps:');
       console.log('1. Set up webhooks at https://dashboard.stripe.com/webhooks');
       console.log('   Endpoint: https://yourdomain.com/api/stripe/webhook');
@@ -195,7 +195,7 @@ async function main(): Promise<void> {
       console.log('3. Restart your development server');
     }
   } catch (error) {
-    console.error('❌ Setup failed:', error);
+    console.error('Setup failed:', error);
     process.exit(1);
   }
 }

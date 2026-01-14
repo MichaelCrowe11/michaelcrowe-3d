@@ -110,7 +110,7 @@ export function AdminDashboard({ isOpen, onClose, adminEmail }: AdminDashboardPr
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col"
+            className="w-full max-w-4xl bg-[#0b0c0f] border border-white/10 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col"
           >
             {/* Header */}
             <div className="p-6 border-b border-white/10 shrink-0">

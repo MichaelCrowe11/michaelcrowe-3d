@@ -15,7 +15,7 @@ const products = [
       </svg>
     ),
     features: ['28 Chapters', '640+ Pages', '46 Hours Video', 'Lifetime Access'],
-    gradient: 'from-emerald-500 to-teal-600',
+    gradient: 'from-[#d4a15f] via-[#e2b577] to-[#6fd6cc]',
     link: '/products/masterclass'
   },
   {
@@ -29,7 +29,7 @@ const products = [
       </svg>
     ),
     features: ['ChEMBL Validated', 'SMILES Data', 'ML Ready', 'API Access'],
-    gradient: 'from-cyan-500 to-blue-600',
+    gradient: 'from-[#6fd6cc] via-[#4fae9e] to-[#d4a15f]',
     link: '/products/dataset'
   },
   {
@@ -43,31 +43,33 @@ const products = [
       </svg>
     ),
     features: ['Claude 4.5 Opus', 'Custom Models', '1:1 Sessions', 'Implementation'],
-    gradient: 'from-violet-500 to-purple-600',
+    gradient: 'from-[#d4a15f] via-[#c08e54] to-[#1c1c22]',
     link: '/products/consulting'
   }
 ];
 
 export function Products() {
   return (
-    <section id="products" className="py-32 px-6 relative">
+    <section id="products" className="py-28 px-6 relative">
       {/* Background glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-cyan-500/10 to-violet-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-10 right-10 w-[560px] h-[560px] bg-gradient-to-br from-[#d4a15f]/15 to-[#6fd6cc]/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14"
         >
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
-            Premium <span className="gradient-text">Products</span>
+          <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-4">Intelligence Assets</p>
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-5">
+            Proprietary products that move faster than the market.
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-            Exclusive access to proprietary research, datasets, and expertise built over a decade.
+          <p className="text-lg text-white/55 max-w-2xl font-light leading-relaxed">
+            Access the masterclass, datasets, and advisory packages that are powering
+            active research programs.
           </p>
         </motion.div>
 
@@ -81,8 +83,8 @@ export function Products() {
               transition={{ delay: i * 0.15 }}
             >
               <HolographicCard
-                className="overflow-hidden group h-full bg-white/5 backdrop-blur-sm"
-                glareColor={i === 1 ? 'cyan' : i === 2 ? 'purple' : 'emerald'}
+                className="overflow-hidden group h-full bg-white/5 backdrop-blur-sm border border-white/10"
+                glareColor={i === 1 ? 'cyan' : i === 2 ? 'emerald' : 'amber'}
               >
                 {/* Product image placeholder */}
                 <div className={`h-48 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
@@ -97,8 +99,8 @@ export function Products() {
                     </motion.div>
                   </div>
                   {product.originalPrice && (
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-rose-500/90 backdrop-blur-sm text-white text-xs font-bold tracking-wider rounded-full shadow-lg">
-                      SALE
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-black/40 backdrop-blur-sm text-white text-xs font-semibold tracking-[0.2em] rounded-full border border-white/20">
+                      PRICE DROP
                     </div>
                   )}
                 </div>
@@ -106,13 +108,13 @@ export function Products() {
                 {/* Content */}
                 <div className="p-8">
                   <h3 className="text-2xl font-display font-bold text-white mb-2">{product.title}</h3>
-                  <p className="text-cyan-200/60 text-sm mb-6 font-medium tracking-wide uppercase">{product.subtitle}</p>
+                  <p className="text-white/50 text-sm mb-6 font-medium tracking-[0.25em] uppercase">{product.subtitle}</p>
 
                   {/* Features */}
                   <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8">
                     {product.features.map((feature, j) => (
                       <div key={j} className="flex items-center gap-2 text-sm text-gray-300">
-                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent-cool)] shadow-[var(--glow-cool)]" />
                         {feature}
                       </div>
                     ))}
@@ -131,9 +133,9 @@ export function Products() {
                     href={product.link}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-bold tracking-wide text-center shadow-lg hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 border border-white/20`}
+                    className={`block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-semibold tracking-[0.2em] uppercase text-center shadow-lg hover:shadow-[0_0_24px_rgba(212,161,95,0.35)] transition-all duration-300 border border-white/20`}
                   >
-                    Get Started
+                    Access
                   </motion.a>
                 </div>
               </HolographicCard>

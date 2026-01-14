@@ -2,131 +2,114 @@
 
 import { motion } from 'framer-motion';
 
-const researchAreas = [
-  { field: 'Computational Chemistry', publications: 12 },
-  { field: 'Mycology & Cultivation', publications: 8 },
-  { field: 'Machine Learning', publications: 15 },
-  { field: 'Natural Products', publications: 6 },
+const signalMetrics = [
+  { label: 'Research Years', value: '10+' },
+  { label: 'Publications', value: '41' },
+  { label: 'Training Samples', value: '634K' },
+  { label: 'Active Programs', value: '6' },
+];
+
+const activeThreads = [
+  'ML-accelerated docking for bioactive discovery',
+  'Closed-loop cultivation controls at commercial scale',
+  'Voice-first expert systems for high-signal decisions',
 ];
 
 export function Hero({ onStartDeepDive }: { onStartDeepDive?: () => void }) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="relative z-10 px-6 max-w-6xl mx-auto py-20">
-        {/* Header with academic style */}
+    <section className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-40 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(212,161,95,0.2)_0%,_transparent_70%)] blur-2xl" />
+        <div className="absolute bottom-0 left-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,_rgba(111,214,204,0.18)_0%,_transparent_70%)] blur-2xl" />
+      </div>
+
+      <div className="relative z-10 px-6 max-w-6xl mx-auto py-24 lg:py-32 w-full grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-12 bg-white/40" />
-            <div>
-              <p className="text-white/50 text-sm tracking-widest uppercase">Principal Researcher</p>
-              <p className="text-white/30 text-xs">Computational Biology & Applied Mycology</p>
-            </div>
+          <div className="inline-flex items-center gap-3 px-4 py-2 signal-chip text-xs uppercase tracking-[0.3em] text-white/70">
+            <span className="h-2 w-2 rounded-full bg-[color:var(--accent)] shadow-[var(--glow-accent)]" />
+            Crowe Logic Research Studio
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-4 tracking-tight">
-            Michael Crowe
+          <h1 className="mt-8 text-5xl md:text-6xl lg:text-7xl font-display text-white tracking-tight leading-[1.05]">
+            Signal-grade AI for life sciences, cultivation, and applied discovery.
           </h1>
 
-          <p className="text-lg md:text-xl text-white/60 max-w-2xl font-light leading-relaxed">
-            Independent researcher specializing in computational approaches to natural product discovery,
-            fungal cultivation systems, and applied machine learning for life sciences.
+          <p className="mt-6 text-lg text-white/65 max-w-xl leading-relaxed">
+            We design adaptive intelligence systems that compress research timelines, optimize operations,
+            and translate complex data into actionable decisions.
           </p>
-        </motion.div>
 
-        {/* Research Focus Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-6 mb-16"
-        >
-          <div className="border border-white/10 p-6 backdrop-blur-sm">
-            <h3 className="text-white/40 text-xs uppercase tracking-widest mb-4">Research Focus</h3>
-            <div className="space-y-3">
-              {researchAreas.map((area, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <span className="text-white/80 text-sm">{area.field}</span>
-                  <div className="flex items-center gap-2">
-                    <div className="h-1 bg-white/20 rounded" style={{ width: `${area.publications * 6}px` }} />
-                    <span className="text-white/40 text-xs font-mono">{area.publications}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="border border-white/10 p-6 backdrop-blur-sm">
-            <h3 className="text-white/40 text-xs uppercase tracking-widest mb-4">Current Work</h3>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li className="flex items-start gap-2">
-                <span className="text-white/30 mt-1">→</span>
-                <span>Bioactive compound screening via ML-accelerated docking</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-white/30 mt-1">→</span>
-                <span>Environmental control systems for commercial cultivation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-white/30 mt-1">→</span>
-                <span>Voice-first expert systems for domain consultation</span>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
-
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap gap-4"
-        >
-          {onStartDeepDive && (
-            <button
-              onClick={onStartDeepDive}
-              className="px-6 py-3 bg-white text-black text-sm font-medium hover:bg-white/90 transition-colors"
+          <div className="mt-10 flex flex-wrap gap-4">
+            {onStartDeepDive && (
+              <button
+                onClick={onStartDeepDive}
+                className="px-6 py-3 rounded-full bg-[color:var(--accent)] text-black text-sm font-semibold tracking-wide hover:bg-[color:var(--accent-strong)] transition-colors"
+              >
+                Consult an Expert
+              </button>
+            )}
+            <a
+              href="#services"
+              className="px-6 py-3 rounded-full border border-white/15 text-white/80 text-sm font-medium hover:border-white/30 hover:bg-white/5 transition-colors"
             >
-              Consult an Expert
-            </button>
-          )}
-          <a
-            href="#services"
-            className="px-6 py-3 border border-white/20 text-white/80 text-sm font-medium hover:bg-white/5 transition-colors"
-          >
-            View Research Areas
-          </a>
-          <a
-            href="#products"
-            className="px-6 py-3 text-white/50 text-sm font-medium hover:text-white/80 transition-colors"
-          >
-            Publications & Data
-          </a>
+              Explore Research Systems
+            </a>
+            <a
+              href="#products"
+              className="px-6 py-3 text-white/50 text-sm font-medium hover:text-white/80 transition-colors"
+            >
+              Products and Intelligence Assets
+            </a>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {signalMetrics.map((metric) => (
+              <div key={metric.label} className="signal-card px-4 py-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-white/40">{metric.label}</p>
+                <p className="mt-2 text-2xl font-display text-white">{metric.value}</p>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Minimal Credentials */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 pt-8 border-t border-white/10"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="signal-card p-8"
         >
-          <div className="flex flex-wrap gap-8 text-xs text-white/40">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <span className="text-white/60 font-mono">10+</span> years research
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40">Live Programs</p>
+              <h2 className="text-2xl font-display text-white mt-2">Research Command Deck</h2>
             </div>
-            <div>
-              <span className="text-white/60 font-mono">41</span> publications
+            <div className="h-10 w-10 rounded-full border border-white/10 flex items-center justify-center text-xs text-white/50">
+              01
             </div>
-            <div>
-              <span className="text-white/60 font-mono">634K</span> training samples
-            </div>
-            <div>
-              <span className="text-white/60 font-mono">6</span> active projects
+          </div>
+
+          <div className="space-y-4">
+            {activeThreads.map((thread) => (
+              <div key={thread} className="flex items-start gap-3 border border-white/5 rounded-2xl px-4 py-3 bg-white/5">
+                <span className="mt-1 h-2 w-2 rounded-full bg-[color:var(--accent-cool)] shadow-[var(--glow-cool)]" />
+                <p className="text-sm text-white/70 leading-relaxed">{thread}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 border-t border-white/10 pt-6">
+            <p className="text-xs text-white/40 uppercase tracking-[0.3em]">Access</p>
+            <p className="text-sm text-white/70 mt-2">
+              Proprietary datasets, expert consultations, and applied R and D programs.
+            </p>
+            <div className="mt-4 flex gap-3">
+              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Private</span>
+              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Enterprise</span>
+              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Data-first</span>
             </div>
           </div>
         </motion.div>

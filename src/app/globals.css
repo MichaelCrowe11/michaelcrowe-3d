@@ -1,35 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #060607;
-  --foreground: #f3f1ed;
+  --background: #050506;
+  --foreground: #f2efe8;
   
   /* Crowe Logic design tokens */
-  --bg: #060607;
-  --bg-elevated: #0e0f11;
-  --panel: rgba(18, 18, 20, 0.55);
-  --panel-hover: rgba(26, 26, 30, 0.7);
+  --bg: #050506;
+  --bg-elevated: #0b0c0f;
+  --panel: rgba(14, 15, 18, 0.7);
+  --panel-hover: rgba(22, 23, 28, 0.85);
   --panel-border: rgba(255, 255, 255, 0.08);
   --panel-border-hover: rgba(255, 255, 255, 0.16);
   
-  --text: #f3f1ed;
-  --text-muted: rgba(243, 241, 237, 0.7);
-  --text-subtle: rgba(243, 241, 237, 0.5);
-  --text-disabled: rgba(243, 241, 237, 0.3);
+  --text: #f2efe8;
+  --text-muted: rgba(242, 239, 232, 0.7);
+  --text-subtle: rgba(242, 239, 232, 0.52);
+  --text-disabled: rgba(242, 239, 232, 0.3);
   
   /* Accent colors */
-  --cyan: #5bc9d6;
-  --cyan-bright: #3cb8c7;
-  --teal: #39b7a4;
-  --violet: #7aa2f7;
-  --magenta: #d0a980;
-  --emerald: #7ad4b5;
+  --accent: #d4a15f;
+  --accent-strong: #f0c27b;
+  --accent-cool: #6fd6cc;
+  --accent-ink: #9a7b4a;
+  --graphite: #0b0c0f;
   
   /* Glow effects */
-  --glow-cyan: 0 0 20px rgba(91, 201, 214, 0.24);
-  --glow-cyan-strong: 0 0 40px rgba(91, 201, 214, 0.5);
-  --glow-violet: 0 0 20px rgba(122, 162, 247, 0.25);
-  --glow-magenta: 0 0 20px rgba(208, 169, 128, 0.3);
+  --glow-accent: 0 0 24px rgba(212, 161, 95, 0.32);
+  --glow-accent-strong: 0 0 44px rgba(212, 161, 95, 0.55);
+  --glow-cool: 0 0 26px rgba(111, 214, 204, 0.35);
 }
 
 @theme inline {
@@ -74,8 +72,9 @@ body::before {
   height: 100%;
   z-index: -1;
   background-image: 
-    radial-gradient(circle at 20% 0%, rgba(208, 169, 128, 0.18) 0%, transparent 52%),
-    radial-gradient(circle at 85% 80%, rgba(91, 201, 214, 0.12) 0%, transparent 55%);
+    radial-gradient(circle at 10% 10%, rgba(212, 161, 95, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(111, 214, 204, 0.18) 0%, transparent 52%),
+    radial-gradient(circle at 70% 85%, rgba(154, 123, 74, 0.2) 0%, transparent 58%);
   pointer-events: none;
 }
 
@@ -85,10 +84,10 @@ body::after {
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 120px 120px;
-  opacity: 0.25;
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 160px 160px;
+  opacity: 0.18;
   pointer-events: none;
 }
 
@@ -180,14 +179,9 @@ body::after {
   animation: float 8s ease-in-out infinite;
 }
 
-.animate-subtle-pulse {
-  animation: subtle-pulse 4s ease-in-out infinite;
-}
-
 .animate-breathe {
   animation: breathe 6s ease-in-out infinite;
 }
-
 .animate-float-slow {
   animation: float-slow 20s ease-in-out infinite;
 }
@@ -254,7 +248,7 @@ body::after {
   border-color: var(--panel-border-hover);
   transform: translateY(-6px);
   box-shadow: 
-    0 28px 70px -20px rgba(91, 201, 214, 0.25),
+    0 28px 70px -20px rgba(212, 161, 95, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
@@ -285,44 +279,60 @@ body::after {
 
 /* Text gradient - warm tones */
 .gradient-text {
-  background: linear-gradient(135deg, #d0a980 0%, #7ad4b5 50%, #5bc9d6 100%);
+  background: linear-gradient(130deg, #f0c27b 0%, #d4a15f 45%, #6fd6cc 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* Signal card utilities */
+.signal-card {
+  background: linear-gradient(140deg, rgba(18, 19, 24, 0.9), rgba(10, 11, 14, 0.85));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+}
+
+.signal-chip {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 11, 14, 0.6);
+  border-radius: 999px;
+}
+
 /* Workspace-specific styles */
 .workspace-input {
-  background: rgba(26, 26, 26, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(16, 16, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease;
 }
 
 .workspace-input:focus {
-  border-color: rgba(201, 165, 92, 0.3);
-  box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.1);
+  border-color: rgba(212, 161, 95, 0.35);
+  box-shadow: 0 0 0 3px rgba(212, 161, 95, 0.12);
 }
 
 .workspace-sidebar {
-  background: rgba(14, 14, 14, 0.95);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(10, 11, 14, 0.95);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .workspace-message {
-  background: rgba(26, 26, 26, 0.6);
+  background: rgba(18, 19, 24, 0.72);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .workspace-message-user {
-  background: rgba(201, 165, 92, 0.1);
-  border-color: rgba(201, 165, 92, 0.15);
+  background: rgba(212, 161, 95, 0.12);
+  border-color: rgba(212, 161, 95, 0.22);
 }
 
 /* Voice indicator */
 .voice-indicator {
-  background: radial-gradient(circle, rgba(201, 165, 92, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 161, 95, 0.25) 0%, transparent 70%);
 }
 
 .voice-active {
@@ -331,11 +341,11 @@ body::after {
 
 @keyframes voice-pulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(201, 165, 92, 0.4);
+    box-shadow: 0 0 0 0 rgba(212, 161, 95, 0.4);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 0 20px rgba(201, 165, 92, 0);
+    box-shadow: 0 0 0 20px rgba(212, 161, 95, 0);
     transform: scale(1.05);
   }
 }
@@ -363,8 +373,8 @@ body::after {
 }
 
 .prose code {
-  background: rgba(201, 165, 92, 0.1);
-  color: #c9a55c;
+  background: rgba(212, 161, 95, 0.12);
+  color: #d4a15f;
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
@@ -372,7 +382,7 @@ body::after {
 
 /* Model selector */
 .model-selector {
-  background: rgba(20, 20, 20, 0.9);
+  background: rgba(16, 17, 20, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
 }
@@ -382,10 +392,10 @@ body::after {
 }
 
 .model-option:hover {
-  background: rgba(201, 165, 92, 0.1);
+  background: rgba(212, 161, 95, 0.1);
 }
 
 .model-option.active {
-  background: rgba(201, 165, 92, 0.15);
-  border-left: 2px solid #c9a55c;
+  background: rgba(212, 161, 95, 0.15);
+  border-left: 2px solid #d4a15f;
 }

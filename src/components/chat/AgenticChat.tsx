@@ -41,7 +41,7 @@ function StreamingText({ text, onComplete }: { text: string; onComplete?: () => 
       {displayedText.split('').map((char, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, color: '#22d3ee' }}
+          initial={{ opacity: 0, color: '#d4a15f' }}
           animate={{ opacity: 1, color: '#e5e5e5' }}
           transition={{ duration: 0.3 }}
           className="inline"
@@ -52,7 +52,7 @@ function StreamingText({ text, onComplete }: { text: string; onComplete?: () => 
       {indexRef.current < text.length && (
         <motion.span
           animate={{ opacity: cursorVisible ? 1 : 0 }}
-          className="inline-block w-0.5 h-5 bg-cyan-400 ml-0.5 align-middle shadow-[0_0_10px_#22d3ee,0_0_20px_#22d3ee]"
+          className="inline-block w-0.5 h-5 bg-[#d4a15f] ml-0.5 align-middle shadow-[0_0_10px_rgba(212,161,95,0.7),0_0_20px_rgba(212,161,95,0.5)]"
         />
       )}
     </span>
@@ -63,7 +63,7 @@ function Avatar({ isAI }: { isAI: boolean }) {
   if (isAI) {
     return (
       <div className="relative">
-        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-cyan-500/50 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-[#d4a15f]/50 shadow-[0_0_16px_rgba(212,161,95,0.4)]">
           <img
             src="/crowe-avatar.png"
             alt="Crowe AI"
@@ -73,13 +73,13 @@ function Avatar({ isAI }: { isAI: boolean }) {
             }}
           />
         </div>
-        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#060607] animate-pulse" />
+        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#6fd6cc] rounded-full border-2 border-[#050506] animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium ring-2 ring-violet-500/30">
+    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#d4a15f] to-[#6fd6cc] flex items-center justify-center text-black text-sm font-semibold ring-2 ring-white/10">
       You
     </div>
   );
@@ -222,9 +222,9 @@ export function AgenticChat({ visible }: { visible: boolean }) {
             </div>
             <div>
               <h1 className="text-lg font-medium text-white/90">
-                michael<span className="text-cyan-400">crowe</span>.ai
+                Crowe <span className="text-[#d4a15f]">Logic</span>
               </h1>
-              <p className="text-xs text-white/40">AI Consultant</p>
+              <p className="text-xs text-white/40">Research Studio</p>
             </div>
           </motion.div>
 
@@ -232,7 +232,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
           <div className="w-full max-w-2xl h-full flex flex-col relative z-20">
             {/* Mobile Header - Visible only on mobile */}
             <div className="md:hidden flex items-center justify-center py-2 mb-2 opacity-60">
-                <span className="text-xs font-medium tracking-widest uppercase">michaelcrowe.ai</span>
+                <span className="text-xs font-medium tracking-widest uppercase">Crowe Logic</span>
             </div>
 
             {/* Welcome */}
@@ -250,7 +250,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 1, type: 'spring' }}
-                    className="w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-cyan-500/30 shadow-[0_0_40px_rgba(34,211,238,0.2)] mb-8"
+                    className="w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-[#d4a15f]/30 shadow-[0_0_40px_rgba(212,161,95,0.25)] mb-8"
                   >
                     <img src="/crowe-avatar.png" alt="Crowe AI" className="w-full h-full object-cover" />
                   </motion.div>
@@ -268,9 +268,9 @@ export function AgenticChat({ visible }: { visible: boolean }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.3 }}
-                    className="text-white/40 mb-10 max-w-md"
+                    className="text-white/50 mb-10 max-w-md"
                   >
-                    AI consulting, drug discovery, ML datasets, scheduling — through conversation.
+                    Strategic AI, drug discovery, datasets, and operational design through conversation.
                   </motion.p>
 
                   <motion.div
@@ -314,7 +314,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
                     <div
                       className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                         msg.role === 'user'
-                          ? 'bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 border border-cyan-500/20'
+                          ? 'bg-gradient-to-r from-[#d4a15f]/25 to-[#6fd6cc]/15 border border-white/10'
                           : 'bg-white/[0.03] border border-white/[0.06]'
                       }`}
                     >
@@ -350,7 +350,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
                               repeat: Infinity,
                               delay: i * 0.15
                             }}
-                            className="w-2 h-2 bg-cyan-400 rounded-full"
+                            className="w-2 h-2 bg-[#d4a15f] rounded-full"
                           />
                         ))}
                       </div>
@@ -369,7 +369,7 @@ export function AgenticChat({ visible }: { visible: boolean }) {
               className="mt-auto pt-4"
             >
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d4a15f]/20 to-[#6fd6cc]/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity" />
                 <div className="relative flex items-center bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
                   <input
                     ref={inputRef}
@@ -385,17 +385,17 @@ export function AgenticChat({ visible }: { visible: boolean }) {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => sendMessage()}
                     disabled={isTyping || !input.trim()}
-                    className="m-2 w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+                    className="m-2 w-10 h-10 rounded-xl bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
                   >
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black">
                       <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                     </svg>
                   </motion.button>
                 </div>
               </div>
 
-              <p className="text-center text-white/15 text-xs mt-3">
-                Powered by GPT-4o on Azure
+              <p className="text-center text-white/20 text-xs mt-3">
+                Powered by Crowe Logic AI Gateway
               </p>
             </motion.div>
           </div>

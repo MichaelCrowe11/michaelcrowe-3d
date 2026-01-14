@@ -30,7 +30,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 7.5h6M9 11.25h6M9 15h4.5" />
           </svg>
         ),
-        gradient: 'from-amber-600/40 to-orange-700/40',
+        gradient: 'from-[#d4a15f]/40 to-[#8f6a3f]/40',
         badge: 'PREMIUM',
       };
     }
@@ -42,7 +42,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M8.25 19.5h7.5" />
           </svg>
         ),
-        gradient: 'from-blue-600/40 to-cyan-600/40',
+        gradient: 'from-[#6fd6cc]/40 to-[#2f7f77]/40',
         badge: 'DIGITAL',
       };
     }
@@ -54,7 +54,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
             <circle cx="12" cy="12" r="3" strokeWidth={1.6} />
           </svg>
         ),
-        gradient: 'from-purple-600/40 to-pink-600/40',
+        gradient: 'from-[#d4a15f]/40 to-[#1c1c22]/40',
         badge: '1:1',
       };
     }
@@ -66,7 +66,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 12h.01M15 12h.01M8.25 6.75h7.5" />
           </svg>
         ),
-        gradient: 'from-emerald-600/40 to-teal-600/40',
+        gradient: 'from-[#6fd6cc]/40 to-[#3a7c73]/40',
         badge: 'AGENT',
       };
     }
@@ -77,7 +77,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M10.5 18h3" />
         </svg>
       ),
-      gradient: 'from-cyan-900/30 to-emerald-900/30',
+      gradient: 'from-[#1c1c22]/30 to-[#6a4e2d]/30',
     };
   };
 
@@ -85,10 +85,8 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
 
   // Map to HolographicCard glare colors
   const getGlare = () => {
-    if (visual.gradient.includes('amber')) return 'amber';
-    if (visual.gradient.includes('purple')) return 'purple';
-    if (visual.gradient.includes('emerald')) return 'emerald';
-    if (visual.gradient.includes('rose')) return 'rose';
+    if (visual.gradient.includes('#d4a15f')) return 'amber';
+    if (visual.gradient.includes('#6fd6cc')) return 'emerald';
     return 'cyan';
   };
 
@@ -150,7 +148,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
           </p>
 
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] bg-clip-text text-transparent">
               {product.price}
             </span>
 
@@ -159,7 +157,7 @@ export function ProductCard({ product, onBuy, onClose }: ProductCardProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onBuy(product)}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-medium shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-shadow z-20 relative pointer-events-auto"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#d4a15f] to-[#6fd6cc] text-black font-semibold shadow-lg shadow-[0_12px_30px_rgba(212,161,95,0.2)] hover:shadow-[0_16px_34px_rgba(212,161,95,0.3)] transition-shadow z-20 relative pointer-events-auto"
               >
                 Continue
               </motion.button>

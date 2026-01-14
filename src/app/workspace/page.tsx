@@ -300,6 +300,10 @@ export default function WorkspacePage() {
     }
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Speech recognition is not supported in your browser.');
+      return;
+    }
     const recognition = new SpeechRecognition();
 
     recognition.continuous = true;
@@ -357,16 +361,16 @@ export default function WorkspacePage() {
   };
 
   return (
-    <div className="h-screen h-dvh flex bg-[#0a0a0a] overflow-hidden">
+    <div className="h-screen h-dvh flex bg-[#050506] overflow-hidden">
       {/* Optional 3D Background - hidden on mobile for performance */}
       {showBackground && (
         <div className="fixed inset-0 z-0 opacity-30 hidden lg:block pointer-events-none">
-          <IntroScene />
+          <IntroScene onIntroComplete={() => {}} />
         </div>
       )}
 
       {/* Mobile Header */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-[#0a0a0a]/95 backdrop-blur-lg border-b border-white/5 flex items-center px-4 z-50 md:hidden">
+      <div className="fixed top-0 left-0 right-0 h-14 bg-[#050506]/95 backdrop-blur-lg border-b border-white/5 flex items-center px-4 z-50 md:hidden">
         <button
           onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
           className="p-2 rounded-lg hover:bg-white/10 text-white/60"
@@ -375,7 +379,7 @@ export default function WorkspacePage() {
         </button>
         <div className="flex-1 flex items-center justify-center">
           <span className="text-sm font-medium text-white/80">
-            crowe<span className="text-[#c9a55c]">AI</span> Workspace
+            Crowe <span className="text-[#d4a15f]">Logic</span> Console
           </span>
         </div>
         <div className="w-10" /> {/* Spacer for symmetry */}

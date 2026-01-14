@@ -31,7 +31,7 @@ function ExplosionRing({ progress }: { progress: number }) {
   return (
     <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
       <ringGeometry args={[0.8, 1, 64]} />
-      <meshBasicMaterial color="#c9a55c" transparent side={THREE.DoubleSide} />
+      <meshBasicMaterial color="#d4a15f" transparent side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -114,7 +114,7 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
   const hasCalledComplete = useRef(false);
 
   // Sophisticated warm palette
-  const colors = ['#c9a55c', '#8b7355', '#d4c4a8', '#a08060', '#6b5b4f', '#b8a080', '#e8d8c0', '#707070'];
+  const colors = ['#d4a15f', '#9a7b4a', '#e0ccb0', '#a08060', '#6b5b4f', '#b8a080', '#efe1c8', '#707070'];
 
   const orbs = useMemo(() => {
     const orbData: OrbData[] = [];
@@ -221,8 +221,8 @@ export function BigBang({ onComplete }: { onComplete?: () => void }) {
         color="#f5f0e8"
         distance={100}
       />
-      <pointLight position={[5, 5, 5]} intensity={1.5} color="#c9a55c" />
-      <pointLight position={[-5, -5, -5]} intensity={1.5} color="#8b7355" />
+      <pointLight position={[5, 5, 5]} intensity={1.5} color="#d4a15f" />
+      <pointLight position={[-5, -5, -5]} intensity={1.5} color="#9a7b4a" />
     </group>
   );
 }

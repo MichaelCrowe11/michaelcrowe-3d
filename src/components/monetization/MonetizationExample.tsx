@@ -71,7 +71,7 @@ export function MonetizationExample({ userEmail, isAdmin = false }: Monetization
           {isAdmin && (
             <button
               onClick={() => setShowAdmin(true)}
-              className="px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors"
+              className="px-4 py-2 rounded-lg bg-[#d4a15f]/15 border border-[#d4a15f]/30 text-[#d4a15f] hover:bg-[#d4a15f]/25 transition-colors"
             >
               Admin
             </button>

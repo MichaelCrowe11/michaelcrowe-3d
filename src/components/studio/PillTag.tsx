@@ -8,10 +8,10 @@ interface PillTagProps {
 
 export function PillTag({ children, variant = 'cyan', className = '' }: PillTagProps) {
   const variantClasses = {
-    cyan: 'bg-cyan-400/15 text-cyan-200 border-cyan-300/30',
-    sky: 'bg-sky-400/15 text-sky-200 border-sky-300/30',
-    emerald: 'bg-emerald-400/15 text-emerald-200 border-emerald-300/30',
-    amber: 'bg-amber-400/15 text-amber-200 border-amber-300/30',
+    cyan: 'bg-[#6fd6cc]/15 text-[#b7f1e9] border-[#6fd6cc]/30',
+    sky: 'bg-[#6fd6cc]/15 text-[#b7f1e9] border-[#6fd6cc]/30',
+    emerald: 'bg-[#6fd6cc]/15 text-[#b7f1e9] border-[#6fd6cc]/30',
+    amber: 'bg-[#d4a15f]/15 text-[#f1d2a8] border-[#d4a15f]/30',
   };
   
   return (
