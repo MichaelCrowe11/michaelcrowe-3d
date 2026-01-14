@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { AgentInterfaceTheme } from '@/config/agentInterfaces';
 
 interface CustomStatusOrbProps {
-  status: 'connected' | 'connecting' | 'disconnected';
+  status: 'connected' | 'connecting' | 'disconnected' | 'disconnecting';
   isSpeaking: boolean;
   theme?: AgentInterfaceTheme;
   orbStyle: 'standard' | 'animated' | 'pulsing' | 'morphing';
@@ -31,12 +31,16 @@ export function CustomStatusOrb({ status, isSpeaking, theme, orbStyle }: CustomS
     ? isSpeaking
       ? `linear-gradient(135deg, ${theme?.primaryColor || '#22d3ee'}, ${theme?.secondaryColor || '#10b981'})`
       : `linear-gradient(135deg, ${theme?.primaryColor || '#22d3ee'}80, ${theme?.secondaryColor || '#10b981'}80)`
+    : status === 'connecting'
+    ? 'rgba(255, 255, 255, 0.15)'
     : 'rgba(255, 255, 255, 0.1)';
 
   const shadowStyle = status === 'connected'
     ? isSpeaking
       ? `0 0 60px ${theme?.glowColor || 'rgba(34, 211, 238, 0.5)'}`
       : `0 0 30px ${theme?.glowColor || 'rgba(34, 211, 238, 0.3)'}`
+    : status === 'connecting'
+    ? `0 0 15px ${theme?.glowColor || 'rgba(34, 211, 238, 0.2)'}`
     : 'none';
 
   return (
@@ -68,7 +72,7 @@ export function CustomStatusOrb({ status, isSpeaking, theme, orbStyle }: CustomS
               {isSpeaking ? 'Agent responding...' : 'Your turn to speak'}
             </div>
           </motion.div>
-        ) : status === 'connecting' ? (
+        ) : status === 'connecting' || status === 'disconnecting' ? (
           <div className="flex gap-1.5">
             {[0, 1, 2].map((i) => (
               <motion.span
