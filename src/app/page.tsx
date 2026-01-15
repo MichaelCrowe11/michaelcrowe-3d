@@ -10,7 +10,7 @@ const hasClerk = typeof window !== 'undefined'
 import { SalesProvider, useSales } from '@/components/sales/SalesProvider';
 import { CroweAIChat } from '@/components/conversation/CroweAIChat';
 import { AgentSelector } from '@/components/agents/AgentSelector';
-import { VoiceConversation } from '@/components/agents/VoiceConversation';
+import { CustomVoiceConversation } from '@/components/agents/interfaces/CustomVoiceConversation';
 import { useSessionStore } from '@/stores/sessionStore';
 import type { Agent } from '@/config/agents';
 import { Hero } from '@/components/sections/Hero';
@@ -204,7 +204,7 @@ function HomeContent() {
         )}
 
         {phase === 'conversation' && selectedAgent && (
-          <VoiceConversation
+          <CustomVoiceConversation
             key="conversation"
             agent={selectedAgent}
             onEnd={handleConversationEnd}

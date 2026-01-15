@@ -2,6 +2,7 @@
   "name": "michaelcrowe-3d",
   "version": "0.1.0",
   "private": true,
+  "description": "Example package.json configuration for using forked ElevenLabs repositories",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,8 +15,25 @@
     "@ai-sdk/gateway": "^3.0.11",
     "@clerk/nextjs": "^6.36.7",
     "@clerk/themes": "^2.4.47",
+    
+    "// ELEVENLABS PACKAGES": "Choose one of the following options:",
+    
+    "// Option 1 - Standard npm packages (current)": "",
     "@elevenlabs/client": "^0.12.2",
     "@elevenlabs/react": "^0.12.3",
+    
+    "// Option 2 - Use GitHub repository URLs": "",
+    "// @elevenlabs/client": "github:YourUsername/elevenlabs-js#main",
+    "// @elevenlabs/react": "github:YourUsername/elevenlabs-js#main",
+    
+    "// Option 3 - Use local file paths (for development)": "",
+    "// @elevenlabs/client": "file:./vendor/elevenlabs-client",
+    "// @elevenlabs/react": "file:./vendor/elevenlabs-react",
+    
+    "// Option 4 - Use git+https URLs with specific commits": "",
+    "// @elevenlabs/client": "git+https://github.com/YourUsername/elevenlabs-js.git#commit-hash",
+    "// @elevenlabs/react": "git+https://github.com/YourUsername/elevenlabs-js.git#commit-hash",
+    
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@react-three/postprocessing": "^3.0.4",

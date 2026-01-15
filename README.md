@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Features
+
+- **Next.js 16** with App Router
+- **React 19** with advanced features
+- **Tailwind CSS v4** for styling
+- **Three.js/R3F** for 3D graphics
+- **AI Avatars** with Simli and ElevenLabs
+- **MCP (Model Context Protocol)** host via API routes
+- **Custom Agent Interfaces** with unique theming per agent
+
 ## Getting Started
 
 First, run the development server:
@@ -19,6 +29,48 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Custom Agent Interfaces
+
+This application features custom interfaces for each AI agent with unique:
+
+- **Themes**: Agent-specific colors, gradients, and visual effects
+- **Suggested Topics**: Contextual conversation starters per agent
+- **Orb Animations**: Multiple animation styles (standard, animated, pulsing, morphing)
+- **Background Styles**: Custom environments per agent type
+
+### Available Agents
+
+1. **Cultivation Intelligence** - Commercial mushroom cultivation mastery
+2. **Sales Director** - Automated CRM & lead qualification
+3. **AI Strategy Advisor** - Enterprise AI implementation
+4. **Extraction & Formulation** - Natural product extraction science
+5. **Mycology Research** - Fungal biology & bioactive compounds
+6. **Computational Chemist** - Molecular modeling & quantum chemistry
+7. **Drug Discovery Specialist** - Target to clinic pathway
+
+### Testing Agent Interfaces
+
+```bash
+npm run test:agents
+```
+
+This utility script helps you preview and test agent-specific interfaces during development.
+
+### Customizing Agent Interfaces
+
+Edit `src/config/agentInterfaces.ts` to customize:
+
+- Theme colors and gradients
+- Suggested conversation topics
+- Animation styles
+- Custom features (visualizers, transcripts, etc.)
+
+Changes hot-reload automatically during development.
+
+## Using Forked ElevenLabs Packages
+
+See [docs/ELEVENLABS_FORKS.md](docs/ELEVENLABS_FORKS.md) for detailed instructions on using custom forked versions of ElevenLabs packages for enhanced customization.
 
 ## Learn More
 
