@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
@@ -13,6 +13,7 @@ import {
   Mic,
   Home,
 } from 'lucide-react';
+import { workspaceModes, type WorkspaceMode } from '@/data/workspaceAgents';
 import Link from 'next/link';
 
 export interface Conversation {
@@ -30,6 +31,8 @@ interface WorkspaceSidebarProps {
   onSelectConversation: (id: string) => void;
   onNewConversation: () => void;
   onDeleteConversation: (id: string) => void;
+  activeMode: WorkspaceMode;
+  onSelectMode: (mode: WorkspaceMode) => void;
   isCollapsed: boolean;
   onToggleCollapse: () => void;
 }
@@ -40,6 +43,8 @@ export function WorkspaceSidebar({
   onSelectConversation,
   onNewConversation,
   onDeleteConversation,
+  activeMode,
+  onSelectMode,
   isCollapsed,
   onToggleCollapse,
 }: WorkspaceSidebarProps) {
@@ -87,6 +92,28 @@ export function WorkspaceSidebar({
           >
             {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </button>
+        </div>
+      </div>
+
+      {/* Modes */}
+      <div className="px-3 pb-3">
+        <div className="space-y-2">
+          {workspaceModes.map((mode) => (
+            <button
+              key={mode.id}
+              onClick={() => onSelectMode(mode.id)}
+              className={`w-full flex items-center gap-3 p-2 rounded-lg text-left transition-all ${
+                activeMode === mode.id
+                  ? 'bg-[#d4a15f]/10 border border-[#d4a15f]/30 text-white'
+                  : 'border border-white/10 text-white/50 hover:border-white/30 hover:text-white/80'
+              } ${isCollapsed ? 'justify-center' : ''}`}
+              title={mode.label}
+            >
+              <span className="text-[10px] uppercase tracking-[0.2em]">
+                {isCollapsed ? mode.label.slice(0, 1) : mode.label}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 

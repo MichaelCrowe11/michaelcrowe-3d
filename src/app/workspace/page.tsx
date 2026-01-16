@@ -5,6 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { WorkspaceSidebar, Conversation } from '@/components/workspace/WorkspaceSidebar';
 import { WorkspaceChat, Message } from '@/components/workspace/WorkspaceChat';
+import { WorkspaceModes } from '@/components/workspace/WorkspaceModes';
+import { RunbooksPanel } from '@/components/workspace/RunbooksPanel';
+import { CurationPanel } from '@/components/workspace/CurationPanel';
+import { VoiceConsolePanel } from '@/components/workspace/VoiceConsolePanel';
+import { workspaceModes, type WorkspaceMode } from '@/data/workspaceAgents';
 import { Menu, X } from 'lucide-react';
 
 // Dynamic import for 3D background - optional enhancement
@@ -24,6 +29,7 @@ interface Model {
 export default function WorkspacePage() {
   // State
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [activeMode, setActiveMode] = useState<WorkspaceMode>('runbooks');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
@@ -35,6 +41,7 @@ export default function WorkspacePage() {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [showBackground, setShowBackground] = useState(true);
+  const activeModeMeta = workspaceModes.find((mode) => mode.id === activeMode);
 
   // Refs
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -379,7 +386,7 @@ export default function WorkspacePage() {
         </button>
         <div className="flex-1 flex items-center justify-center">
           <span className="text-sm font-medium text-white/80">
-            Crowe <span className="text-[#d4a15f]">Logic</span> Console
+            {activeModeMeta?.label || 'Crowe Logic Console'}
           </span>
         </div>
         <div className="w-10" /> {/* Spacer for symmetry */}
@@ -406,6 +413,8 @@ export default function WorkspacePage() {
           onSelectConversation={handleSelectConversation}
           onNewConversation={handleNewConversation}
           onDeleteConversation={handleDeleteConversation}
+          activeMode={activeMode}
+          onSelectMode={setActiveMode}
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
@@ -427,6 +436,11 @@ export default function WorkspacePage() {
               onSelectConversation={handleSelectConversation}
               onNewConversation={handleNewConversation}
               onDeleteConversation={handleDeleteConversation}
+              activeMode={activeMode}
+              onSelectMode={(mode) => {
+                setActiveMode(mode);
+                setIsMobileSidebarOpen(false);
+              }}
               isCollapsed={false}
               onToggleCollapse={() => setIsMobileSidebarOpen(false)}
             />
@@ -434,21 +448,45 @@ export default function WorkspacePage() {
         )}
       </AnimatePresence>
 
-      {/* Main Chat Area */}
+      {/* Main Workspace Area */}
       <main className="flex-1 relative z-10 pt-14 md:pt-0">
-        <WorkspaceChat
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          isLoading={isLoading}
-          selectedModel={selectedModel}
-          availableModels={models}
-          onSelectModel={setSelectedModel}
-          onStartVoice={handleStartVoice}
-          onStopVoice={handleStopVoice}
-          isVoiceActive={isVoiceActive}
-          isListening={isListening}
-          transcript={transcript}
-        />
+        <div className="h-full overflow-y-auto">
+          <div className="px-6 pt-6 pb-4 md:px-10 border-b border-white/5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-white/40">Crowe Logic Research Studio</p>
+                <h1 className="text-2xl md:text-3xl font-semibold text-white mt-2">{activeModeMeta?.label || 'Workspace'}</h1>
+                <p className="text-sm text-white/50 mt-2 max-w-2xl">{activeModeMeta?.summary}</p>
+              </div>
+              <WorkspaceModes activeMode={activeMode} onSelectMode={setActiveMode} />
+            </div>
+          </div>
+          <div className="px-6 py-6 md:px-10 pb-16">
+            {activeMode === 'runbooks' && (
+              <RunbooksPanel
+                mode={activeMode}
+                chat={
+                  <WorkspaceChat
+                    className="h-full"
+                    messages={messages}
+                    onSendMessage={handleSendMessage}
+                    isLoading={isLoading}
+                    selectedModel={selectedModel}
+                    availableModels={models}
+                    onSelectModel={setSelectedModel}
+                    onStartVoice={handleStartVoice}
+                    onStopVoice={handleStopVoice}
+                    isVoiceActive={isVoiceActive}
+                    isListening={isListening}
+                    transcript={transcript}
+                  />
+                }
+              />
+            )}
+            {activeMode === 'curation' && <CurationPanel mode={activeMode} />}
+            {activeMode === 'voice' && <VoiceConsolePanel mode={activeMode} />}
+          </div>
+        </div>
       </main>
     </div>
   );

@@ -15,6 +15,7 @@ import {
   Zap,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import clsx from 'clsx';
 
 export interface Message {
   id: string;
@@ -43,6 +44,7 @@ interface WorkspaceChatProps {
   isVoiceActive: boolean;
   isListening: boolean;
   transcript: string;
+  className?: string;
 }
 
 export function WorkspaceChat({
@@ -57,6 +59,7 @@ export function WorkspaceChat({
   isVoiceActive,
   isListening,
   transcript,
+  className,
 }: WorkspaceChatProps) {
   const [input, setInput] = useState('');
   const [showModelSelector, setShowModelSelector] = useState(false);
@@ -100,7 +103,7 @@ export function WorkspaceChat({
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-[#050506]">
+    <div className={clsx('flex-1 flex flex-col h-full bg-[#050506]', className)}>
       {/* Model Selector Header */}
       <div className="border-b border-white/5 p-4">
         <div className="max-w-3xl mx-auto">
