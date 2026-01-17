@@ -58,10 +58,10 @@ export default function DatasetPage() {
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {[
-            { icon: '✅', label: 'ChEMBL Validated', desc: 'Curated targets' },
-            { icon: '🧬', label: 'SMILES Data', desc: 'Molecular structures' },
-            { icon: '🤖', label: 'ML Ready', desc: 'Pre-processed data' },
-            { icon: '🔌', label: 'API Access', desc: 'Direct integration' },
+            { icon: 'Verified', label: 'ChEMBL Validated', desc: 'Curated targets' },
+            { icon: 'Structures', label: 'SMILES Data', desc: 'Molecular structures' },
+            { icon: 'ML', label: 'ML Ready', desc: 'Pre-processed data' },
+            { icon: 'API', label: 'API Access', desc: 'Direct integration' },
           ].map((feature, i) => (
             <motion.div
               key={i}

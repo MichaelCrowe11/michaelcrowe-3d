@@ -18,7 +18,7 @@ export function CustomSuggestedTopics({ topics, theme }: CustomSuggestedTopicsPr
       aria-label="Suggested conversation topics"
     >
       <p className="w-full text-center text-white/60 text-sm md:text-base font-medium mb-2">
-        💡 Suggested topics (just speak to ask):
+        Suggested topics (just speak to ask):
       </p>
       {topics.map((topic, index) => (
         <motion.span

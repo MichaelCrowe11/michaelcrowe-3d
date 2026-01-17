@@ -67,7 +67,7 @@ export function CustomStatusOrb({ status, isSpeaking, theme, orbStyle }: CustomS
             className="text-white text-center px-6"
           >
             <div className="text-xl md:text-2xl font-bold mb-2 drop-shadow-lg">
-              {isSpeaking ? '🗣️ Speaking' : '👂 Listening'}
+              {isSpeaking ? 'Speaking' : 'Listening'}
             </div>
             <div className="text-sm md:text-base font-medium text-white/80">
               {isSpeaking ? 'Agent responding...' : 'Your turn to speak'}

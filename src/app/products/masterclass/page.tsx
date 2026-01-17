@@ -58,10 +58,10 @@ export default function MasterclassPage() {
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {[
-            { icon: '📚', label: '28 Chapters', desc: 'Comprehensive curriculum' },
-            { icon: '📄', label: '640+ Pages', desc: 'In-depth content' },
-            { icon: '🎥', label: '46 Hours Video', desc: 'Visual demonstrations' },
-            { icon: '♾️', label: 'Lifetime Access', desc: 'Learn at your pace' },
+            { icon: 'Chapters', label: '28 Chapters', desc: 'Comprehensive curriculum' },
+            { icon: 'Pages', label: '640+ Pages', desc: 'In-depth content' },
+            { icon: 'Video', label: '46 Hours Video', desc: 'Visual demonstrations' },
+            { icon: 'Access', label: 'Lifetime Access', desc: 'Learn at your pace' },
           ].map((feature, i) => (
             <motion.div
               key={i}
