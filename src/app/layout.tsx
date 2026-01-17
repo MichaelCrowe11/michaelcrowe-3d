@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -18,8 +19,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "michaelcrowe.ai | Agentic AI Platform",
-  description: "Transform expertise into immersive, voice-first experiences. Deep Consulting, Drug Discovery, AI Strategy, and beyond. Private, powerful, and always available.",
+  title: "Crowe Logic Research Studio | Agentic AI Platform",
+  description: "Crowe Logic Research Studio delivers agentic research, voice-first intelligence, and accelerated consulting systems.",
   keywords: ["AI Platform", "Voice AI", "Local AI", "Crowe Logic", "AI Consulting", "Drug Discovery", "Machine Learning", "Private AI"],
   authors: [{ name: "Michael Crowe" }],
   manifest: "/manifest.json",
@@ -32,22 +33,22 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "michaelcrowe.ai | Agentic AI Platform",
+    title: "Crowe Logic Research Studio | Agentic AI Platform",
     description: "Transform expertise into immersive, voice-first experiences.",
     url: "https://michaelcrowe.ai",
-    siteName: "Crowe Logic Studio",
+    siteName: "Crowe Logic Research Studio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "michaelcrowe.ai | Agentic AI Platform",
+    title: "Crowe Logic Research Studio | Agentic AI Platform",
     description: "Transform expertise into immersive, voice-first experiences.",
   },
 };
 
 import { LiquidCursor } from '@/components/ui/LiquidCursor';
 import { PWARegistration } from '@/components/PWARegistration';
-import { GlobalNav } from '@/components/layout/GlobalNav';
+import { GlobalSideNav } from '@/components/layout/GlobalSideNav';
 
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -67,9 +68,16 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased selection:bg-[#d4a15f]/40 selection:text-black cursor-none">
         <LiquidCursor />
-        <GlobalNav />
-        {children}
+        <div className="relative min-h-screen bg-[#050506]">
+          <GlobalSideNav />
+          <main className="pl-20 md:pl-24">
+            {children}
+          </main>
+        </div>
         <PWARegistration />
+        <Script src="https://elevenlabs.io/convai-widget/index.js" strategy="lazyOnload" />
+        {/* @ts-expect-error - ElevenLabs custom element */}
+        <elevenlabs-convai agent-id="agent_7001kevrqj5yf67a6g5r6a0gzj0z"></elevenlabs-convai>
       </body>
     </html>
   );
