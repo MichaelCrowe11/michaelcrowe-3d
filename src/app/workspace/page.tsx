@@ -10,7 +10,6 @@ import { RunbooksPanel } from '@/components/workspace/RunbooksPanel';
 import { CurationPanel } from '@/components/workspace/CurationPanel';
 import { VoiceConsolePanel } from '@/components/workspace/VoiceConsolePanel';
 import { workspaceModes, type WorkspaceMode } from '@/data/workspaceAgents';
-import { Menu, X } from 'lucide-react';
 
 // Dynamic import for 3D background - optional enhancement
 const IntroScene = dynamic(
@@ -61,6 +60,14 @@ export default function WorkspacePage() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleToggle = () => {
+      setIsMobileSidebarOpen((prev) => !prev);
+    };
+    window.addEventListener('workspace:toggle-sidebar', handleToggle as EventListener);
+    return () => window.removeEventListener('workspace:toggle-sidebar', handleToggle as EventListener);
   }, []);
 
   // Fetch available models from Ollama
@@ -368,29 +375,13 @@ export default function WorkspacePage() {
   };
 
   return (
-    <div className="h-screen h-dvh flex bg-[#050506] overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)] flex bg-[#050506] overflow-hidden">
       {/* Optional 3D Background - hidden on mobile for performance */}
       {showBackground && (
         <div className="fixed inset-0 z-0 opacity-30 hidden lg:block pointer-events-none">
           <IntroScene onIntroComplete={() => {}} />
         </div>
       )}
-
-      {/* Mobile Header */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-[#050506]/95 backdrop-blur-lg border-b border-white/5 flex items-center px-4 z-50 md:hidden">
-        <button
-          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="p-2 rounded-lg hover:bg-white/10 text-white/60"
-        >
-          {isMobileSidebarOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-        <div className="flex-1 flex items-center justify-center">
-          <span className="text-sm font-medium text-white/80">
-            {activeModeMeta?.label || 'Crowe Logic Console'}
-          </span>
-        </div>
-        <div className="w-10" /> {/* Spacer for symmetry */}
-      </div>
 
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
@@ -428,7 +419,7 @@ export default function WorkspacePage() {
             animate={{ x: 0 }}
             exit={{ x: -280 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed top-14 left-0 bottom-0 w-[280px] z-50 md:hidden"
+            className="fixed top-16 left-0 bottom-0 w-[280px] z-50 md:hidden"
           >
             <WorkspaceSidebar
               conversations={conversations}
@@ -449,7 +440,7 @@ export default function WorkspacePage() {
       </AnimatePresence>
 
       {/* Main Workspace Area */}
-      <main className="flex-1 relative z-10 pt-14 md:pt-0">
+      <main className="flex-1 relative z-10 pt-0">
         <div className="h-full overflow-y-auto">
           <div className="px-6 pt-6 pb-4 md:px-10 border-b border-white/5">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

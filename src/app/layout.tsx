@@ -47,6 +47,7 @@ export const metadata: Metadata = {
 
 import { LiquidCursor } from '@/components/ui/LiquidCursor';
 import { PWARegistration } from '@/components/PWARegistration';
+import { GlobalNav } from '@/components/layout/GlobalNav';
 
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -66,6 +67,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased selection:bg-[#d4a15f]/40 selection:text-black cursor-none">
         <LiquidCursor />
+        <GlobalNav />
         {children}
         <PWARegistration />
       </body>
