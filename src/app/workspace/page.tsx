@@ -375,7 +375,7 @@ export default function WorkspacePage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)] flex bg-[#050506] overflow-hidden">
+    <div className="min-h-screen flex bg-[#050506] overflow-hidden">
       {/* Optional 3D Background - hidden on mobile for performance */}
       {showBackground && (
         <div className="fixed inset-0 z-0 opacity-30 hidden lg:block pointer-events-none">
@@ -419,7 +419,7 @@ export default function WorkspacePage() {
             animate={{ x: 0 }}
             exit={{ x: -280 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed top-16 left-0 bottom-0 w-[280px] z-50 md:hidden"
+            className="fixed top-0 left-0 bottom-0 w-[280px] z-50 md:hidden"
           >
             <WorkspaceSidebar
               conversations={conversations}

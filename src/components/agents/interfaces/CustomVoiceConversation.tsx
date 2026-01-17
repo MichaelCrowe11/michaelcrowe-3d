@@ -261,7 +261,7 @@ export function CustomVoiceConversation({ agent, onEnd }: CustomVoiceConversatio
         >
           <div className="text-white/70 text-base font-medium">
             {credits.availableMinutes === -1 ? (
-              <span className="text-emerald-400 text-lg font-semibold">✓ Unlimited plan active</span>
+              <span className="text-emerald-400 text-lg font-semibold">Unlimited plan active</span>
             ) : (
               <>
                 <span className="text-white text-xl font-bold">{credits.availableMinutes} minutes</span> available
@@ -315,7 +315,7 @@ export function CustomVoiceConversation({ agent, onEnd }: CustomVoiceConversatio
               boxShadow: signedUrl ? `0 0 30px ${theme?.glowColor || 'rgba(34, 211, 238, 0.3)'}` : 'none'
             }}
           >
-            {signedUrl ? '🎙️ Start Deep Dive' : 'Connecting...'}
+            {signedUrl ? 'Start Deep Dive' : 'Connecting...'}
           </button>
         )}
 

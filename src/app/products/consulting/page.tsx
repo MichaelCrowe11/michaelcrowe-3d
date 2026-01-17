@@ -34,17 +34,17 @@ export default function ConsultingPage() {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6">
-            AI Consultation<br />Package
+            Crowe Logic Research Studio<br />Consulting
           </h1>
           
           <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-3xl mx-auto">
-            Enterprise-grade AI strategy and implementation consulting
+            Research Studio consulting for agentic systems, applied intelligence, and accelerated delivery
           </p>
 
           <div className="flex items-center justify-center gap-4 mb-8">
             <span className="text-5xl font-display font-bold text-white">$5,000</span>
             <span className="px-4 py-2 bg-[#d4a15f]/20 text-[#d4a15f] rounded-full text-sm font-semibold">
-              Enterprise Package
+              Research Studio Package
             </span>
           </div>
         </motion.div>
@@ -57,10 +57,10 @@ export default function ConsultingPage() {
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {[
-            { icon: '🧠', label: 'Claude 4.5 Opus', desc: 'Latest AI models' },
-            { icon: '⚙️', label: 'Custom Models', desc: 'Tailored solutions' },
-            { icon: '👤', label: '1:1 Sessions', desc: 'Direct access' },
-            { icon: '🚀', label: 'Implementation', desc: 'Full deployment' },
+            { icon: 'Model', label: 'Claude 4.5 Opus', desc: 'Latest AI models' },
+            { icon: 'Systems', label: 'Custom Models', desc: 'Tailored solutions' },
+            { icon: 'Access', label: '1:1 Sessions', desc: 'Direct access' },
+            { icon: 'Launch', label: 'Implementation', desc: 'Full deployment' },
           ].map((feature, i) => (
             <motion.div
               key={i}
@@ -135,7 +135,7 @@ export default function ConsultingPage() {
           className="text-center"
         >
           <button className="px-12 py-6 bg-gradient-to-r from-[#d4a15f] via-[#c08e54] to-[#1c1c22] text-white text-xl font-bold rounded-2xl shadow-2xl hover:shadow-[0_0_40px_rgba(212,161,95,0.5)] transition-all">
-            Schedule Consultation
+            Schedule Research Studio Consult
           </button>
           
           <p className="mt-6 text-white/50 text-sm">
