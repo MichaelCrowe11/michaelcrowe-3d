@@ -5,17 +5,37 @@ import { HolographicCard } from '@/components/ui/HolographicCard';
 
 const products = [
   {
+    title: 'AI Tools Access',
+    subtitle: 'All 7 Specialist Agents',
+    price: '$49',
+    originalPrice: '$99',
+    priceSuffix: '/mo',
+    badge: 'BEST VALUE',
+    badgeColor: 'bg-[color:var(--accent)] text-black',
+    icon: (
+      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+      </svg>
+    ),
+    features: ['7 AI Specialists', 'Voice Consultations', '200 min/mo included', 'Cancel Anytime'],
+    gradient: 'from-[#d4a15f] via-[#f0c27b] to-[#6fd6cc]',
+    link: '#pricing'
+  },
+  {
     title: "Mushroom Cultivator's Masterclass",
     subtitle: 'The Complete Guide',
     price: '$499',
     originalPrice: '$899',
+    priceSuffix: '',
+    badge: 'PRICE DROP',
+    badgeColor: 'bg-black/50 text-[color:var(--accent)] border border-[color:var(--accent)]/30',
     icon: (
       <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
       </svg>
     ),
     features: ['28 Chapters', '640+ Pages', '46 Hours Video', 'Lifetime Access'],
-    gradient: 'from-[#d4a15f] via-[#e2b577] to-[#6fd6cc]',
+    gradient: 'from-[#6fd6cc] via-[#4fae9e] to-[#d4a15f]',
     link: '/products/masterclass'
   },
   {
@@ -23,13 +43,16 @@ const products = [
     subtitle: '500+ Validated Targets',
     price: '$2,499',
     originalPrice: '$4,999',
+    priceSuffix: '',
+    badge: 'PRICE DROP',
+    badgeColor: 'bg-black/50 text-[color:var(--accent)] border border-[color:var(--accent)]/30',
     icon: (
       <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
       </svg>
     ),
     features: ['ChEMBL Validated', 'SMILES Data', 'ML Ready', 'API Access'],
-    gradient: 'from-[#6fd6cc] via-[#4fae9e] to-[#d4a15f]',
+    gradient: 'from-[#d4a15f] via-[#c08e54] to-[#1c1c22]',
     link: '/products/dataset'
   },
   {
@@ -37,13 +60,16 @@ const products = [
     subtitle: 'Crowe Logic Research Studio',
     price: '$5,000',
     originalPrice: null,
+    priceSuffix: '',
+    badge: null,
+    badgeColor: '',
     icon: (
       <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
       </svg>
     ),
     features: ['Claude 4.5 Opus', 'Custom Models', '1:1 Sessions', 'Implementation'],
-    gradient: 'from-[#d4a15f] via-[#c08e54] to-[#1c1c22]',
+    gradient: 'from-[#d4a15f] via-[#e2b577] to-[#6fd6cc]',
     link: '/products/consulting'
   }
 ];
@@ -76,69 +102,73 @@ export function Products() {
             <span className="gradient-text">move faster than the market.</span>
           </h2>
           <p className="text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
-            Access the masterclass, datasets, and advisory packages that are powering
+            Subscribe for AI tool access, or purchase datasets and advisory packages powering
             active research programs.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
           {products.map((product, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6 }}
+              transition={{ delay: i * 0.12, duration: 0.6 }}
+              className={i === 0 ? 'md:col-span-2 xl:col-span-1' : ''}
             >
               <HolographicCard
-                className="overflow-hidden group h-full bg-white/[0.03] backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500"
-                glareColor={i === 1 ? 'cyan' : i === 2 ? 'emerald' : 'amber'}
+                className={`overflow-hidden group h-full bg-white/[0.03] backdrop-blur-sm border transition-all duration-500 ${i === 0 ? 'border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]/60 ring-1 ring-[color:var(--accent)]/20' : 'border-white/10 hover:border-white/20'}`}
+                glareColor={i === 0 ? 'amber' : i === 1 ? 'cyan' : i === 2 ? 'amber' : 'emerald'}
               >
                 {/* Product image placeholder */}
-                <div className={`h-52 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
+                <div className={`h-44 bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
                   <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
                   <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.div
-                      className="w-28 h-28 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl"
+                      className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl"
                       whileHover={{ rotate: 8, scale: 1.15 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
                       {product.icon}
                     </motion.div>
                   </div>
-                  {product.originalPrice && (
+                  {product.badge && (
                     <motion.div
                       initial={{ x: 20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.5 + i * 0.15 }}
-                      className="absolute top-4 right-4 px-4 py-1.5 bg-black/50 backdrop-blur-sm text-[color:var(--accent)] text-[10px] font-bold tracking-[0.25em] rounded-full border border-[color:var(--accent)]/30"
+                      transition={{ delay: 0.5 + i * 0.12 }}
+                      className={`absolute top-4 right-4 px-4 py-1.5 text-[10px] font-bold tracking-[0.25em] rounded-full backdrop-blur-sm ${product.badgeColor}`}
                     >
-                      PRICE DROP
+                      {product.badge}
                     </motion.div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="p-8 lg:p-10">
-                  <h3 className="text-2xl font-display font-bold text-white mb-2 group-hover:text-[color:var(--accent)] transition-colors duration-300">{product.title}</h3>
-                  <p className="text-white/50 text-xs mb-6 font-medium tracking-[0.3em] uppercase">{product.subtitle}</p>
+                <div className="p-6 lg:p-8">
+                  <h3 className="text-xl font-display font-bold text-white mb-1 group-hover:text-[color:var(--accent)] transition-colors duration-300">{product.title}</h3>
+                  <p className="text-white/50 text-xs mb-5 font-medium tracking-[0.3em] uppercase">{product.subtitle}</p>
 
                   {/* Features */}
-                  <div className="grid grid-cols-2 gap-y-4 gap-x-3 mb-8">
+                  <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-6">
                     {product.features.map((feature, j) => (
-                      <div key={j} className="flex items-center gap-2.5 text-sm text-white/70">
-                        <div className="w-2 h-2 rounded-full bg-[color:var(--accent-cool)] shadow-[var(--glow-cool)]" />
+                      <div key={j} className="flex items-center gap-2 text-xs text-white/70">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent-cool)] shadow-[var(--glow-cool)] flex-shrink-0" />
                         {feature}
                       </div>
                     ))}
                   </div>
 
                   {/* Price */}
-                  <div className="flex items-baseline gap-3 mb-8">
-                    <span className="text-4xl lg:text-5xl font-display font-bold text-white">{product.price}</span>
+                  <div className="flex items-baseline gap-2 mb-6">
+                    <span className="text-3xl lg:text-4xl font-display font-bold text-white">{product.price}</span>
+                    {product.priceSuffix && (
+                      <span className="text-sm text-white/50">{product.priceSuffix}</span>
+                    )}
                     {product.originalPrice && (
-                      <span className="text-base text-white/35 line-through decoration-white/30">{product.originalPrice}</span>
+                      <span className="text-sm text-white/30 line-through decoration-white/25">{product.originalPrice}</span>
                     )}
                   </div>
 
@@ -147,9 +177,9 @@ export function Products() {
                     href={product.link}
                     whileHover={{ scale: 1.02, boxShadow: '0 0 35px rgba(212, 161, 95, 0.4)' }}
                     whileTap={{ scale: 0.98 }}
-                    className={`btn-enhanced ripple-effect block w-full py-4 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-bold tracking-[0.2em] uppercase text-center text-sm shadow-lg transition-all duration-300 border border-white/20`}
+                    className={`btn-enhanced ripple-effect block w-full py-3.5 rounded-xl text-white font-bold tracking-[0.15em] uppercase text-center text-xs shadow-lg transition-all duration-300 border ${i === 0 ? 'bg-gradient-to-r from-[#d4a15f] to-[#f0c27b] text-black border-transparent' : `bg-gradient-to-r ${product.gradient} border-white/20`}`}
                   >
-                    Access Now
+                    {i === 0 ? 'Get AI Access' : 'Access Now'}
                   </motion.a>
                 </div>
               </HolographicCard>
@@ -166,7 +196,7 @@ export function Products() {
         >
           <p className="text-white/50 text-sm mb-4">Need a custom solution?</p>
           <motion.a
-            href="#"
+            href="/products/consulting"
             whileHover={{ scale: 1.02 }}
             className="inline-flex items-center gap-2 text-[color:var(--accent)] font-medium link-underline"
           >

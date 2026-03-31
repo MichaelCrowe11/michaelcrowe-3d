@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { Home, LayoutGrid, Orbit, BookOpen, Database, Briefcase } from 'lucide-react';
+import { Home, LayoutGrid, Orbit, BookOpen, Database, Briefcase, Zap } from 'lucide-react';
 
 const primaryLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/workspace', label: 'Workspace', icon: LayoutGrid },
   { href: '/studio', label: 'Studio', icon: Orbit },
+  { href: '/#pricing', label: 'Plans', icon: Zap },
   { href: '/products/masterclass', label: 'Masterclass', icon: BookOpen },
   { href: '/products/dataset', label: 'Dataset', icon: Database },
   { href: '/products/consulting', label: 'Consulting', icon: Briefcase },
@@ -39,13 +40,16 @@ export function GlobalSideNav() {
                   key={link.href}
                   href={link.href}
                   className={clsx(
-                    'group flex h-11 w-11 items-center justify-center rounded-xl border transition',
+                    'group relative flex h-11 w-11 items-center justify-center rounded-xl border transition',
                     isActive
                       ? 'border-[#d4a15f]/50 bg-[#d4a15f]/15 text-white'
                       : 'border-white/10 text-white/50 hover:border-white/30 hover:text-white'
                   )}
                 >
                   <Icon size={18} className={isActive ? 'text-[#d4a15f]' : ''} />
+                  {link.label === 'Plans' && !isActive && (
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#d4a15f] shadow-[0_0_6px_rgba(212,161,95,0.8)]" />
+                  )}
                   <span className="sr-only">{link.label}</span>
                 </Link>
               );

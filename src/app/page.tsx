@@ -16,6 +16,7 @@ import type { Agent } from '@/config/agents';
 import { Hero } from '@/components/sections/Hero';
 import { Services } from '@/components/sections/Services';
 import { Products } from '@/components/sections/Products';
+import { Pricing } from '@/components/sections/Pricing';
 import { Footer as SectionFooter } from '@/components/sections/Footer';
 
 type Phase = 'intro' | 'home' | 'agents' | 'conversation';
@@ -191,6 +192,7 @@ function HomeContent() {
             <Hero onStartDeepDive={handleStartDeepDive} />
             <Services />
             <Products />
+            <Pricing />
             <SectionFooter />
           </motion.div>
         )}

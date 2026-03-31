@@ -23,26 +23,42 @@ export function Footer() {
               operational decisioning. Precision, speed, and measurable outcomes.
             </p>
             <div className="flex gap-4">
-              {['github', 'twitter', 'linkedin'].map((social) => (
+              {[
+                { name: 'github', url: 'https://github.com' },
+                { name: 'twitter', url: 'https://twitter.com' },
+                { name: 'linkedin', url: 'https://linkedin.com' },
+              ].map((social) => (
                 <motion.a
-                  key={social}
-                  href={`https://${social}.com`}
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ y: -3 }}
                   className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_18px_rgba(212,161,95,0.25)] transition-all duration-300"
                 >
-                  <span className="text-white/60 capitalize text-xs font-medium">{social[0].toUpperCase()}</span>
+                  <span className="text-white/60 capitalize text-xs font-medium">{social.name[0].toUpperCase()}</span>
                 </motion.a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
+          {/* Products */}
           <div>
             <h5 className="text-white font-display font-semibold mb-6 tracking-wide">Products</h5>
             <ul className="space-y-3">
-              {['Masterclass', 'Datasets', 'Consulting', 'API Access'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-white/50 hover:text-white transition-colors font-light hover:pl-2 duration-200">{item}</a>
+              {[
+                { label: 'AI Tools Access', href: '/#pricing' },
+                { label: 'Masterclass', href: '/products/masterclass' },
+                { label: 'Datasets', href: '/products/dataset' },
+                { label: 'Consulting', href: '/products/consulting' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="text-white/50 hover:text-white transition-colors font-light hover:pl-2 duration-200">
+                    {item.label}
+                    {item.label === 'AI Tools Access' && (
+                      <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-[color:var(--accent)]/20 text-[color:var(--accent)] font-medium align-middle">NEW</span>
+                    )}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -51,9 +67,14 @@ export function Footer() {
           <div>
             <h5 className="text-white font-display font-semibold mb-6 tracking-wide">Company</h5>
             <ul className="space-y-3">
-              {['About', 'Contact', 'Blog', 'Careers'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-white/50 hover:text-white transition-colors font-light hover:pl-2 duration-200">{item}</a>
+              {[
+                { label: 'About', href: '#' },
+                { label: 'Contact', href: '#' },
+                { label: 'Blog', href: '#' },
+                { label: 'Careers', href: '#' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="text-white/50 hover:text-white transition-colors font-light hover:pl-2 duration-200">{item.label}</a>
                 </li>
               ))}
             </ul>
