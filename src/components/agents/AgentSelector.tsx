@@ -117,9 +117,18 @@ export function AgentSelector({ onSelect, onBack }: AgentSelectorProps) {
         <h2 className="text-3xl md:text-4xl font-display text-white/90 mb-3">
           Select Your Specialist
         </h2>
-        <p className="text-white/55 max-w-md mx-auto text-sm md:text-base">
+        <p className="text-white/55 max-w-md mx-auto text-sm md:text-base mb-4">
           Choose a domain lead to start a focused consultation session.
         </p>
+        <button
+          onClick={onBack}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[color:var(--accent)]/15 border border-[color:var(--accent)]/30 text-[color:var(--accent)] text-xs font-medium hover:bg-[color:var(--accent)]/25 transition-all"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Pro plan: 200 min/mo for $49 · <span className="underline underline-offset-2">View plans</span>
+        </button>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl w-full pb-20 md:pb-0">

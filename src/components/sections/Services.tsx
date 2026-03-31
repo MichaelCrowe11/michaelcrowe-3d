@@ -9,7 +9,9 @@ const researchDomains = [
     abstract: 'Virtual screening pipelines combining molecular docking with machine learning for hit identification. Focus on natural product scaffolds and GPCR targets.',
     methods: ['Molecular Dynamics', 'QSAR Modeling', 'Pharmacophore Mapping'],
     datasets: '500+ validated targets',
-    status: 'Active'
+    status: 'Active',
+    agentLabel: 'Drug Discovery Specialist',
+    agentColor: 'text-[#d4a15f]',
   },
   {
     id: '02',
@@ -17,7 +19,9 @@ const researchDomains = [
     abstract: 'Systematic optimization of Basidiomycete cultivation through environmental control and substrate engineering. Commercial-scale protocols for medicinal species.',
     methods: ['Environmental Modeling', 'Spectral Analysis', 'Yield Optimization'],
     datasets: '634K training frames',
-    status: 'Active'
+    status: 'Active',
+    agentLabel: 'Cultivation Intelligence',
+    agentColor: 'text-[#6fd6cc]',
   },
   {
     id: '03',
@@ -25,15 +29,19 @@ const researchDomains = [
     abstract: 'Extraction and characterization of bioactive compounds from fungal sources. Beta-glucan quantification and triterpene profiling for quality standardization.',
     methods: ['HPLC-MS', 'NMR Spectroscopy', 'Bioassay Screening'],
     datasets: '200+ compound profiles',
-    status: 'Active'
+    status: 'Active',
+    agentLabel: 'Extraction & Formulation',
+    agentColor: 'text-[#f0c27b]',
   },
   {
     id: '04',
     title: 'Expert Systems',
     abstract: 'Development of voice-first consultation systems embedding domain expertise. Real-time knowledge retrieval with conversational interfaces.',
     methods: ['RAG Architecture', 'Voice Synthesis', 'Knowledge Graphs'],
-    datasets: '6 deployed agents',
-    status: 'Active'
+    datasets: '7 deployed agents',
+    status: 'Active',
+    agentLabel: 'AI Strategy Advisor',
+    agentColor: 'text-[#6fd6cc]',
   }
 ];
 
@@ -58,8 +66,8 @@ export function Services() {
             </h2>
           </div>
           <p className="text-white/55 max-w-xl text-sm leading-relaxed">
-            Each domain is designed as a closed-loop program: data capture, modeling,
-            operational feedback, and measurable outcomes.
+            Each domain is backed by a specialized AI agent available for real-time consultation.
+            Start free, then scale with a Pro subscription.
           </p>
         </motion.div>
 
@@ -96,6 +104,17 @@ export function Services() {
                 <span>Data footprint</span>
                 <span className="text-white/70">{domain.datasets}</span>
               </div>
+              <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                <span className={`text-xs font-medium ${domain.agentColor}`}>
+                  AI: {domain.agentLabel}
+                </span>
+                <a href="#pricing" className="text-xs text-white/40 hover:text-[color:var(--accent)] transition-colors flex items-center gap-1">
+                  Try free
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -104,11 +123,17 @@ export function Services() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 pt-8 border-t border-white/10"
+          className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
         >
           <p className="text-white/40 text-xs">
             For collaboration or data licensing, schedule a consult with the relevant domain expert.
           </p>
+          <a
+            href="#pricing"
+            className="text-xs px-4 py-2 rounded-full border border-[color:var(--accent)]/30 text-[color:var(--accent)] hover:bg-[color:var(--accent)]/10 transition-colors whitespace-nowrap"
+          >
+            View AI access plans →
+          </a>
         </motion.div>
       </div>
     </section>
