@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { RecordedTerminal } from '@/components/RecordedTerminal';
 
 const signalMetrics = [
   { label: 'Research Years', value: '10+' },
@@ -90,6 +91,10 @@ export function Hero({ onStartDeepDive }: { onStartDeepDive?: () => void }) {
             <div className="h-10 w-10 rounded-full border border-white/10 flex items-center justify-center text-xs text-white/50">
               01
             </div>
+          </div>
+
+          <div className="mb-5 rounded-2xl overflow-hidden">
+            <RecordedTerminal src="/sessions/crowe-logic.json" title="crowe logic" badge="live" badgeKind="ok" />
           </div>
 
           <div className="space-y-4">

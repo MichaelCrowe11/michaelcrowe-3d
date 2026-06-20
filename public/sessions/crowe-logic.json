@@ -1,0 +1,18 @@
+{
+  "title": "crowe logic",
+  "badge": "live",
+  "badge_kind": "ok",
+  "events": [
+    { "type": "cmd",     "text": "crowe status --all" },
+    { "type": "out",     "text": "operator-built infrastructure  ·  4 products online" },
+    { "type": "wait",    "ms": 350 },
+    { "type": "ok",      "text": "OK    deepparallel      cross-model review        p50 1.2s" },
+    { "type": "ok",      "text": "OK    crowe terminal    record-to-finish          ready" },
+    { "type": "ok",      "text": "OK    crowe sense       3.4M readings  ·  18.5 days  streaming" },
+    { "type": "ok",      "text": "OK    theorem           proof panels              ready" },
+    { "type": "wait",    "ms": 350 },
+    { "type": "comment", "text": "# one warm-dark foundation. gold is the parent. each product is a child." },
+    { "type": "wait",    "ms": 300 },
+    { "type": "out",     "text": "all systems converged  ->  exit 0" }
+  ]
+}
