@@ -14,13 +14,14 @@ export function Footer() {
                 <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover rounded-lg opacity-80" />
               </div>
               <div>
-                <h4 className="text-xl font-display font-bold text-white tracking-wide">Crowe Logic</h4>
-                <p className="text-sm text-white/50 font-medium">Research Intelligence Studio</p>
+                <h4 className="text-xl font-display font-bold text-white tracking-wide">Michael Crowe</h4>
+                <p className="text-sm text-white/50 font-medium">Founder, Crowe Logic</p>
               </div>
             </div>
             <p className="text-white/55 max-w-md mb-8 leading-relaxed font-light">
-              We build applied intelligence systems for life sciences, cultivation, and
-              operational decisioning. Precision, speed, and measurable outcomes.
+              I build at the seam of real-world biology and computation: an instrumented
+              commercial farm, a drug-discovery toolchain, and research software. 26
+              DOI-backed works, all resolvable.
             </p>
             <div className="flex gap-4">
               {['github', 'twitter', 'linkedin'].map((social) => (

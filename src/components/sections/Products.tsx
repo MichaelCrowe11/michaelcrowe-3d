@@ -33,8 +33,8 @@ const products = [
     link: '/products/dataset'
   },
   {
-    title: 'Research Studio Consulting',
-    subtitle: 'Crowe Logic Research Studio',
+    title: 'Consulting and Collaboration',
+    subtitle: 'Work directly with Michael Crowe',
     price: '$5,000',
     originalPrice: null,
     icon: (

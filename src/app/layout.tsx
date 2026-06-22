@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -19,30 +18,30 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Crowe Logic Research Studio | Agentic AI Platform",
-  description: "Crowe Logic Research Studio delivers agentic research, voice-first intelligence, and accelerated consulting systems.",
-  keywords: ["AI Platform", "Voice AI", "Local AI", "Crowe Logic", "AI Consulting", "Drug Discovery", "Machine Learning", "Private AI"],
+  title: "Michael Crowe | Where real-world biology meets computation",
+  description: "Founder of Crowe Logic and operator of Southwest Mushrooms since 2017. A portfolio of 26 DOI-backed works across cultivation intelligence, computational drug discovery, and research software.",
+  keywords: ["Michael Crowe", "Crowe Logic", "cheminformatics", "drug discovery", "QSAR", "virtual screening", "RDKit", "natural products", "applied mycology", "cultivation telemetry"],
   authors: [{ name: "Michael Crowe" }],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "CroweAI",
+    title: "Michael Crowe",
   },
   formatDetection: {
     telephone: false,
   },
   openGraph: {
-    title: "Crowe Logic Research Studio | Agentic AI Platform",
-    description: "Transform expertise into immersive, voice-first experiences.",
+    title: "Michael Crowe | Where real-world biology meets computation",
+    description: "Founder of Crowe Logic. Cultivating since 2005, commercial since 2017. 26 DOI-backed works across cultivation intelligence, drug discovery, and research software.",
     url: "https://michaelcrowe.ai",
-    siteName: "Crowe Logic Research Studio",
+    siteName: "Michael Crowe",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crowe Logic Research Studio | Agentic AI Platform",
-    description: "Transform expertise into immersive, voice-first experiences.",
+    title: "Michael Crowe | Where real-world biology meets computation",
+    description: "Founder of Crowe Logic. Cultivating since 2005, commercial since 2017. 26 DOI-backed works, all resolvable.",
   },
 };
 
@@ -66,7 +65,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className="font-sans antialiased selection:bg-[#d4a15f]/40 selection:text-black cursor-none">
+      <body className="grain font-sans antialiased selection:bg-[#d2ad62]/40 selection:text-black cursor-none">
         <LiquidCursor />
         <div className="relative min-h-screen bg-[#050506]">
           <GlobalSideNav />
@@ -75,9 +74,6 @@ export default function RootLayout({
           </main>
         </div>
         <PWARegistration />
-        <Script src="https://elevenlabs.io/convai-widget/index.js" strategy="lazyOnload" />
-        {/* @ts-expect-error - ElevenLabs custom element */}
-        <elevenlabs-convai agent-id="agent_7001kevrqj5yf67a6g5r6a0gzj0z"></elevenlabs-convai>
       </body>
     </html>
   );

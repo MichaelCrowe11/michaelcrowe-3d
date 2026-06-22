@@ -1,18 +1,17 @@
 {
-  "title": "crowe logic",
-  "badge": "live",
+  "title": "the record",
+  "badge": "DOI-backed",
   "badge_kind": "ok",
   "events": [
-    { "type": "cmd",     "text": "crowe status --all" },
-    { "type": "out",     "text": "operator-built infrastructure  ·  4 products online" },
-    { "type": "wait",    "ms": 350 },
-    { "type": "ok",      "text": "OK    deepparallel      cross-model review        p50 1.2s" },
-    { "type": "ok",      "text": "OK    crowe terminal    record-to-finish          ready" },
-    { "type": "ok",      "text": "OK    crowe sense       3.4M readings  ·  18.5 days  streaming" },
-    { "type": "ok",      "text": "OK    theorem           proof panels              ready" },
-    { "type": "wait",    "ms": 350 },
-    { "type": "comment", "text": "# one warm-dark foundation. gold is the parent. each product is a child." },
+    { "type": "cmd",     "text": "orcid show 0009-0008-5676-8816 --works" },
+    { "type": "out",     "text": "26 works, all DOI-resolvable, conservatively described" },
+    { "type": "wait",    "ms": 400 },
+    { "type": "comment", "text": "# real-world biology meets computation. an owned, closed-loop data system." },
+    { "type": "ok",      "text": "OK    crios nova       cheminformatics engine   rdkit / mordred / deepchem" },
+    { "type": "ok",      "text": "OK    crowe sense       3,596,420 readings       23 days, open-hardware node" },
+    { "type": "ok",      "text": "OK    crowe-theorem     proof verification       z3 / lean / sympy" },
+    { "type": "warn",    "text": "WARN  outcome labels    accruing                 telemetry to prediction, in progress" },
     { "type": "wait",    "ms": 300 },
-    { "type": "out",     "text": "all systems converged  ->  exit 0" }
+    { "type": "out",     "text": "cultivating since 2005  ·  commercial since 2017  ->  exit 0" }
   ]
 }

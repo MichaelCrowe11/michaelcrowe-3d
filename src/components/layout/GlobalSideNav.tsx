@@ -22,10 +22,12 @@ export function GlobalSideNav() {
       <div className="flex h-full flex-col items-center justify-between py-6">
         <div className="flex flex-col items-center gap-6">
           <Link href="/" className="flex flex-col items-center gap-3">
-            <div className="h-10 w-10 rounded-xl border border-white/10 bg-white/5" />
+            <div className="h-10 w-10 rounded-xl border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/10 flex items-center justify-center shadow-[0_0_18px_-6px_rgba(210,173,98,0.5)]">
+              <span className="font-display text-sm font-semibold text-[color:var(--accent-strong)] leading-none">MC</span>
+            </div>
             <div className="hidden md:block text-center">
-              <p className="text-[10px] uppercase tracking-[0.35em] text-white/40">Crowe Logic</p>
-              <p className="text-xs font-semibold text-white">Research Studio</p>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-white/40">Michael</p>
+              <p className="text-xs font-semibold text-white">Crowe</p>
             </div>
           </Link>
 
@@ -53,9 +55,9 @@ export function GlobalSideNav() {
           </nav>
         </div>
 
-        <div className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40">
-          <div className="h-8 w-8 rounded-full border border-white/10 bg-white/5" />
-          <span className="hidden md:block">Control</span>
+        <div className="flex flex-col items-center gap-2.5 text-[9px] uppercase tracking-[0.28em] text-white/35">
+          <span className="h-2 w-2 rounded-full bg-[color:var(--accent-cool)] animate-pulse shadow-[var(--glow-cool)]" />
+          <span className="hidden md:block">Live</span>
         </div>
       </div>
     </aside>
