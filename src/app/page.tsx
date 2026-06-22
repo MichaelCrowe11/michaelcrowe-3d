@@ -14,14 +14,23 @@ import { CustomVoiceConversation } from '@/components/agents/interfaces/CustomVo
 import { useSessionStore } from '@/stores/sessionStore';
 import type { Agent } from '@/config/agents';
 import { Hero } from '@/components/sections/Hero';
+import { Story } from '@/components/sections/Story';
 import { Services } from '@/components/sections/Services';
+import { Portfolio } from '@/components/sections/Portfolio';
 import { Products } from '@/components/sections/Products';
+import { Contact } from '@/components/sections/Contact';
 import { Footer as SectionFooter } from '@/components/sections/Footer';
+import { AssistantPanel } from '@/components/AssistantPanel';
 
 type Phase = 'intro' | 'home' | 'agents' | 'conversation';
 
 const IntroScene = dynamic(
   () => import('@/components/three/IntroScene').then((mod) => mod.IntroScene),
+  { ssr: false }
+);
+
+const BioComputeField = dynamic(
+  () => import('@/components/three/BioComputeField').then((mod) => mod.BioComputeField),
   { ssr: false }
 );
 
@@ -31,16 +40,16 @@ function Branding() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className="fixed top-6 left-6 z-20 flex items-center gap-3 px-3 py-2 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/20 transition-colors duration-300"
+      className="fixed top-6 left-24 md:left-28 z-20 flex items-center gap-3 px-3 py-2 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/20 transition-colors duration-300"
     >
       <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_16px_rgba(212,161,95,0.35)]">
         <img src="/crowe-avatar.png" alt="MC" className="w-full h-full object-cover" />
       </div>
       <div>
         <h1 className="text-lg font-display font-bold text-white tracking-tight">
-          Crowe <span className="gradient-text">Logic</span>
+          Michael <span className="gradient-text">Crowe</span>
         </h1>
-        <p className="text-xs text-white/50 font-medium tracking-[0.25em] uppercase">Research Studio</p>
+        <p className="text-xs text-white/50 font-medium tracking-[0.25em] uppercase">Biology meets computation</p>
       </div>
     </motion.div>
   );
@@ -90,7 +99,7 @@ function AuthButtons() {
 }
 
 function HomeContent() {
-  const [phase, setPhase] = useState<Phase>('intro');
+  const [phase, setPhase] = useState<Phase>('home');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const sales = useSales();
   const { reset: resetSession } = useSessionStore();
@@ -167,9 +176,14 @@ function HomeContent() {
 
   return (
     <main className={`relative min-h-screen bg-[#050506] ${phase === 'home' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'}`}>
-      {/* 3D Background - Fixed */}
+      {/* 3D Background - Fixed. Intro animation during intro; the meaningful
+          biology-to-computation field for every other phase. */}
       <div className="fixed inset-0 z-0">
-        <IntroScene onIntroComplete={() => setPhase('home')} />
+        {phase === 'intro' ? (
+          <IntroScene onIntroComplete={() => setPhase('home')} />
+        ) : (
+          <BioComputeField />
+        )}
       </div>
 
       {/* Branding */}
@@ -188,10 +202,14 @@ function HomeContent() {
             exit={{ opacity: 0 }}
             className="relative z-10"
           >
-            <Hero onStartDeepDive={handleStartDeepDive} />
+            <Hero />
+            <Story />
             <Services />
+            <Portfolio />
             <Products />
+            <Contact />
             <SectionFooter />
+            <AssistantPanel />
           </motion.div>
         )}
 
@@ -212,12 +230,6 @@ function HomeContent() {
         )}
       </AnimatePresence>
 
-      {/* Legacy chat orb - still available as fallback - moved to bottom right fixed */}
-      {showUI && phase === 'home' && (
-        <div className="fixed bottom-6 right-6 z-50">
-          <CroweAIChat />
-        </div>
-      )}
     </main>
   );
 }

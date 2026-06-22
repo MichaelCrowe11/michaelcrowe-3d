@@ -1,124 +1,93 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { RecordedTerminal } from '@/components/RecordedTerminal';
 
-const signalMetrics = [
-  { label: 'Research Years', value: '10+' },
-  { label: 'Publications', value: '41' },
-  { label: 'Training Samples', value: '634K' },
-  { label: 'Active Programs', value: '6' },
-];
+// Verified, checkable. No "20-year" claims, no superlatives.
+const proof = ['Cultivating since 2005', '26 DOI-backed works', '3.6M sensor readings', '195K subscribers'];
 
-const activeThreads = [
-  'ML-accelerated docking for bioactive discovery',
-  'Closed-loop cultivation controls at commercial scale',
-  'Voice-first expert systems for high-signal decisions',
-];
-
-export function Hero({ onStartDeepDive }: { onStartDeepDive?: () => void }) {
+export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(212,161,95,0.2)_0%,_transparent_70%)] blur-2xl" />
-        <div className="absolute bottom-0 left-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,_rgba(111,214,204,0.18)_0%,_transparent_70%)] blur-2xl" />
-      </div>
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden">
+      {/* legibility wash so the full-bleed 3D never fights the type */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(120%_100%_at_30%_45%,rgba(7,9,12,0.82)_0%,rgba(7,9,12,0.5)_45%,transparent_75%)]" />
 
-      <div className="relative z-10 px-6 max-w-6xl mx-auto py-24 lg:py-32 w-full grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
-        <motion.div
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24">
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="eyebrow-mono text-[color:var(--accent)]"
+        >
+          Operator, builder, researcher, Phoenix Arizona
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.08 }}
+          className="mt-6 font-display tracking-[-0.03em] leading-[0.98] text-[clamp(3rem,9vw,8rem)] max-w-[15ch]"
+        >
+          <span className="headline-gradient">Real-world </span>
+          <span className="g-gold">biology</span>
+          <span className="headline-gradient">, </span>
+          <span className="g-cyan">computed</span>
+          <span className="headline-gradient">.</span>
+        </motion.h1>
+
+        <motion.p
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-8 text-lg md:text-xl text-white/60 max-w-xl leading-relaxed"
         >
-          <div className="inline-flex items-center gap-3 px-4 py-2 signal-chip text-xs uppercase tracking-[0.3em] text-white/70">
-            <span className="h-2 w-2 rounded-full bg-[color:var(--accent)] shadow-[var(--glow-accent)]" />
-            Crowe Logic Research Studio
-          </div>
-
-          <h1 className="mt-8 text-5xl md:text-6xl lg:text-7xl font-display text-white tracking-tight leading-[1.05]">
-            Signal-grade AI for life sciences, cultivation, and applied discovery.
-          </h1>
-
-          <p className="mt-6 text-lg text-white/65 max-w-xl leading-relaxed">
-            We design adaptive intelligence systems that compress research timelines, optimize operations,
-            and translate complex data into actionable decisions.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            {onStartDeepDive && (
-              <button
-                onClick={onStartDeepDive}
-                className="px-6 py-3 rounded-full bg-[color:var(--accent)] text-black text-sm font-semibold tracking-wide hover:bg-[color:var(--accent-strong)] transition-colors"
-              >
-                Consult an Expert
-              </button>
-            )}
-            <a
-              href="#services"
-              className="px-6 py-3 rounded-full border border-white/15 text-white/80 text-sm font-medium hover:border-white/30 hover:bg-white/5 transition-colors"
-            >
-              Explore Research Systems
-            </a>
-            <a
-              href="#products"
-              className="px-6 py-3 text-white/50 text-sm font-medium hover:text-white/80 transition-colors"
-            >
-              Products and Intelligence Assets
-            </a>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {signalMetrics.map((metric) => (
-              <div key={metric.label} className="signal-card px-4 py-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-white/40">{metric.label}</p>
-                <p className="mt-2 text-2xl font-display text-white">{metric.value}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+          I run a commercial farm, instrumented it myself, and built the computational
+          science to close the loop. Operator-built, and all of it resolves.
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="signal-card p-8"
+          transition={{ duration: 0.8, delay: 0.32 }}
+          className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/40">Live Programs</p>
-              <h2 className="text-2xl font-display text-white mt-2">Research Command Deck</h2>
-            </div>
-            <div className="h-10 w-10 rounded-full border border-white/10 flex items-center justify-center text-xs text-white/50">
-              01
-            </div>
-          </div>
+          <a href="#contact" className="btn-gold px-7 py-3.5 text-base">Work with me</a>
+          <a href="#work" className="btn-glass px-7 py-3.5 text-base font-medium">See the work</a>
+          <a
+            href="https://orcid.org/0009-0008-5676-8816"
+            target="_blank"
+            rel="noreferrer"
+            className="px-3 py-3.5 text-sm text-white/45 hover:text-white/80 transition-colors"
+          >
+            Read the record
+          </a>
+        </motion.div>
 
-          <div className="mb-5 rounded-2xl overflow-hidden">
-            <RecordedTerminal src="/sessions/crowe-logic.json" title="crowe logic" badge="live" badgeKind="ok" />
-          </div>
-
-          <div className="space-y-4">
-            {activeThreads.map((thread) => (
-              <div key={thread} className="flex items-start gap-3 border border-white/5 rounded-2xl px-4 py-3 bg-white/5">
-                <span className="mt-1 h-2 w-2 rounded-full bg-[color:var(--accent-cool)] shadow-[var(--glow-cool)]" />
-                <p className="text-sm text-white/70 leading-relaxed">{thread}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 border-t border-white/10 pt-6">
-            <p className="text-xs text-white/40 uppercase tracking-[0.3em]">Access</p>
-            <p className="text-sm text-white/70 mt-2">
-              Proprietary datasets, expert consultations, and applied R and D programs.
-            </p>
-            <div className="mt-4 flex gap-3">
-              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Private</span>
-              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Enterprise</span>
-              <span className="px-3 py-1 text-xs uppercase tracking-[0.2em] signal-chip text-white/60">Data-first</span>
-            </div>
-          </div>
+        {/* slim proof line, not cards */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] uppercase tracking-[0.14em] text-white/40"
+        >
+          {proof.map((p, i) => (
+            <span key={p} className="flex items-center gap-3">
+              {i > 0 && <span className="text-[color:var(--accent-cool)]/50">/</span>}
+              {p}
+            </span>
+          ))}
         </motion.div>
       </div>
+
+      {/* scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.9 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/30"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+        <span className="h-8 w-px bg-gradient-to-b from-white/40 to-transparent animate-pulse" />
+      </motion.div>
     </section>
   );
 }
