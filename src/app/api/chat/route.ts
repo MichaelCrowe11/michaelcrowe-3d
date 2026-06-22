@@ -3,11 +3,21 @@ import { NextRequest } from 'next/server';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Azure OpenAI Configuration
-const AZURE_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || 'https://crios-nova-openai.cognitiveservices.azure.com';
-const AZURE_API_KEY = process.env.AZURE_OPENAI_API_KEY;
-const AZURE_DEPLOYMENT = process.env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o';
-const AZURE_API_VERSION = '2024-08-01-preview';
+/*
+ * Chat provider for the "Ask the record" assistant.
+ * Primary: Anthropic Claude (best quality, on-brand). Switchable to
+ * Cloudflare Workers AI (open models) via CHAT_PROVIDER=cloudflare.
+ * Both stream OpenAI-style SSE chunks so the client parser stays unchanged:
+ *   data: {"choices":[{"delta":{"content":"..."}}]}
+ */
+const PROVIDER = (process.env.CHAT_PROVIDER || 'anthropic').toLowerCase();
+
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
+
+const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const CF_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+const CF_MODEL = process.env.CLOUDFLARE_MODEL || '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
 
 const SYSTEM_PROMPT = `You are the assistant on michaelcrowe.ai. You speak for Michael Crowe's work. Be direct, precise, and conservative. Let the work speak. Never hype.
 
@@ -37,43 +47,126 @@ HOW TO HELP:
 - For consulting, research collaboration, or licensing, point people to michael@crowelogic.com. Do not quote prices; Michael scopes engagements directly.
 - Keep responses short unless depth is asked for. You are talking to smart people who value their time.`;
 
+type ChatMessage = { role: 'user' | 'assistant' | 'system'; content: string };
+
+const SSE_HEADERS = {
+  'Content-Type': 'text/event-stream',
+  'Cache-Control': 'no-cache',
+  'Connection': 'keep-alive',
+};
+
+// Wrap a text delta as an OpenAI-style SSE chunk the client already parses.
+function openaiChunk(text: string): string {
+  return `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`;
+}
+
+// Anthropic Messages API -> OpenAI-style SSE the client understands.
+async function streamAnthropic(messages: ChatMessage[]): Promise<Response> {
+  if (!ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set');
+
+  const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: ANTHROPIC_MODEL,
+      system: SYSTEM_PROMPT,
+      max_tokens: 1024,
+      temperature: 0.7,
+      stream: true,
+      messages: messages
+        .filter((m) => m.role === 'user' || m.role === 'assistant')
+        .map((m) => ({ role: m.role, content: m.content })),
+    }),
+  });
+
+  if (!upstream.ok || !upstream.body) {
+    const err = await upstream.text();
+    console.error('Anthropic error:', upstream.status, err);
+    throw new Error(`Anthropic error: ${upstream.status}`);
+  }
+
+  const reader = upstream.body.getReader();
+  const decoder = new TextDecoder();
+  const encoder = new TextEncoder();
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      let buffer = '';
+      try {
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          for (const line of lines) {
+            const t = line.trim();
+            if (!t.startsWith('data:')) continue;
+            const data = t.slice(5).trim();
+            if (!data || data === '[DONE]') continue;
+            try {
+              const evt = JSON.parse(data);
+              if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+                controller.enqueue(encoder.encode(openaiChunk(evt.delta.text)));
+              }
+            } catch {
+              // ignore keep-alive / non-JSON lines
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Anthropic stream error:', e);
+      } finally {
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, { headers: SSE_HEADERS });
+}
+
+// Cloudflare Workers AI exposes an OpenAI-compatible endpoint, so its
+// stream already matches the client format and passes through directly.
+async function streamCloudflare(messages: ChatMessage[]): Promise<Response> {
+  if (!CF_ACCOUNT_ID || !CF_API_TOKEN) throw new Error('Cloudflare credentials not set');
+
+  const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/v1/chat/completions`;
+  const upstream = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${CF_API_TOKEN}`,
+    },
+    body: JSON.stringify({
+      model: CF_MODEL,
+      stream: true,
+      max_tokens: 1024,
+      temperature: 0.7,
+      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+    }),
+  });
+
+  if (!upstream.ok || !upstream.body) {
+    const err = await upstream.text();
+    console.error('Cloudflare AI error:', upstream.status, err);
+    throw new Error(`Cloudflare AI error: ${upstream.status}`);
+  }
+
+  return new Response(upstream.body, { headers: SSE_HEADERS });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
+    const history: ChatMessage[] = Array.isArray(messages) ? messages : [];
 
-    // Azure OpenAI endpoint
-    const url = `${AZURE_ENDPOINT}/openai/deployments/${AZURE_DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': AZURE_API_KEY || '',
-      },
-      body: JSON.stringify({
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          ...messages
-        ],
-        stream: true,
-        max_tokens: 1024,
-        temperature: 0.7,
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error('AI Gateway error:', error);
-      throw new Error(`AI Gateway error: ${response.status}`);
-    }
-
-    return new Response(response.body, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-    });
+    if (PROVIDER === 'cloudflare') return await streamCloudflare(history);
+    return await streamAnthropic(history);
   } catch (error) {
     console.error('Chat API error:', error);
     return new Response(
