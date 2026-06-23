@@ -13,7 +13,17 @@ export const dynamic = 'force-dynamic';
 const PROVIDER = (process.env.CHAT_PROVIDER || 'anthropic').toLowerCase();
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
+// Nimbus default: Claude Opus 4.8 routed through the Cloudflare AI Gateway.
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-opus-4-8';
+const CF_AIG_GATEWAY = process.env.CF_AIG_GATEWAY || 'dev';
+const TEMPERATURE = Number(process.env.CHAT_TEMPERATURE || '0.3');
+// Opus 4.x deprecated the temperature parameter and hard-rejects it.
+const modelSupportsTemperature = (model: string) => !/^claude-opus-4-/.test(model);
+// When a CF account id is present, route Anthropic through the AI Gateway
+// (observability, caching, rate limiting). Otherwise call Anthropic directly.
+const ANTHROPIC_BASE = process.env.CLOUDFLARE_ACCOUNT_ID
+  ? `https://gateway.ai.cloudflare.com/v1/${process.env.CLOUDFLARE_ACCOUNT_ID}/${CF_AIG_GATEWAY}/anthropic`
+  : 'https://api.anthropic.com';
 
 const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
 const CF_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
@@ -64,7 +74,7 @@ function openaiChunk(text: string): string {
 async function streamAnthropic(messages: ChatMessage[]): Promise<Response> {
   if (!ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set');
 
-  const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+  const upstream = await fetch(`${ANTHROPIC_BASE}/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +85,7 @@ async function streamAnthropic(messages: ChatMessage[]): Promise<Response> {
       model: ANTHROPIC_MODEL,
       system: SYSTEM_PROMPT,
       max_tokens: 1024,
-      temperature: 0.7,
+      ...(modelSupportsTemperature(ANTHROPIC_MODEL) ? { temperature: TEMPERATURE } : {}),
       stream: true,
       messages: messages
         .filter((m) => m.role === 'user' || m.role === 'assistant')
@@ -146,7 +156,7 @@ async function streamCloudflare(messages: ChatMessage[]): Promise<Response> {
       model: CF_MODEL,
       stream: true,
       max_tokens: 1024,
-      temperature: 0.7,
+      temperature: TEMPERATURE,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
     }),
   });
