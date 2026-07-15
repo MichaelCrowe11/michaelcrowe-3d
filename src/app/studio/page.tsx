@@ -56,6 +56,36 @@ export default function StudioPage() {
             </div>
           </motion.div>
           
+          {/* Featured modules */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+              <Link href="/studio/parallel-synth">
+                <GlassCard className="p-6 h-full">
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    Parallel<span className="text-[#d4a15f]">Synth</span>
+                  </h3>
+                  <p className="text-white/60 text-sm mb-4">
+                    The production studio for generated media. Film, audio, and music from one terminal.
+                  </p>
+                  <PillTag variant="cyan">Production studio</PillTag>
+                </GlassCard>
+              </Link>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+              <Link href="/studio/doomscroll">
+                <GlassCard className="p-6 h-full">
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    DOOM<span className="text-[#6fd6cc]">SCROLL</span>
+                  </h3>
+                  <p className="text-white/60 text-sm mb-4">
+                    An arena survivor about the attention economy, built by an agentic game-dev pipeline. Watch the trailer.
+                  </p>
+                  <PillTag variant="cyan">UE5 · playable build</PillTag>
+                </GlassCard>
+              </Link>
+            </motion.div>
+          </div>
+
           {/* Module Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {agents.map((agent, i) => (
