@@ -21,7 +21,7 @@ const built = [
   {
     name: 'Crowe Sense',
     cat: 'Ag-tech hardware',
-    desc: 'A multi-zone cultivation telemetry rig on a working farm. 3,596,420 readings over 23 days, with an open-hardware sensor node.',
+    desc: 'A multi-zone cultivation telemetry rig from a commercial farm. 3,596,420 readings over 23 days, with an open-hardware sensor node.',
     tag: 'DOI · open hardware',
     href: 'https://doi.org/10.5281/zenodo.20722953',
   },

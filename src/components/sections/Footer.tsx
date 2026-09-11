@@ -19,8 +19,8 @@ export function Footer() {
               </div>
             </div>
             <p className="text-white/55 max-w-md mb-8 leading-relaxed font-light">
-              I build at the seam of real-world biology and computation: an instrumented
-              commercial farm, a drug-discovery toolchain, and research software. 26
+              I build at the seam of real-world biology and computation: a commercial
+              farm I instrumented, a drug-discovery toolchain, and research software. 26
               DOI-backed works, all resolvable.
             </p>
             <div className="flex gap-4">

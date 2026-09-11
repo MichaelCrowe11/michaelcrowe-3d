@@ -9,7 +9,7 @@ const pillars = [
     id: '01',
     title: 'Cultivation Intelligence',
     abstract:
-      'An operating commercial farm, instrumented end to end. Crowe Sense logs multi-zone environmental telemetry; harvest weight and quality close the loop per batch. The asset a competitor cannot buy: owned sensor-to-outcome pairs from a real commercial floor.',
+      'A commercial farm I ran and instrumented end to end. Crowe Sense logged multi-zone environmental telemetry; harvest weight and quality closed the loop per batch. The asset a competitor cannot buy: owned sensor-to-outcome pairs from a real commercial floor.',
     methods: ['Crowe Sense telemetry', 'Open-hardware sensor node', 'Yield + contamination modeling'],
     proof: '2 DOIs, 3,596,420 readings',
     status: 'Telemetry live',

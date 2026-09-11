@@ -40,7 +40,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mt-8 text-lg md:text-xl text-white/60 max-w-xl leading-relaxed"
         >
-          I run a commercial farm, instrumented it myself, and built the computational
+          I built and ran a commercial farm, instrumented it myself, and built the computational
           science to close the loop. Operator-built, and all of it resolves.
         </motion.p>
 

@@ -19,7 +19,7 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: "Michael Crowe | Where real-world biology meets computation",
-  description: "Founder of Crowe Logic and operator of Southwest Mushrooms since 2017. A portfolio of 26 DOI-backed works across cultivation intelligence, computational drug discovery, and research software.",
+  description: "Founder of Crowe Logic and of Southwest Mushrooms, a commercial farm in Phoenix he ran from 2017 to 2025. A portfolio of 26 DOI-backed works across cultivation intelligence, computational drug discovery, and research software.",
   keywords: ["Michael Crowe", "Crowe Logic", "cheminformatics", "drug discovery", "QSAR", "virtual screening", "RDKit", "natural products", "applied mycology", "cultivation telemetry"],
   authors: [{ name: "Michael Crowe" }],
   manifest: "/manifest.json",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Michael Crowe | Where real-world biology meets computation",
-    description: "Founder of Crowe Logic. Cultivating since 2005, commercial since 2017. 26 DOI-backed works across cultivation intelligence, drug discovery, and research software.",
+    description: "Founder of Crowe Logic. Cultivating since 2005; ran a commercial farm from 2017 to 2025. 26 DOI-backed works across cultivation intelligence, drug discovery, and research software.",
     url: "https://michaelcrowe.ai",
     siteName: "Michael Crowe",
     type: "website",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Michael Crowe | Where real-world biology meets computation",
-    description: "Founder of Crowe Logic. Cultivating since 2005, commercial since 2017. 26 DOI-backed works, all resolvable.",
+    description: "Founder of Crowe Logic. Cultivating since 2005; ran a commercial farm from 2017 to 2025. 26 DOI-backed works, all resolvable.",
   },
 };
 

@@ -12,6 +12,6 @@
     { "type": "ok",      "text": "OK    crowe-theorem     proof verification       z3 / lean / sympy" },
     { "type": "warn",    "text": "WARN  outcome labels    accruing                 telemetry to prediction, in progress" },
     { "type": "wait",    "ms": 300 },
-    { "type": "out",     "text": "cultivating since 2005  ·  commercial since 2017  ->  exit 0" }
+    { "type": "out",     "text": "cultivating since 2005  ·  commercial 2017 to 2025  ->  exit 0" }
   ]
 }

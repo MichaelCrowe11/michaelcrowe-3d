@@ -22,7 +22,7 @@ const arc = [
   {
     year: '2024',
     title: 'Instrumented the floor with Crowe Sense',
-    body: 'Built my own multi-zone telemetry rig on the working farm. A frozen snapshot holds 3,596,420 readings over 23 continuous days, backed by an open-hardware sensor-node design.',
+    body: 'Built my own multi-zone telemetry rig on the farm floor. A frozen snapshot holds 3,596,420 readings over 23 continuous days, backed by an open-hardware sensor-node design.',
   },
   {
     year: '2025',

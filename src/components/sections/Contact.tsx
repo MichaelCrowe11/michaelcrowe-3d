@@ -77,7 +77,7 @@ export function Contact() {
             ))}
           </div>
           <p className="text-xs text-white/35 text-center">
-            Michael Crowe, Phoenix, Arizona. Cultivating since 2005, commercial since 2017.
+            Michael Crowe, Phoenix, Arizona. Cultivating since 2005; commercial 2017 to 2025.
           </p>
         </motion.div>
       </div>
