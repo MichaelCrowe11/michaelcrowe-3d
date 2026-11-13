@@ -30,15 +30,15 @@ const projects = [
   },
   {
     number: '02',
-    category: 'Production systems · Physical workflow',
-    title: 'The cultivation floor',
-    subtitle: 'Designing the system around people, materials, space, and repeatability.',
-    body: 'Founded and operated Southwest Mushrooms, a commercial cultivation operation. The work required translating biological processes into a physical production system: room layouts, environmental control, material movement, sanitation, equipment use, and repeatable work sequences.',
-    design: ['Production flow from preparation through harvest', 'Equipment and room use under real operating constraints', 'Human factors, cleaning access, serviceability, and process clarity'],
-    proof: 'Commercial operation · Phoenix, Arizona · 2017–2025',
-    note: 'A real operating environment—not a speculative facility rendering.',
-    href: 'https://www.southwestmushrooms.com',
-    linkLabel: 'View operation archive',
+    category: 'Laboratory equipment · Printable build system',
+    title: 'Crowe Logic Flow Hood',
+    subtitle: 'A modular laminar-flow hood build package designed around accessible fabrication.',
+    body: 'A printable laboratory-equipment design package published through Southwest Mushrooms. The product catalog specifies 25 STL parts alongside an assembly guide, airflow-verification guide, bill of materials, and print manifest. The builder sources the HEPA filter and blower separately and assembles the unit.',
+    design: ['25 STL parts organized as a printable enclosure and component system', 'Assembly documentation, print manifest, and bill of materials', 'Airflow verification included as a required post-assembly step'],
+    proof: 'Digital build package · 25 STL parts · documented assembly workflow',
+    note: 'A user-built design package—not a factory-produced or safety-certified finished appliance. Airflow must be verified after assembly.',
+    href: 'https://michaelcrowemycology.com/',
+    linkLabel: 'View Southwest Mushrooms product site',
     kind: 'workflow',
   },
   {
@@ -97,10 +97,10 @@ function InstrumentDiagram() {
 }
 
 function WorkflowDiagram() {
-  const stages = ['Prepare', 'Inoculate', 'Incubate', 'Fruit', 'Harvest'];
+  const stages = ['HEPA filter', 'Plenum', 'Work zone', 'Front access', 'Base'];
   return (
     <div className="w-full bg-[#11120f] border border-white/10 p-6 md:p-9">
-      <div className="eyebrow-mono text-[#c9a86b] mb-8">Production sequence · conceptual process map</div>
+      <div className="eyebrow-mono text-[#c9a86b] mb-8">Flow hood architecture · conceptual component map</div>
       <div className="grid grid-cols-5 gap-2 md:gap-4 items-center">
         {stages.map((stage, i) => (
           <div key={stage} className="relative">
@@ -112,7 +112,7 @@ function WorkflowDiagram() {
           </div>
         ))}
       </div>
-      <p className="mt-8 max-w-2xl text-sm leading-7 text-white/55">Each stage changes the requirements for space, equipment, environmental conditions, handling, and sanitation. Designing the complete sequence reduces friction at the handoffs.</p>
+      <p className="mt-8 max-w-2xl text-sm leading-7 text-white/55">The build package separates printable structure from sourced filtration and blower components. Final airflow is a performance requirement to verify after assembly—not a result assumed by the CAD.</p>
     </div>
   );
 }
@@ -189,7 +189,7 @@ export default function IndustrialDesignPage() {
               </div>
               <div className="self-start">
                 {project.kind==='instrument' ? <InstrumentDiagram/> : project.kind==='workflow' ? <WorkflowDiagram/> : <InterfaceDiagram/>}
-                <p className="mt-3 text-[10px] uppercase tracking-[.15em] text-white/30">{project.kind==='instrument'?'Enclosure architecture · conceptual diagram; source CAD and dimensions linked':project.kind==='workflow'?'Operational sequence · process map':'Interaction model · illustrative interface diagram'}</p>
+                <p className="mt-3 text-[10px] uppercase tracking-[.15em] text-white/30">{project.kind==='instrument'?'Enclosure architecture · conceptual diagram; source CAD and dimensions linked':project.kind==='workflow'?'Flow hood component architecture · conceptual map':'Interaction model · illustrative interface diagram'}</p>
               </div>
             </article>
           ))}
