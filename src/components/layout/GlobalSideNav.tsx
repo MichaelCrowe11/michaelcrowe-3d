@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { Home, LayoutGrid, Orbit, BookOpen, Database, Briefcase } from 'lucide-react';
+import { Home, LayoutGrid, Orbit, BookOpen, Database, Briefcase, Box } from 'lucide-react';
 
 const primaryLinks = [
   { href: '/', label: 'Home', icon: Home },
+  { href: '/industrial-design', label: 'Industrial Design', icon: Box },
   { href: '/workspace', label: 'Workspace', icon: LayoutGrid },
   { href: '/studio', label: 'Studio', icon: Orbit },
   { href: '/products/masterclass', label: 'Masterclass', icon: BookOpen },
@@ -34,12 +35,14 @@ export function GlobalSideNav() {
           <nav className="flex flex-col gap-3">
             {primaryLinks.map((link) => {
               const Icon = link.icon;
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
 
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-label={link.label}
+                  title={link.label}
                   className={clsx(
                     'group flex h-11 w-11 items-center justify-center rounded-xl border transition',
                     isActive
