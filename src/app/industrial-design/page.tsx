@@ -19,13 +19,13 @@ const projects = [
     number: '01',
     category: 'Ag-tech hardware · Field instrumentation',
     title: 'Crowe Sense',
-    subtitle: 'A sensor system designed around the realities of a working grow room.',
-    body: 'A multi-zone cultivation telemetry system developed and deployed in a commercial production environment. The work connected physical sensor nodes, environmental measurements, and batch-level production outcomes into one operating picture.',
-    design: ['Sensor placement across distinct grow zones', 'Field deployment and repeatable measurement', 'A practical path from environmental readings to operational decisions'],
-    proof: '3,596,420 readings · 23 continuous days',
-    note: 'Open-hardware sensor-node design and DOI-backed technical record.',
-    href: 'https://doi.org/10.5281/zenodo.20722953',
-    linkLabel: 'View technical record',
+    subtitle: 'A modular, parametric enclosure for a field-deployable environmental sensing node.',
+    body: 'A bay-and-deck enclosure designed around a Raspberry Pi 5, removable sensor head, portable storage, and a cellular hotspot. The parametric OpenSCAD model separates five printable parts and exposes fit-critical dimensions as editable parameters.',
+    design: ['220 × 130 × 95 mm main enclosure; removable 25 mm sensor head', 'Dedicated bays for a 2.5-inch drive, Pi 5 compute deck, and cellular hotspot', 'Service access, cable routing, antenna pass-throughs, venting, and removable retention features'],
+    proof: 'Parametric OpenSCAD design · 5 printable components',
+    note: 'Early-stage design: firmware tests use a simulated I²C bus; the repository states that physical Pi/sensor bring-up has not yet been completed.',
+    href: 'https://github.com/MichaelCrowe11/crowe-sense',
+    linkLabel: 'View CAD, mechanical design & BOM',
     kind: 'instrument',
   },
   {
@@ -184,12 +184,12 @@ export default function IndustrialDesignPage() {
                 <div className="mt-8 pt-5 border-t border-white/10">
                   <p className="text-xs text-[#e0c994]">{project.proof}</p>
                   <p className="mt-2 text-xs text-white/35">{project.note}</p>
-                  <a href={project.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 text-xs uppercase tracking-[.15em] text-white/65 hover:text-[#e0c994] transition-colors">{project.linkLabel}<ArrowUpRight size={14}/></a>
+                  <a href={project.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 text-xs uppercase tracking-[.15em] text-white/65 hover:text-[#e0c994] transition-colors">{project.linkLabel}<ArrowUpRight size={14}/></a>{project.kind === "instrument" && <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/45"><a href="https://github.com/MichaelCrowe11/crowe-sense/blob/main/hardware/enclosure/crowe_sensor_enclosure.scad" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-[#e0c994]">Parametric OpenSCAD source</a><a href="https://github.com/MichaelCrowe11/crowe-sense/blob/main/docs/02-mechanical-design.md" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-[#e0c994]">Mechanical specification</a><a href="https://github.com/MichaelCrowe11/crowe-sense/blob/main/hardware/bom.csv" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-[#e0c994]">Bill of materials</a></div>}
                 </div>
               </div>
               <div className="self-start">
                 {project.kind==='instrument' ? <InstrumentDiagram/> : project.kind==='workflow' ? <WorkflowDiagram/> : <InterfaceDiagram/>}
-                <p className="mt-3 text-[10px] uppercase tracking-[.15em] text-white/30">{project.kind==='instrument'?'System schematic · illustrative, not a manufacturing drawing':project.kind==='workflow'?'Operational sequence · process map':'Interaction model · illustrative interface diagram'}</p>
+                <p className="mt-3 text-[10px] uppercase tracking-[.15em] text-white/30">{project.kind==='instrument'?'Enclosure architecture · conceptual diagram; source CAD and dimensions linked':project.kind==='workflow'?'Operational sequence · process map':'Interaction model · illustrative interface diagram'}</p>
               </div>
             </article>
           ))}
