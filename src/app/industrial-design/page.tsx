@@ -1,5 +1,18 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight, Box, Cpu, Layers3, MoveRight, Ruler, Workflow } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Layers3, MoveRight, Ruler, Workflow } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Industrial Design & Product Systems | Michael Crowe',
+  description: 'Selected work in field instrumentation, physical production systems, and human-machine interfaces by Michael Crowe.',
+  openGraph: {
+    title: 'Industrial Design & Product Systems | Michael Crowe',
+    description: 'Selected work in field instrumentation, physical production systems, and human-machine interfaces.',
+    url: 'https://michaelcrowe.ai/industrial-design',
+    siteName: 'Michael Crowe',
+    type: 'website',
+  },
+};
 
 const projects = [
   {
